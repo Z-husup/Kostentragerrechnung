@@ -1,9 +1,9 @@
-package com.prog.kostentragerrechnung;
+package com.prog.kostentragerrechnung.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class StartPageController {
     @FXML
     private Label welcomeText;
 

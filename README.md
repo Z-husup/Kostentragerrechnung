@@ -2,7 +2,7 @@ WIW09470 Einführung in die Wirtschaftswissenschaften (Prof. Keil)
 
 Project: Kostentragerrechnung
 
-Team:
-Akylbek Bektenaliev
-Zhusup Akylbek uulu
-Aziz Kalimov
+Team:\n
+Akylbek Bektenaliev\n
+Zhusup Akylbek uulu\n
+Aziz Kalimov\n

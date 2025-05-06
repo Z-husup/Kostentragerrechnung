@@ -9,10 +9,8 @@ module com.prog.kostentragerrechnung {
 
     opens com.prog.kostentragerrechnung to javafx.fxml;
     exports com.prog.kostentragerrechnung;
-    exports com.prog.kostentragerrechnung.model;
-    opens com.prog.kostentragerrechnung.model to javafx.fxml;
+    exports com.prog.kostentragerrechnung.tables;
+    opens com.prog.kostentragerrechnung.tables to javafx.fxml;
     exports com.prog.kostentragerrechnung.controller;
     opens com.prog.kostentragerrechnung.controller to javafx.fxml;
-    exports com.prog.kostentragerrechnung.repository;
-    opens com.prog.kostentragerrechnung.repository to javafx.fxml;
 }

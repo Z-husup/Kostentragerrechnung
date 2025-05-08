@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.paint.Material;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import com.prog.kostentragerrechnung.tables.MaterialTable;
@@ -21,8 +20,8 @@ public class InputPageController {
     private final CalculationService calculationService = new CalculationService();
 
     // Materials
-    @FXML private TableView<Material> materialsTable;
-    private final ObservableList<Material> materials = FXCollections.observableArrayList();
+    @FXML private TableView<MaterialTable> materialsTable;
+    private final ObservableList<MaterialTable> materialsTables = FXCollections.observableArrayList();
     @FXML private TableColumn<MaterialTable, String> materialId;
     @FXML private TableColumn<MaterialTable, String> materialName;
     @FXML private TableColumn<MaterialTable, Double> unitCost;
@@ -57,7 +56,7 @@ public class InputPageController {
 
     @FXML
     public void initialize() {
-        materialsTable.setItems(materials);
+        materialsTable.setItems(materialsTables);
         partsTable.setItems(partTables);
         machinesTable.setItems(machineTables);
         workPlanTable.setItems(workPlanTableSteps);
@@ -118,7 +117,7 @@ public class InputPageController {
     @FXML
     private void calculate(ActionEvent event) {
         calculationService.calculateCosts(
-                materials,
+                materialsTables,
                 partTables,
                 machineTables,
                 workPlanTableSteps,

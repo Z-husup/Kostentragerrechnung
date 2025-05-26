@@ -6,6 +6,7 @@ module com.prog.kostentragerrechnung {
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires atlantafx.base;
 
     opens com.prog.kostentragerrechnung to javafx.fxml;
     exports com.prog.kostentragerrechnung;

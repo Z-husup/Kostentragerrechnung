@@ -8,9 +8,6 @@ import javafx.scene.control.Button;
 public class StartPageController {
 
     @FXML
-    private Button startButton;
-
-    @FXML
     private void goToInputPage(ActionEvent event) {
         Application.switchScene("input-page.fxml");
     }

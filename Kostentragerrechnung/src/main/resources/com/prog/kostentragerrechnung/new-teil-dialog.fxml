@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddPartController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="teilNummer" layoutX="192.0" layoutY="89.0" prefHeight="25.0" prefWidth="201.0" />
       <Label layoutX="164.0" layoutY="33.0" text="New Teil:">
@@ -27,7 +27,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="36.0" layoutY="348.0" mnemonicParsing="false" onAction="#handeAddNewTeil" prefHeight="25.0" prefWidth="366.0" text="Add New Row" />
+      <Button layoutX="36.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="Add New Row" />
       <TextField fx:id="anzahl" layoutX="189.0" layoutY="183.0" prefHeight="25.0" prefWidth="201.0" />
       <Label layoutX="36.0" layoutY="186.0" text="Anzahl">
          <font>

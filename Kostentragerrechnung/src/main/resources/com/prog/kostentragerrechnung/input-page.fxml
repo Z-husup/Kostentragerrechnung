@@ -126,6 +126,8 @@
 </Text>
 <Button fx:id="calculateButton" layoutX="880.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleCalculate" prefHeight="29.0" prefWidth="182.0" text="Calculate" />
 <Button fx:id="importExcelButton" layoutX="691.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleImport" prefHeight="29.0" prefWidth="161.0" text="Import Excel" />
+<Label fx:id="fileLabel" layoutX="691.0" layoutY="62.0" text="Kein Datei ausgewählt" />
+
 <Button fx:id="helpButton" layoutX="501.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="29.0" prefWidth="161.0" text="Help" />
 </children>
 </AnchorPane>

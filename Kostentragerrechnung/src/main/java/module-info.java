@@ -8,6 +8,7 @@ module com.prog.kostentragerrechnung {
     requires org.kordamp.bootstrapfx.core;
     requires atlantafx.base;
     requires static lombok;
+    requires java.sql;
 
     opens com.prog.kostentragerrechnung to javafx.fxml;
     exports com.prog.kostentragerrechnung;

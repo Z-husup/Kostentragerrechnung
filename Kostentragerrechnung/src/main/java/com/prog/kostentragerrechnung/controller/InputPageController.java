@@ -91,6 +91,8 @@ public class InputPageController {
      */
     @FXML private Button helpButton;
 
+    @FXML private Label fileLabel;
+
     /**
      * Initializes the controller.
      * <p>
@@ -108,6 +110,7 @@ public class InputPageController {
      */
     @FXML
     public void handleImport() {
+        importService.importExcel(importExcelButton, fileLabel);
         // TODO Optional: refresh table content
     }
 

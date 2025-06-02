@@ -4,6 +4,9 @@ import com.prog.kostentragerrechnung.tables.MachineTable;
 import com.prog.kostentragerrechnung.tables.PartTable;
 import com.prog.kostentragerrechnung.tables.ProductStructureTable;
 import com.prog.kostentragerrechnung.tables.WorkPlanTable;
+
+import java.io.File;
+
 import com.prog.kostentragerrechnung.service.CalculationService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,6 +14,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import com.prog.kostentragerrechnung.tables.MaterialTable;
@@ -53,6 +58,9 @@ public class InputPageController {
     @FXML private Button calculateButton;
     @FXML private Button importExcelButton;
     @FXML private Button helpButton;
+    @FXML private Label fileLabel;
+    private File selectedFile;
+
 
     @FXML
     public void initialize() {
@@ -69,6 +77,32 @@ public class InputPageController {
         productStructureTable.setEditable(true);
 
         configureMaterialTable();
+    }
+
+    @FXML
+    private void importExcel(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выберите Excel файл");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Excel Files", "*.xlsx", "*.xls")
+        );
+
+        Stage stage = (Stage) importExcelButton.getScene().getWindow();
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            selectedFile = file;
+            fileLabel.setText("Выбран: " + file.getName());
+
+            // Вызов метода парсинга Excel
+            // ExcelParser.parse(file); // твой метод обработки
+        } else {
+            fileLabel.setText("Файл не выбран");
+        }
+    }
+
+    public File getSelectedFile() {
+        return selectedFile;
     }
 
     private void configureMaterialTable() {
@@ -124,11 +158,6 @@ public class InputPageController {
                 productStructureTableSteps
         );
         System.out.println("Calculation triggered.");
-    }
-
-    @FXML
-    private void importExcel(ActionEvent event) {
-        System.out.println("Importing Excel file...");
     }
 
     @FXML

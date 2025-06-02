@@ -7,6 +7,9 @@ module com.prog.kostentragerrechnung {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires atlantafx.base;
+    requires java.sql;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
     opens com.prog.kostentragerrechnung to javafx.fxml;
     exports com.prog.kostentragerrechnung;

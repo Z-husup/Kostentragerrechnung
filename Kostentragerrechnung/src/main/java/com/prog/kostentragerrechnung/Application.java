@@ -1,6 +1,7 @@
 package com.prog.kostentragerrechnung;
 
-import atlantafx.base.theme.CupertinoLight;
+import com.prog.kostentragerrechnung.database.DBManager;
+
 import atlantafx.base.theme.NordLight;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -35,6 +36,7 @@ public class Application extends javafx.application.Application {
         stage.setMaximized(true);
         stage.initStyle(StageStyle.DECORATED);
         stage.show();
+        DBManager.initDatabase();
     }
 
 

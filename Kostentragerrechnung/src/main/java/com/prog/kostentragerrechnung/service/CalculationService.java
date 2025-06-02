@@ -1,10 +1,12 @@
 package com.prog.kostentragerrechnung.service;
 
-import com.prog.kostentragerrechnung.model.*;
-import com.prog.kostentragerrechnung.tables.*;
-import javafx.collections.ObservableList;
-
 import java.util.List;
+
+import com.prog.kostentragerrechnung.model.Arbeitsplan;
+import com.prog.kostentragerrechnung.model.Auftrag;
+import com.prog.kostentragerrechnung.model.Maschine;
+import com.prog.kostentragerrechnung.model.Material;
+import com.prog.kostentragerrechnung.model.Teil;
 
 public class CalculationService {
 

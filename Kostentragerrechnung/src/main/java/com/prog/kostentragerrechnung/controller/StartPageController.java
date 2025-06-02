@@ -3,10 +3,6 @@ package com.prog.kostentragerrechnung.controller;
 import com.prog.kostentragerrechnung.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 
 /**
  * Controller class for the start page of the application.

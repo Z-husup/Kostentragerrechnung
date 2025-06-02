@@ -6,6 +6,9 @@ import com.prog.kostentragerrechnung.tables.ProductStructureTable;
 import com.prog.kostentragerrechnung.tables.WorkPlanTable;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import com.prog.kostentragerrechnung.service.CalculationService;
 import javafx.fxml.FXML;
@@ -87,15 +90,37 @@ public class InputPageController {
             new FileChooser.ExtensionFilter("Excel Files", "*.xlsx", "*.xls")
         );
 
+
         Stage stage = (Stage) importExcelButton.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
 
         if (file != null) {
             selectedFile = file;
             fileLabel.setText("Выбран: " + file.getName());
+            String fileName = file.getName();
+            fileLabel.setText(fileName);
 
-            // Вызов метода парсинга Excel
-            // ExcelParser.parse(file); // твой метод обработки
+            Tooltip tooltip = new Tooltip("Выбран файл: " + file.getAbsolutePath());
+            Tooltip.install(fileLabel, tooltip);
+
+            File tempDir = new File("temp");
+        if (!tempDir.exists()) {
+            tempDir.mkdir();
+        }
+
+        // Копируем файл во временную папку
+        File savedFile = new File(tempDir, file.getName());
+        try {
+            Files.copy(file.toPath(), savedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Файл скопирован в: " + savedFile.getAbsolutePath());
+            // Здесь можешь вызвать свой ExcelParser
+            // ExcelParser.parse(savedFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fileLabel.setText("Ошибка при копировании файла.");
+                // Вызов метода парсинга Excel
+                // ExcelParser.parse(file); // твой метод обработки
+        }
         } else {
             fileLabel.setText("Файл не выбран");
         }

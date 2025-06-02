@@ -134,5 +134,11 @@
 <Button fx:id="calculateButton" layoutX="880.0" layoutY="28.0" mnemonicParsing="false" onAction="#calculate" prefHeight="29.0" prefWidth="182.0" text="Calculate" />
 <Button fx:id="importExcelButton" layoutX="691.0" layoutY="28.0" mnemonicParsing="false" onAction="#importExcel" prefHeight="29.0" prefWidth="161.0" text="Import Excel" />
 <Button fx:id="helpButton" layoutX="501.0" layoutY="28.0" mnemonicParsing="false" onAction="#openHelpPage" prefHeight="29.0" prefWidth="161.0" text="Help" />
+<Label fx:id="fileLabel" text="Файл не выбран">
+    <tooltip>
+        <Tooltip text="Здесь будет отображаться имя выбранного файла" />
+    </tooltip>
+</Label>
+
 </children>
 </AnchorPane>

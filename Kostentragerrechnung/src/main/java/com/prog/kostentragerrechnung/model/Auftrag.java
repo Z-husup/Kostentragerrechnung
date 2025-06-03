@@ -17,10 +17,12 @@ import java.util.List;
 @Data
 public class Auftrag {
 
+    private static int nextId = 1;
+
     /**
      * Unique identifier for the order.
      */
-    private String auftragId;
+    private int auftragId;
 
     /**
      * Order number (corresponds to database column {@code auftrag_nr}).
@@ -45,8 +47,8 @@ public class Auftrag {
      * @param auftragNummer         The order number.
      * @param datumKostenrechnung   The date of the last cost calculation.
      */
-    public Auftrag(String auftragId, String auftragNummer, LocalDate datumKostenrechnung) {
-        this.auftragId = auftragId;
+    public Auftrag(String auftragNummer, LocalDate datumKostenrechnung) {
+        this.auftragId = nextId++;
         this.auftragNummer = auftragNummer;
         this.datumKostenrechnung = datumKostenrechnung;
         auftrags.add(this);

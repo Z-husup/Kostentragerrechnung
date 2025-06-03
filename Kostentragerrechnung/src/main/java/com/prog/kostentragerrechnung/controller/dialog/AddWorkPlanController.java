@@ -117,7 +117,7 @@ public class AddWorkPlanController {
         try {
             int gangNr = Integer.parseInt(gang);
             int dauerMin = Integer.parseInt(dauer);
-            new Arbeitsplan(java.util.UUID.randomUUID().toString(), teilId, gangNr, maschine, dauerMin);
+            new Arbeitsplan(teilId, gangNr, maschine, dauerMin);
             saved = true;
             dialogStage.close();
         } catch (NumberFormatException e) {

@@ -14,6 +14,8 @@ import java.util.List;
 @Data
 public class Maschine {
 
+    private static int nextId = 1;
+
     /**
      * Unique identifier for the machine.
      */
@@ -48,8 +50,8 @@ public class Maschine {
      * @param bezeichnung          The description or name of the machine.
      * @param kostensatzProStunde  The cost rate per hour.
      */
-    public Maschine(int maschineId, String maschinenNummer, String bezeichnung, double kostensatzProStunde) {
-        this.maschineId = maschineId;
+    public Maschine(String maschinenNummer, String bezeichnung, double kostensatzProStunde) {
+        this.maschineId = nextId++;
         this.maschinenNummer = maschinenNummer;
         this.bezeichnung = bezeichnung;
         this.kostensatzProStunde = kostensatzProStunde;

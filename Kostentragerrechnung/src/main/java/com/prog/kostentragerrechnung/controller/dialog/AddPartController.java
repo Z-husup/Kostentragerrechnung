@@ -112,7 +112,7 @@ public class AddPartController {
         try {
             int position = Integer.parseInt(pos);
             int anzahlVal = Integer.parseInt(anzahlStr);
-            new Teil(java.util.UUID.randomUUID().toString(), teil, position, anzahlVal, material);
+            new Teil(teil, position, anzahlVal, material);
             saved = true;
             dialogStage.close();
         } catch (NumberFormatException e) {

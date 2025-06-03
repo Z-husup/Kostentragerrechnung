@@ -13,6 +13,8 @@ import java.util.List;
 @Data
 public class Material {
 
+    private static int nextId = 1;
+
     /**
      * Unique identifier for the material.
      */
@@ -37,12 +39,12 @@ public class Material {
      * Constructs a new {@code Material} object with the specified attributes,
      * and automatically adds it to the {@link #materials} list.
      *
-     * @param id     The unique identifier of the material.
+     * @param materialId     The unique identifier of the material.
      * @param nummer The material number.
      * @param kosten The cost per unit.
      */
-    public Material(int materialId, String nummer, double kosten) {
-        this.materialId = materialId;
+    public Material(String nummer, double kosten) {
+        this.materialId = nextId++;
         this.materialNummer = nummer;
         this.kostenProStueck = kosten;
         materials.add(this);

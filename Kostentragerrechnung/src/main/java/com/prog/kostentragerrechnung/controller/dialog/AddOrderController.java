@@ -89,7 +89,9 @@ public class AddOrderController {
         try {
             // Parse date in ISO format
             LocalDate parsedDate = LocalDate.parse(datum); // Expected: yyyy-MM-dd
-            new Auftrag(java.util.UUID.randomUUID().toString(), nummer, parsedDate);
+
+            new Auftrag(nummer, parsedDate);
+
             saved = true;
             dialogStage.close();
         } catch (Exception e) {

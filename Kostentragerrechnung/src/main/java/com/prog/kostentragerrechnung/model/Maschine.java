@@ -17,7 +17,7 @@ public class Maschine {
     /**
      * Unique identifier for the machine.
      */
-    private String maschineId;
+    private int maschineId;
 
     /**
      * Machine number (corresponds to database column {@code nr}).
@@ -48,7 +48,7 @@ public class Maschine {
      * @param bezeichnung          The description or name of the machine.
      * @param kostensatzProStunde  The cost rate per hour.
      */
-    public Maschine(String maschineId, String maschinenNummer, String bezeichnung, double kostensatzProStunde) {
+    public Maschine(int maschineId, String maschinenNummer, String bezeichnung, double kostensatzProStunde) {
         this.maschineId = maschineId;
         this.maschinenNummer = maschinenNummer;
         this.bezeichnung = bezeichnung;

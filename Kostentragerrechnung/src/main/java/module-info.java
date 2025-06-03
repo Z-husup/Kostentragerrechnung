@@ -12,6 +12,8 @@ module com.prog.kostentragerrechnung {
 
     opens com.prog.kostentragerrechnung to javafx.fxml;
     exports com.prog.kostentragerrechnung;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
     exports com.prog.kostentragerrechnung.controller;
     opens com.prog.kostentragerrechnung.controller to javafx.fxml;

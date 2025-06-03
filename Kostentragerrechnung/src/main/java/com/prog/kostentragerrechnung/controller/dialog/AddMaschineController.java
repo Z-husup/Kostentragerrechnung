@@ -1,6 +1,8 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
 import com.prog.kostentragerrechnung.model.Maschine;
+import com.prog.kostentragerrechnung.model.repositories.MaschiineRepo;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
  * Handles input validation and creation of new {@link Maschine} objects.
  */
 public class AddMaschineController {
+    MaschiineRepo maschiineRepo;
 
     /**
      * Indicates whether the new machine was successfully saved.
@@ -91,11 +94,13 @@ public class AddMaschineController {
 
         try {
             double ks = Double.parseDouble(kostensatz);
-            new Maschine(java.util.UUID.randomUUID().toString(), nummer, bez, ks);
+            maschiineRepo.create(nummer, bez, ks);
             saved = true;
             dialogStage.close();
         } catch (NumberFormatException e) {
             showAlert("Fehler", "Kostensatz muss eine Zahl sein.");
+        } catch (Exception e) {
+            showAlert("Fehler", "Ein Fehler ist aufgetreten: " + e.getMessage());
         }
     }
 

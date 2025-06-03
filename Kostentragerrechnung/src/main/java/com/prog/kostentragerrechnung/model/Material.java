@@ -16,7 +16,7 @@ public class Material {
     /**
      * Unique identifier for the material.
      */
-    private String materialId;
+    private int materialId;
 
     /**
      * Material number (corresponds to database column {@code nr}).
@@ -41,8 +41,8 @@ public class Material {
      * @param nummer The material number.
      * @param kosten The cost per unit.
      */
-    public Material(String id, String nummer, double kosten) {
-        this.materialId = id;
+    public Material(int materialId, String nummer, double kosten) {
+        this.materialId = materialId;
         this.materialNummer = nummer;
         this.kostenProStueck = kosten;
         materials.add(this);

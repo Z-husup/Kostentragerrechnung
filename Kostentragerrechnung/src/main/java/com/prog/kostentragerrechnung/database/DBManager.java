@@ -7,7 +7,7 @@ import java.sql.Statement;
 public class DBManager {
     Connection connection;
 
-    private static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         String url = "jdbc:sqlite:database.db";
         return java.sql.DriverManager.getConnection(url);
     }
@@ -18,25 +18,22 @@ public class DBManager {
         CREATE TABLE IF NOT EXISTS material (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nr TEXT NOT NULL,
-            kost INTEGER NOT NULL
+            kost REAL NOT NULL
         );
         """,
         """
         CREATE TABLE IF NOT EXISTS teil (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             bezeichnung TEXT NOT NULL,
-            ks_e_h INTEGER NOT NULL
+            ks_e_h REAL NOT NULL
         );
         """,
         """
         CREATE TABLE IF NOT EXISTS maschine (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            teil_nr TEXT NOT NULL,
-            knoten TEXT NOT NULL,
-            k_mat INTEGER NOT NULL,
-            k_fert INTEGER NOT NULL,
-            anzahl INTEGER NOT NULL,
-            mat TEXT NOT NULL
+            nr TEXT NOT NULL,
+            bezeichnung TEXT NOT NULL,
+            ks_eh REAL NOT NULL
         );
         """,
         """
@@ -47,13 +44,13 @@ public class DBManager {
             dat_kost INTEGER NOT NULL
             );
         """, 
-        """
-        CREATE TABLE IF NOT EXISTS auftrag (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            k_mat INTEGER NOT NULL,
-            k_fert INTEGER NOT NULL,
-            dat_kost INTEGER NOT NULL
-        );dat_kost INTEGER NOT NULL);
+         """
+        CREATE TABLE IF NOT EXISTS arbeitsplan (
+            teil_nr TEXT,
+            ag INTEGER,
+            maschine TEXT,
+            zeit REAL
+        );
         """  
     };
 

@@ -1,6 +1,10 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
+import java.sql.SQLException;
+
 import com.prog.kostentragerrechnung.model.Material;
+import com.prog.kostentragerrechnung.model.repositories.MaterialRepo;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -14,6 +18,7 @@ import javafx.stage.Stage;
  * Handles user input to create and save a new {@link Material} object.
  */
 public class AddMaterialController {
+    MaterialRepo materialRepo;
 
     /**
      * Indicates whether the material was successfully saved.
@@ -77,7 +82,12 @@ public class AddMaterialController {
         }
 
         // Create a new Material with default cost 0.0
-        new Material(java.util.UUID.randomUUID().toString(), nummer, 0.0);
+        try {
+            materialRepo.create(nummer, 0);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         saved = true;
         dialogStage.close();
     }

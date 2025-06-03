@@ -38,10 +38,6 @@ public class InputPageController {
      */
     private DialogService dialogService;
 
-    public void setDialogService(DialogService dialogService) {
-        this.dialogService = dialogService;
-    }
-
     /**
      * Sets the primary stage and initializes the {@link DialogService}.
      *

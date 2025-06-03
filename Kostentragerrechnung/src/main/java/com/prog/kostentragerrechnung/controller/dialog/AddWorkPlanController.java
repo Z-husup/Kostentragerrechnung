@@ -1,6 +1,8 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
 import com.prog.kostentragerrechnung.model.Arbeitsplan;
+import com.prog.kostentragerrechnung.model.Maschine;
+import com.prog.kostentragerrechnung.model.Teil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -8,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 /**
  * Controller for the "Add Work Plan" (Arbeitsplan) dialog.
@@ -78,7 +82,16 @@ public class AddWorkPlanController {
      */
     @FXML
     public void initialize() {
-        // Optional: Load options for ComboBoxes (e.g., from Teil.teils and Maschine.maschines)
+        List<String> maschineNummern = Maschine.maschines.stream()
+                .map(Maschine::getMaschinenNummer)
+                .toList();
+
+        List<String> teilNummern = Teil.teils.stream()
+                .map(Teil::getTeilNummer)
+                .toList();
+
+        maschinenNummer.getItems().addAll(maschineNummern);
+        teilNummerCombo.getItems().addAll(teilNummern);
     }
 
     /**

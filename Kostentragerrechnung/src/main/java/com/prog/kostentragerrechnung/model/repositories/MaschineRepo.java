@@ -8,35 +8,41 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.prog.kostentragerrechnung.database.DBManager;
 import com.prog.kostentragerrechnung.model.Maschine;
 
-public class MaschiineRepo {
-    public final Connection connection;
+
+public class MaschineRepo {
+    private final Connection connection;
+
+    public MaschineRepo() throws SQLException {
+        this.connection = DBManager.getConnection();
+    }
     
 
-    public MaschiineRepo(Connection connection) {
-        this.connection = connection;
-    }
+    
 
-    public void create(String nr, String bz,double ksps) throws SQLException {
-        String sql = "INSERT INTO maschine (nr, bezeichnung,ks_eh) VALUES (?, ?,?)";
+    public void create(String nr, String bz, double ksps) throws SQLException {
+        String sql = "INSERT INTO maschine (nr, bezeichnung, ks_eh) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(0, nr);
-            stmt.setString(1, bz);
-            stmt.setDouble(2, ksps);
+            stmt.setString(1, nr);
+            stmt.setString(2, bz);
+            stmt.setDouble(3, ksps);
             stmt.executeUpdate();
-
         }
     }
+
     public void update(Maschine mk) throws SQLException {
         String sql = "UPDATE maschine SET nr = ?, bezeichnung = ?, ks_eh = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(0, mk.getMaschinenNummer());
-            stmt.setString(1, mk.getBezeichnung());
-            stmt.setDouble(2, mk.getKostensatzProStunde());
+            stmt.setString(1, mk.getMaschinenNummer());
+            stmt.setString(2, mk.getBezeichnung());
+            stmt.setDouble(3, mk.getKostensatzProStunde());
+            stmt.setInt(4, mk.getMaschineId());
             stmt.executeUpdate();
         }
     }
+
     public void delete(Maschine mk) throws SQLException {
         String sql = "DELETE FROM maschine WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -44,12 +50,14 @@ public class MaschiineRepo {
             stmt.executeUpdate();
         }
     }
+
     public void deleteAll() throws SQLException {
-        String sql = "DELETE * FROM maschine";
+        String sql = "DELETE FROM maschine";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.executeUpdate();
         }
     }
+
     public void deleteByNr(String nr) throws SQLException {
         String sql = "DELETE FROM maschine WHERE nr = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -57,12 +65,12 @@ public class MaschiineRepo {
             stmt.executeUpdate();
         }
     }
+
     public List<Maschine> getAll() throws SQLException {
         List<Maschine> list = new ArrayList<>();
-        String sql = "SELECT * FROM Maschinekosten";
+        String sql = "SELECT * FROM maschine";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-
             while (rs.next()) {
                 list.add(new Maschine(
                     rs.getInt("id"),
@@ -76,9 +84,9 @@ public class MaschiineRepo {
     }
 
     public Maschine getById(String id) throws SQLException {
-        String sql = "SELECT * FROM Maschine WHERE id = ?";
+        String sql = "SELECT * FROM maschine WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(0, id);
+            stmt.setString(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new Maschine(

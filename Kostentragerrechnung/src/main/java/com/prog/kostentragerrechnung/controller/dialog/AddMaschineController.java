@@ -1,7 +1,7 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
 import com.prog.kostentragerrechnung.model.Maschine;
-import com.prog.kostentragerrechnung.model.repositories.MaschiineRepo;
+import com.prog.kostentragerrechnung.model.repositories.MaschineRepo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  * Handles input validation and creation of new {@link Maschine} objects.
  */
 public class AddMaschineController {
-    MaschiineRepo maschiineRepo;
+    MaschineRepo maschineRepo;
 
     /**
      * Indicates whether the new machine was successfully saved.
@@ -94,7 +94,7 @@ public class AddMaschineController {
 
         try {
             double ks = Double.parseDouble(kostensatz);
-            maschiineRepo.create(nummer, bez, ks);
+            maschineRepo.create(nummer, bez, ks);
             saved = true;
             dialogStage.close();
         } catch (NumberFormatException e) {

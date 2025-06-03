@@ -16,6 +16,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.prog.kostentragerrechnung.database.DBManager;
+import com.prog.kostentragerrechnung.model.repositories.MaschineRepo;
+import com.prog.kostentragerrechnung.model.repositories.MaterialRepo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,7 +27,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ImportService {
+    MaschineRepo maschineRepo;
+    MaterialRepo materialRepo;
 
+    public ImportService() {
+        try {
+            this.materialRepo = new MaterialRepo();
+            // this.maschineRepo = new MaschineRepo();
+        } catch (SQLException e) {
+            System.err.println("Ошибка инициализации репозиториев: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     public void importExcelFile (
 
     ) {
@@ -93,140 +106,126 @@ public class ImportService {
             }
 
             // Material
-            Sheet materialSheet = workbook.getSheet("Material");
+            Sheet materialSheet = workbook.getSheet("material");
             if (materialSheet != null) {
                 for (Row row : materialSheet) {
                     if (row.getRowNum() == 0) continue; // Пропуск заголовков
 
                     String nr = row.getCell(0).getStringCellValue();
-                    int kost = (int) getCellAsDouble(row.getCell(1));
-
-                    String sql = "INSERT INTO material (nr, kost) VALUES (?, ?)";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setString(1, nr);
-                        pstmt.setInt(2, kost);
-                        pstmt.executeUpdate();
-                    }
-                }
-            }
-
-            // Teil
-            Sheet teilSheet = workbook.getSheet("Teil");
-            if (teilSheet != null) {
-                for (Row row : teilSheet) {
-                    if (row.getRowNum() == 0) continue;
-
-                    String bezeichnung = row.getCell(1).getStringCellValue();
-                    int ks_e_h = (int) getCellAsDouble(row.getCell(2));
-
-                    String sql = "INSERT INTO teil (bezeichnung, ks_e_h) VALUES (?, ?)";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setString(1, bezeichnung);
-                        pstmt.setInt(2, ks_e_h);
-                        pstmt.executeUpdate();
-                    }
+                    double kost = (double) row.getCell(1).getNumericCellValue();
+                    materialRepo.create(nr, kost);
+                    
                 }
             }
 
             // Maschine
-            Sheet maschineSheet = workbook.getSheet("Maschine");
-            if (maschineSheet != null) {
-                for (Row row : maschineSheet) {
-                    if (row.getRowNum() == 0) continue;
+            // Sheet maschineSheet = workbook.getSheet("maschine");
+            // if (maschineSheet != null) {
+            //     for (Row row : maschineSheet) {
+            //         if (row.getRowNum() == 0) continue;
 
-                    String teilNr = row.getCell(0).getStringCellValue();
-                    String knoten = row.getCell(1).getStringCellValue();
-                    int k_mat = (int) row.getCell(2).getNumericCellValue();
-                    int k_fert = (int) row.getCell(3).getNumericCellValue();
-                    int anzahl = (int) row.getCell(4).getNumericCellValue();
-                    String mat = row.getCell(5).getStringCellValue();
+            //         String nr = row.getCell(0).getStringCellValue();
+            //         String bezeichnung = row.getCell(1).getStringCellValue();
+            //         double ks_eh = (double) row.getCell(2).getNumericCellValue();
+                    
+            //         maschineRepo.create(nr, bezeichnung, ks_eh);
+            //     }
+            // }
+        
 
-                    String sql = "INSERT INTO maschine (teil_nr, knoten, k_mat, k_fert, anzahl, mat) VALUES (?, ?, ?, ?, ?, ?)";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setString(1, teilNr);
-                        pstmt.setString(2, knoten);
-                        pstmt.setInt(3, k_mat);
-                        pstmt.setInt(4, k_fert);
-                        pstmt.setInt(5, anzahl);
-                        pstmt.setString(6, mat);
-                        pstmt.executeUpdate();
-                    }
-                }
-            }
+            // Teil
+    //         Sheet teilSheet = workbook.getSheet("Teil");
+    //         if (teilSheet != null) {
+    //             for (Row row : teilSheet) {
+    //                 if (row.getRowNum() == 0) continue;
 
-            // Arbeitsplan
-            Sheet arbeitsplanSheet = workbook.getSheet("Arbeitsplan");
-            if (arbeitsplanSheet != null) {
-                for (Row row : arbeitsplanSheet) {
-                    if (row.getRowNum() == 0) continue;
+    //                 String bezeichnung = row.getCell(1).getStringCellValue();
+    //                 int ks_e_h = (int) getCellAsDouble(row.getCell(2));
 
-                    String teilNr = row.getCell(0).getStringCellValue();
-                    int ag = (int) row.getCell(1).getNumericCellValue();
-                    String maschine = row.getCell(2).getStringCellValue();
-                    double zeit = row.getCell(3).getNumericCellValue();
+    //                 String sql = "INSERT INTO teil (bezeichnung, ks_e_h) VALUES (?, ?)";
+    //                 try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    //                     pstmt.setString(1, bezeichnung);
+    //                     pstmt.setInt(2, ks_e_h);
+    //                     pstmt.executeUpdate();
+    //                 }
+    //             }
+    //         }
 
-                    String sql = "INSERT INTO arbeitsplan (teil_nr, ag, maschine, zeit) VALUES (?, ?, ?, ?)";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setString(1, teilNr);
-                        pstmt.setInt(2, ag);
-                        pstmt.setString(3, maschine);
-                        pstmt.setDouble(4, zeit);
-                        pstmt.executeUpdate();
-                    }
-                }
-            }
+            
 
-            // Auftrag
-            Sheet auftragSheet = workbook.getSheet("Auftrag");
-            if (auftragSheet != null) {
-                for (Row row : auftragSheet) {
-                    if (row.getRowNum() == 0) continue;
+    //         // Arbeitsplan
+    //         Sheet arbeitsplanSheet = workbook.getSheet("Arbeitsplan");
+    //         if (arbeitsplanSheet != null) {
+    //             for (Row row : arbeitsplanSheet) {
+    //                 if (row.getRowNum() == 0) continue;
 
-                    int k_mat = (int) row.getCell(0).getNumericCellValue();
-                    int k_fert = (int) row.getCell(1).getNumericCellValue();
-                    int dat_kost = (int) row.getCell(2).getNumericCellValue(); // Пример: 20240601
+    //                 String teilNr = row.getCell(0).getStringCellValue();
+    //                 int ag = (int) row.getCell(1).getNumericCellValue();
+    //                 String maschine = row.getCell(2).getStringCellValue();
+    //                 double zeit = row.getCell(3).getNumericCellValue();
 
-                    String sql = "INSERT INTO auftrag (k_mat, k_fert, dat_kost) VALUES (?, ?, ?)";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setInt(1, k_mat);
-                        pstmt.setInt(2, k_fert);
-                        pstmt.setInt(3, dat_kost);
-                        pstmt.executeUpdate();
-                    }
-                }
-            }
+    //                 String sql = "INSERT INTO arbeitsplan (teil_nr, ag, maschine, zeit) VALUES (?, ?, ?, ?)";
+    //                 try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    //                     pstmt.setString(1, teilNr);
+    //                     pstmt.setInt(2, ag);
+    //                     pstmt.setString(3, maschine);
+    //                     pstmt.setDouble(4, zeit);
+    //                     pstmt.executeUpdate();
+    //                 }
+    //             }
+    //         }
 
-            conn.commit();
-            System.out.println("Импорт из Excel завершен успешно.");
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    //         // Auftrag
+    //         Sheet auftragSheet = workbook.getSheet("Auftrag");
+    //         if (auftragSheet != null) {
+    //             for (Row row : auftragSheet) {
+    //                 if (row.getRowNum() == 0) continue;
 
-    public static double getCellAsDouble(Cell cell) {
-    if (cell == null) return 0.0; // ячейка отсутствует
+    //                 int k_mat = (int) row.getCell(0).getNumericCellValue();
+    //                 int k_fert = (int) row.getCell(1).getNumericCellValue();
+    //                 int dat_kost = (int) row.getCell(2).getNumericCellValue(); // Пример: 20240601
 
-    try {
-        switch (cell.getCellType()) {
-            case NUMERIC:
-                return cell.getNumericCellValue();
-            case STRING:
-                String s = cell.getStringCellValue().replace(",", ".").trim();
-                return s.isEmpty() ? 0.0 : Double.parseDouble(s);
-            case FORMULA:
-                return cell.getNumericCellValue();
-            case BLANK:
-                return 0.0;
-            case BOOLEAN:
-            case ERROR:
-            default:
-                return 0.0;
-        }
+    //                 String sql = "INSERT INTO auftrag (k_mat, k_fert, dat_kost) VALUES (?, ?, ?)";
+    //                 try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    //                     pstmt.setInt(1, k_mat);
+    //                     pstmt.setInt(2, k_fert);
+    //                     pstmt.setInt(3, dat_kost);
+    //                     pstmt.executeUpdate();
+    //                 }
+    //             }
+    //         }
+
+    //         conn.commit();
+    //         System.out.println("Импорт из Excel завершен успешно.");
+    //     } catch (IOException | SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
+    // public static double getCellAsDouble(Cell cell) {
+    // if (cell == null) return 0.0; // ячейка отсутствует
+
+    // try {
+    //     switch (cell.getCellType()) {
+    //         case NUMERIC:
+    //             return cell.getNumericCellValue();
+    //         case STRING:
+    //             String s = cell.getStringCellValue().replace(",", ".").trim();
+    //             return s.isEmpty() ? 0.0 : Double.parseDouble(s);
+    //         case FORMULA:
+    //             return cell.getNumericCellValue();
+    //         case BLANK:
+    //             return 0.0;
+    //         case BOOLEAN:
+    //         case ERROR:
+    //         default:
+    //             return 0.0;
+    //     }
     } catch (Exception e) {
-        System.err.println("Ошибка при чтении числового значения из ячейки: " + cell);
-        return 0.0;
+        System.err.println("Ошибка при чтении числового значения из ячейки: " + e.getMessage());
+        // return 0.0;
     }
 
-    //todo: починить перевод данных в таблицу БД
+    // todo: починить перевод данных в таблицу БД
 }
 }

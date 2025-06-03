@@ -20,6 +20,9 @@ public class StartPageController {
      */
     @FXML
     private void goToInputPage(ActionEvent event) {
-        Application.switchScene("input-page.fxml");
+        InputPageController controller = Application.switchScene("input-page.fxml");
+        if (controller != null) {
+            controller.setMainStage(Application.mainStage);
+        }
     }
 }

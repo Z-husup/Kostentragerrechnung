@@ -1,5 +1,8 @@
 package com.prog.kostentragerrechnung.service;
 
+import com.prog.kostentragerrechnung.Application;
+import com.prog.kostentragerrechnung.controller.dialog.AddMaschineController;
+import com.prog.kostentragerrechnung.model.repositories.MaschiineRepo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,24 +46,29 @@ public class DialogService {
     @SuppressWarnings("unchecked")
     public <T> T openDialog(String fxmlPath, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(Application.class.getResource(fxmlPath));
             Parent root = loader.load();
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle(title);
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainStage);
             dialogStage.setScene(new Scene(root));
 
             Object controller = loader.getController();
+
+            // Inject dialog stage if method exists
             try {
-                // If the controller has a method setDialogStage(Stage), inject the dialog stage
                 controller.getClass()
                         .getMethod("setDialogStage", Stage.class)
                         .invoke(controller, dialogStage);
-            } catch (NoSuchMethodException ignored) {
-                // Method not found – it's optional
-            }
+            } catch (NoSuchMethodException ignored) {}
+
+            // Inject dialog service if method exists
+            try {
+                controller.getClass()
+                        .getMethod("setDialogService", DialogService.class)
+                        .invoke(controller, this);
+            } catch (NoSuchMethodException ignored) {}
 
             dialogStage.showAndWait();
             return (T) controller;
@@ -70,5 +78,6 @@ public class DialogService {
             return null;
         }
     }
+
 }
 

@@ -38,6 +38,10 @@ public class InputPageController {
      */
     private DialogService dialogService;
 
+    public void setDialogService(DialogService dialogService) {
+        this.dialogService = dialogService;
+    }
+
     /**
      * Sets the primary stage and initializes the {@link DialogService}.
      *
@@ -142,7 +146,7 @@ public class InputPageController {
      */
     @FXML
     private void openMaschineDialogButtonAction() {
-        var controller = dialogService.openDialog("/com/prog/kostentragerrechnung/view/new-maschine-dialog.fxml", "Neue Maschine");
+        var controller = dialogService.openDialog("new-maschine-dialog.fxml", "Neue Maschine");
         if (controller instanceof AddMaschineController maschineController && maschineController.isSaved()) {
             System.out.println("✅ Neue Maschine gespeichert.");
         }
@@ -153,7 +157,7 @@ public class InputPageController {
      */
     @FXML
     private void openMaterialDialogButtonAction() {
-        var controller = dialogService.openDialog("/com/prog/kostentragerrechnung/view/new-material-dialog.fxml", "Neues Material");
+        var controller = dialogService.openDialog("new-material-dialog.fxml", "Neues Material");
         if (controller instanceof AddMaterialController materialController && materialController.isSaved()) {
             System.out.println("✅ Neues Material gespeichert.");
         }
@@ -164,7 +168,7 @@ public class InputPageController {
      */
     @FXML
     private void openOrderDialogButtonAction() {
-        var controller = dialogService.openDialog("/com/prog/kostentragerrechnung/view/new-auftrag-dialog.fxml", "Neuer Auftrag");
+        var controller = dialogService.openDialog("new-auftrag-dialog.fxml", "Neuer Auftrag");
         if (controller instanceof AddOrderController orderController && orderController.isSaved()) {
             System.out.println("✅ Neuer Auftrag gespeichert.");
         }
@@ -175,7 +179,7 @@ public class InputPageController {
      */
     @FXML
     private void openPartDialogButtonAction() {
-        var controller = dialogService.openDialog("/com/prog/kostentragerrechnung/view/new-teil-dialog.fxml", "Neues Teil");
+        var controller = dialogService.openDialog("new-teil-dialog.fxml", "Neues Teil");
         if (controller instanceof AddPartController partController && partController.isSaved()) {
             System.out.println("✅ Neues Teil gespeichert.");
         }
@@ -186,7 +190,7 @@ public class InputPageController {
      */
     @FXML
     private void openWorkPlanDialogButtonAction() {
-        var controller = dialogService.openDialog("/com/prog/kostentragerrechnung/view/new-arbeitsplan-dialog.fxml", "Neuer Arbeitsplan");
+        var controller = dialogService.openDialog("new-arbeitsplan-dialog.fxml", "Neuer Arbeitsplan");
         if (controller instanceof AddWorkPlanController workPlanController && workPlanController.isSaved()) {
             System.out.println("✅ Neuer Arbeitsplan gespeichert.");
         }

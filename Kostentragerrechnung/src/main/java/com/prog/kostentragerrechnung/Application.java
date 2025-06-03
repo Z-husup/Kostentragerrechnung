@@ -1,8 +1,11 @@
 package com.prog.kostentragerrechnung;
 
+import com.prog.kostentragerrechnung.controller.InputPageController;
+import com.prog.kostentragerrechnung.controller.StartPageController;
 import com.prog.kostentragerrechnung.database.DBManager;
 
 import atlantafx.base.theme.NordLight;
+import com.prog.kostentragerrechnung.service.DialogService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -53,15 +56,20 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws Exception {
         mainStage = stage;
 
-        // Apply NordLight theme stylesheet
         Application.setUserAgentStylesheet(new NordLight().getUserAgentStylesheet());
 
-        // Load the initial FXML scene
         FXMLLoader loader = new FXMLLoader(Application.class.getResource("start-page.fxml"));
         Parent content = loader.load();
 
-        Scene scene = wrapAndScale(content, stage);
+        // Inject dialog service (via setMainStage)
+        Object controller = loader.getController();
+        if (controller instanceof InputPageController inputPageController) {
+            inputPageController.setMainStage(stage); // ✅ This sets up the dialogService!
+        }
 
+
+        // Wrap and show scene
+        Scene scene = wrapAndScale(content, stage);
         stage.setTitle("Kosten-Trägerrechnung");
         stage.setScene(scene);
         stage.setMaximized(true);
@@ -70,6 +78,8 @@ public class Application extends javafx.application.Application {
 
         DBManager.initDatabase();
     }
+
+
 
     /**
      * Wraps the root content in a scaling group and sets up listeners
@@ -118,15 +128,19 @@ public class Application extends javafx.application.Application {
      *
      * @param fxmlPath Path to the FXML resource.
      */
-    public static void switchScene(String fxmlPath) {
+    public static <T> T switchScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(Application.class.getResource(fxmlPath));
             Parent newContent = loader.load();
 
             scaledGroup.getChildren().setAll(newContent);
 
+            // Return the controller so the caller can inject services
+            return loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
+
 }

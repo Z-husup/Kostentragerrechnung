@@ -19,4 +19,6 @@ module com.prog.kostentragerrechnung {
     opens com.prog.kostentragerrechnung.controller to javafx.fxml;
     exports com.prog.kostentragerrechnung.controller.dialog;
     opens com.prog.kostentragerrechnung.controller.dialog to javafx.fxml;
+    opens com.prog.kostentragerrechnung.model to javafx.base;
+
 }

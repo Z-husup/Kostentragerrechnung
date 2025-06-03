@@ -73,7 +73,6 @@ public class MaschineRepo {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 list.add(new Maschine(
-                    rs.getInt("id"),
                     rs.getString("nr"),
                     rs.getString("bezeichnung"),
                     rs.getDouble("ks_eh")
@@ -90,7 +89,6 @@ public class MaschineRepo {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new Maschine(
-                        rs.getInt("id"),
                         rs.getString("nr"),
                         rs.getString("bezeichnung"),
                         rs.getDouble("ks_eh")

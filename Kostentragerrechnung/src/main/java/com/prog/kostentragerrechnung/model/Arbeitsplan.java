@@ -14,10 +14,12 @@ import java.util.List;
 @Data
 public class Arbeitsplan {
 
+    private static int nextId = 1;
+
     /**
      * Unique identifier for the work plan entry.
      */
-    private String arbeitsplanId;
+    private int arbeitsplanId;
 
     /**
      * The ID of the associated part (corresponds to database column {@code teil_id}).
@@ -54,9 +56,9 @@ public class Arbeitsplan {
      * @param maschinenNummer       The machine used for the operation.
      * @param bearbeitungsdauerMin  The duration of the operation in minutes.
      */
-    public Arbeitsplan(String arbeitsplanId, String teilId, int arbeitsgangNummer,
+    public Arbeitsplan(String teilId, int arbeitsgangNummer,
                        String maschinenNummer, int bearbeitungsdauerMin) {
-        this.arbeitsplanId = arbeitsplanId;
+        this.arbeitsplanId = nextId++;
         this.teilId = teilId;
         this.arbeitsgangNummer = arbeitsgangNummer;
         this.maschinenNummer = maschinenNummer;

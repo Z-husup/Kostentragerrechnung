@@ -1,5 +1,6 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
+import com.prog.kostentragerrechnung.model.Material;
 import com.prog.kostentragerrechnung.model.Teil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 /**
  * Controller for the "Add Part" (Teil) dialog.
@@ -78,8 +81,13 @@ public class AddPartController {
      */
     @FXML
     public void initialize() {
-        // Optional: Initialize combo box values (e.g. from Material.materials)
+        List<String> materialNumbers = Material.materials.stream()
+                .map(Material::getMaterialNummer)
+                .toList();
+
+        materialNummer.getItems().addAll(materialNumbers);
     }
+
 
     /**
      * Handles the Save button click event.
@@ -104,7 +112,7 @@ public class AddPartController {
         try {
             int position = Integer.parseInt(pos);
             int anzahlVal = Integer.parseInt(anzahlStr);
-            new Teil(java.util.UUID.randomUUID().toString(), teil, position, anzahlVal, material);
+            new Teil(teil, position, anzahlVal, material);
             saved = true;
             dialogStage.close();
         } catch (NumberFormatException e) {

@@ -13,10 +13,12 @@ import java.util.List;
 @Data
 public class Teil {
 
+    private static int nextId = 1;
+
     /**
      * Unique identifier for the part (corresponds to database column {@code teil_id}).
      */
-    private String teilId;
+    private int teilId;
 
     /**
      * Part number (corresponds to database column {@code teil_nr}).
@@ -53,8 +55,8 @@ public class Teil {
      * @param anzahl               The quantity of the part.
      * @param materialNummer       The associated material number.
      */
-    public Teil(String teilId, String teilNummer, int unterstrukturPosition, int anzahl, String materialNummer) {
-        this.teilId = teilId;
+    public Teil(String teilNummer, int unterstrukturPosition, int anzahl, String materialNummer) {
+        this.teilId = nextId++;
         this.teilNummer = teilNummer;
         this.unterstrukturPosition = unterstrukturPosition;
         this.anzahl = anzahl;

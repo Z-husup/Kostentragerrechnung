@@ -67,7 +67,6 @@ public class MaterialRepo {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 list.add(new Material(
-                    rs.getInt("id"),
                     rs.getString("nr"),
                     rs.getDouble("kost")
                 ));
@@ -83,7 +82,6 @@ public class MaterialRepo {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new Material(
-                        rs.getInt("id"),
                         rs.getString("nr"),
                         rs.getDouble("kost")
                     );

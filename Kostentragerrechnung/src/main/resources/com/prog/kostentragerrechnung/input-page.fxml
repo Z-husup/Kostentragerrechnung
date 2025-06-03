@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.InputPageController">
     <children>
         <TabPane layoutY="93.0" prefHeight="627.0" prefWidth="1077.0" tabClosingPolicy="UNAVAILABLE">
@@ -14,7 +15,11 @@
                         <children>
                             <TableView fx:id="materialsTable" layoutY="67.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
                                 <columns>
-                                    <TableColumn fx:id="materialId" text="Material-ID" />
+                                    <TableColumn fx:id="materialId" text="Material-ID" prefWidth="80.0">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="materialId" />
+                                        </cellValueFactory>
+                                    </TableColumn>
                                     <TableColumn fx:id="materialNummer" text="Material Nummer" />
                                     <TableColumn fx:id="kostenProStueck" text="Kosten Pro Stueck" />
                                 </columns>
@@ -23,7 +28,7 @@
                                 </columnResizePolicy>
                             </TableView>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMaterialDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" text="Delete Row" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteMaterial" text="Delete Row" />
                         </children>
                     </AnchorPane>
                 </content>
@@ -39,14 +44,14 @@
                             <TableColumn fx:id="teilNummer" text="Teil Nummer" />
                             <TableColumn fx:id="unterstrukturPosition" text="Unterstruktur Position" />
                             <TableColumn fx:id="anzahl" text="Anzahl" />
-                            <TableColumn fx:id="materialNummer" text="Material Nummer" />
+                            <TableColumn fx:id="materialNummerTeil" text="Material Nummer" />
                         </columns>
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                     </TableView>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openPartDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" text="Delete Row" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteTeil" text="Delete Row" />
                 </children>
             </AnchorPane>
         </content>
@@ -68,7 +73,7 @@
                         </columnResizePolicy>
                     </TableView>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMaschineDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" text="Delete Row" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteMaschine" text="Delete Row" />
                 </children>
             </AnchorPane>
         </content>
@@ -81,9 +86,9 @@
                     <TableView fx:id="workPlanTable" layoutY="70.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
                         <columns>
                             <TableColumn fx:id="arbeitsplanId" text="Arbeitsplan-ID" />
-                            <TableColumn fx:id="teilNummer" text="Teil-Nummer" />
+                            <TableColumn fx:id="teilNummerArbeitsplan" text="Teil-Nummer" />
                             <TableColumn fx:id="arbeitsgangNummer" text="Arbeitsgang Nummer" />
-                            <TableColumn fx:id="maschinenNummer" text="Maschinen Nummer" />
+                            <TableColumn fx:id="maschinenNummerArbeitsplan" text="Maschinen Nummer" />
                             <TableColumn fx:id="bearbeitungsdauerMin" text="Bearbeitungs Dauer Min" />
                         </columns>
                         <columnResizePolicy>
@@ -91,7 +96,7 @@
                         </columnResizePolicy>
                     </TableView>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openWorkPlanDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" text="Delete Row" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteArbeitsplan" text="Delete Row" />
                 </children>
             </AnchorPane>
         </content>
@@ -101,7 +106,7 @@
         <content>
             <AnchorPane styleClass="content-pane">
                 <children>
-                    <TableView fx:id="productStructureTable" layoutY="69.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
+                    <TableView fx:id="auftragTable" layoutY="69.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
                         <columns>
                             <TableColumn fx:id="auftragId" text="Auftrag-ID" />
                             <TableColumn fx:id="auftragNummer" text="Auftrag Nummer" />
@@ -112,7 +117,7 @@
                         </columnResizePolicy>
                     </TableView>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openOrderDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" text="Delete Row" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteAuftrag" text="Delete Row" />
                 </children>
             </AnchorPane>
         </content>

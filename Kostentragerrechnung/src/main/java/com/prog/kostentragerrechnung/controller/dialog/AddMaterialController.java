@@ -18,7 +18,6 @@ import javafx.stage.Stage;
  * Handles user input to create and save a new {@link Material} object.
  */
 public class AddMaterialController {
-    MaterialRepo materialRepo;
 
     /**
      * Indicates whether the material was successfully saved.
@@ -83,13 +82,14 @@ public class AddMaterialController {
 
         // Create a new Material with default cost 0.0
         try {
-            materialRepo.create(nummer, 0);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
+            new Material(nummer, 0.0);
+
+            saved = true;
+            dialogStage.close();
+        } catch (Exception e) {
+            showAlert("Fehler", "Ungültiges Datumsformat (z.B. 2024-12-01)");
         }
-        saved = true;
-        dialogStage.close();
     }
 
     /**

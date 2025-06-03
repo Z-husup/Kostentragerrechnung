@@ -1,9 +1,6 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
-import java.sql.SQLException;
-
 import com.prog.kostentragerrechnung.model.Material;
-import com.prog.kostentragerrechnung.model.repositories.MaterialRepo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

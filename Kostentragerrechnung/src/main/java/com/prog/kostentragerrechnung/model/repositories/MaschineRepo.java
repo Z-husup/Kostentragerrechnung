@@ -13,10 +13,13 @@ import com.prog.kostentragerrechnung.model.Maschine;
 
 
 public class MaschineRepo {
-    private final Connection connection;
+    Connection connection;
 
-    public MaschineRepo() throws SQLException {
-        this.connection = DBManager.getConnection();
+    public MaschineRepo(Connection conn) throws SQLException {
+        this.connection = conn;
+        if (this.connection == null) {
+            this.connection = DBManager.getConnection();
+        }
     }
     
 

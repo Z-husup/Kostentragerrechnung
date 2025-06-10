@@ -1,11 +1,9 @@
 package com.prog.kostentragerrechnung;
 
 import com.prog.kostentragerrechnung.controller.InputPageController;
-import com.prog.kostentragerrechnung.controller.StartPageController;
 import com.prog.kostentragerrechnung.database.DBManager;
 
 import atlantafx.base.theme.NordLight;
-import com.prog.kostentragerrechnung.service.DialogService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;

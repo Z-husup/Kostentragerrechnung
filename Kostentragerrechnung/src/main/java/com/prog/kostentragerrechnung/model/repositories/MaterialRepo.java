@@ -12,10 +12,13 @@ import com.prog.kostentragerrechnung.database.DBManager;
 import com.prog.kostentragerrechnung.model.Material;
 
 public class MaterialRepo {
-    private final Connection connection;
+    Connection connection;
 
-    public MaterialRepo() throws SQLException {
-        this.connection = DBManager.getConnection();
+    public MaterialRepo(Connection conn) throws SQLException {
+        this.connection = conn;
+        if (this.connection == null) {
+            this.connection = DBManager.getConnection();
+        }
     }
 
     public void create(String nr, double kost) throws SQLException {

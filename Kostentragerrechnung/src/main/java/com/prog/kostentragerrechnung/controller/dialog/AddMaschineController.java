@@ -1,11 +1,7 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
 import com.prog.kostentragerrechnung.model.Maschine;
-import com.prog.kostentragerrechnung.model.repositories.MaschineRepo;
-import com.prog.kostentragerrechnung.model.Material;
-import com.prog.kostentragerrechnung.model.repositories.MaschiineRepo;
 
-import com.prog.kostentragerrechnung.service.DialogService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

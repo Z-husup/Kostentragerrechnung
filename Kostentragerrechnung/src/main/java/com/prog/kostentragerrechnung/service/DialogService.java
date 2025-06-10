@@ -1,8 +1,6 @@
 package com.prog.kostentragerrechnung.service;
 
 import com.prog.kostentragerrechnung.Application;
-import com.prog.kostentragerrechnung.controller.dialog.AddMaschineController;
-import com.prog.kostentragerrechnung.model.repositories.MaschiineRepo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

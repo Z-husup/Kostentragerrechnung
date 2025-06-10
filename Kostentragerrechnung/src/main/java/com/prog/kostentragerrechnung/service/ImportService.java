@@ -9,13 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.prog.kostentragerrechnung.database.DBManager;
+import com.prog.kostentragerrechnung.model.Maschine;
+import com.prog.kostentragerrechnung.model.Material;
 import com.prog.kostentragerrechnung.model.repositories.MaschineRepo;
 import com.prog.kostentragerrechnung.model.repositories.MaterialRepo;
 
@@ -29,16 +30,20 @@ import javafx.stage.Stage;
 public class ImportService {
     MaschineRepo maschineRepo;
     MaterialRepo materialRepo;
+    Connection conn;
 
     public ImportService() {
         try {
-            this.materialRepo = new MaterialRepo();
-            // this.maschineRepo = new MaschineRepo();
+            this.conn = DBManager.getConnection(); 
+            this.materialRepo = new MaterialRepo(this.conn);
+            this.maschineRepo = new MaschineRepo(this.conn);
         } catch (SQLException e) {
-            System.err.println("Ошибка инициализации репозиториев: " + e.getMessage());
+            System.err.println("Ошибка инициализации подключения к БД: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+
     public void importExcelFile (
 
     ) {
@@ -68,7 +73,7 @@ public class ImportService {
 
             Tooltip tooltip = new Tooltip("Selected file: " + file.getAbsolutePath());
             Tooltip.install(fileLabel, tooltip);
-            excelToDB(file);
+            excelToDB(file,conn);
             File tempDir = new File("temp");
         if (!tempDir.exists()) {
             tempDir.mkdir();
@@ -90,14 +95,10 @@ public class ImportService {
         }
     }
 
-    private void excelToDB(File file) {
+    private void excelToDB(File file, Connection conn) {
         try (FileInputStream fis = new FileInputStream(file);
             Workbook workbook = new XSSFWorkbook(fis);
-            Connection conn = DBManager.getConnection()) {
-
-            conn.setAutoCommit(false); // Всё в одной транзакции
-
-            // Очистка таблиц (опционально)
+            ) {
             String[] tables = {"material", "teil", "maschine", "arbeitsplan", "auftrag"};
             for (String table : tables) {
                 try (PreparedStatement pstmt = conn.prepareStatement("DELETE FROM " + table)) {
@@ -106,31 +107,32 @@ public class ImportService {
             }
 
             // Material
-            Sheet materialSheet = workbook.getSheet("material");
+            Sheet materialSheet = workbook.getSheet("Material");
             if (materialSheet != null) {
                 for (Row row : materialSheet) {
                     if (row.getRowNum() == 0) continue; // Пропуск заголовков
 
                     String nr = row.getCell(0).getStringCellValue();
                     double kost = (double) row.getCell(1).getNumericCellValue();
+                    Material.materials.add(new Material(nr, kost));
                     materialRepo.create(nr, kost);
                     
                 }
             }
 
             // Maschine
-            // Sheet maschineSheet = workbook.getSheet("maschine");
-            // if (maschineSheet != null) {
-            //     for (Row row : maschineSheet) {
-            //         if (row.getRowNum() == 0) continue;
+            Sheet maschineSheet = workbook.getSheet("Maschine");
+            if (maschineSheet != null) {
+                for (Row row : maschineSheet) {
+                    if (row.getRowNum() == 0) continue;
 
-            //         String nr = row.getCell(0).getStringCellValue();
-            //         String bezeichnung = row.getCell(1).getStringCellValue();
-            //         double ks_eh = (double) row.getCell(2).getNumericCellValue();
-                    
-            //         maschineRepo.create(nr, bezeichnung, ks_eh);
-            //     }
-            // }
+                    String nr = row.getCell(0).getStringCellValue();
+                    String bezeichnung = row.getCell(1).getStringCellValue();
+                    double ks_eh = (double) row.getCell(2).getNumericCellValue();
+                    Maschine.maschines.add(new Maschine(nr, bezeichnung, ks_eh));
+                    maschineRepo.create(nr, bezeichnung, ks_eh);
+                }
+            }
         
 
             // Teil

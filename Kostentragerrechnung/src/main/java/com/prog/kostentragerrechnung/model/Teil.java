@@ -4,63 +4,25 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Represents a component or part ("Teil") in the system.
- * <p>
- * Each {@code Teil} contains information such as its ID, part number, structural position,
- * quantity, and associated material number.
- */
 @Data
 public class Teil {
 
     private static int nextId = 1;
 
-    /**
-     * Unique identifier for the part (corresponds to database column {@code teil_id}).
-     */
-    private int teilId;
+    private int teilId; //teil_id
 
-    /**
-     * Part number (corresponds to database column {@code teil_nr}).
-     */
-    private String teilNummer;
+    private String teilNummer; //teil_nr
 
-    /**
-     * Structural position in a hierarchy (corresponds to column {@code knoten}).
-     */
-    private int unterstrukturPosition;
+    private Teil parent; //knoten
 
-    /**
-     * Quantity of this part (corresponds to column {@code anzahl}).
-     */
-    private int anzahl;
+    private double materialkosten; //K_mat
+    private double fertigungskosten; //K_fert
 
-    /**
-     * Material number associated with this part (corresponds to column {@code mat}).
-     */
-    private String materialNummer;
+    private int anzahl; //anzahl
 
-    /**
-     * A global list of all created {@code Teil} instances.
-     */
+    private Maschine maschine; //maschine
+    private Material material; //mat(nr)
+
     public static final List<Teil> teils = new ArrayList<>();
 
-    /**
-     * Constructs a new {@code Teil} object with the given attributes and automatically
-     * adds it to the static {@code teils} list.
-     *
-     * @param teilId               The unique identifier of the part.
-     * @param teilNummer           The part number.
-     * @param unterstrukturPosition The structural position in the hierarchy.
-     * @param anzahl               The quantity of the part.
-     * @param materialNummer       The associated material number.
-     */
-    public Teil(String teilNummer, int unterstrukturPosition, int anzahl, String materialNummer) {
-        this.teilId = nextId++;
-        this.teilNummer = teilNummer;
-        this.unterstrukturPosition = unterstrukturPosition;
-        this.anzahl = anzahl;
-        this.materialNummer = materialNummer;
-        teils.add(this);
-    }
 }

@@ -4,50 +4,18 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Represents a material entity used in the system.
- * <p>
- * Each {@code Material} instance includes an identifier, material number, and cost per unit.
- * All created materials are stored in a global static list.
- */
 @Data
 public class Material {
 
     private static int nextId = 1;
 
-    /**
-     * Unique identifier for the material.
-     */
     private int materialId;
 
-    /**
-     * Material number (corresponds to database column {@code nr}).
-     */
-    private String materialNummer;
+    private String materialNummer; //Nr
 
-    /**
-     * Cost per unit of the material (corresponds to database column {@code kost}).
-     */
-    private double kostenProStueck;
+    private double kostenProStueck; //kost
 
-    /**
-     * A global list containing all created {@code Material} instances.
-     */
     public static final List<Material> materials = new ArrayList<>();
 
-    /**
-     * Constructs a new {@code Material} object with the specified attributes,
-     * and automatically adds it to the {@link #materials} list.
-     *
-     * @param materialId     The unique identifier of the material.
-     * @param nummer The material number.
-     * @param kosten The cost per unit.
-     */
-    public Material(String nummer, double kosten) {
-        this.materialId = nextId++;
-        this.materialNummer = nummer;
-        this.kostenProStueck = kosten;
-        materials.add(this);
-    }
 }
 

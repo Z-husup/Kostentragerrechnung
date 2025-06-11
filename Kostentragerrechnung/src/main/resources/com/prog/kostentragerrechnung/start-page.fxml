@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.StartPageController">
+<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.StartPageController">
     <children>
       <Text layoutX="30.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Herstellkosten: Kostenträgerrechnung">
          <font>
@@ -21,31 +16,9 @@
         <tabs>
             <Tab text="die Auskunft">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Формулы:1. Materialkosten (MK):Стоимость всех материалов по количеству.Materialkosten=∑i=1n(Mengei×Preis je Einheiti)\text{Materialkosten} = \sum_{i=1}^{n} \left( \text{Menge}_i \times \text{Preis je Einheit}_i \right)Materialkosten=i=1∑n​(Mengei​×Preis je Einheiti​)Menge – количество единиц материала.Preis je Einheit – цена за единицу (из Stammdaten).2. Materialgemeinkosten (MGK):Накладные расходы на материалы (процент от Materialkosten).Materialgemeinkosten=Materialkosten×MGK-Zuschlagssatz100\text{Materialgemeinkosten} = \text{Materialkosten} \times \frac{\text{MGK-Zuschlagssatz}}{100}Materialgemeinkosten=Materialkosten×100MGK-Zuschlagssatz​3. Fertigungskosten (FK):Затраты на производственные операции.Fertigungskosten=∑j=1m(Zeitj×Stundensatzj)\text{Fertigungskosten} = \sum_{j=1}^{m} \left( \text{Zeit}_j \times \text{Stundensatz}_j \right)Fertigungskosten=j=1∑m​(Zeitj​×Stundensatzj​)Zeit – время операции (в часах или минутах, с переводом).Stundensatz – ставка за машино-/рабочее время (из Stammdaten).4. Fertigungsgemeinkosten (FGK):Накладные расходы на производство (процент от Fertigungskosten).Fertigungsgemeinkosten=Fertigungskosten×FGK-Zuschlagssatz100\text{Fertigungsgemeinkosten} = \text{Fertigungskosten} \times \frac{\text{FGK-Zuschlagssatz}}{100}Fertigungsgemeinkosten=Fertigungskosten×100FGK-Zuschlagssatz​" wrappingWidth="347.3333333333335" />
-                        <ImageView fitHeight="502.0" fitWidth="601.0" layoutX="441.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../OneDrive/Изображения/Снимки%20экрана/Screenshot%202024-06-09%20213810.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-          <Tab text="die Auskunft">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Формулы:1. Materialkosten (MK):Стоимость всех материалов по количеству.Materialkosten=∑i=1n(Mengei×Preis je Einheiti)\text{Materialkosten} = \sum_{i=1}^{n} \left( \text{Menge}_i \times \text{Preis je Einheit}_i \right)Materialkosten=i=1∑n​(Mengei​×Preis je Einheiti​)Menge – количество единиц материала.Preis je Einheit – цена за единицу (из Stammdaten).2. Materialgemeinkosten (MGK):Накладные расходы на материалы (процент от Materialkosten).Materialgemeinkosten=Materialkosten×MGK-Zuschlagssatz100\text{Materialgemeinkosten} = \text{Materialkosten} \times \frac{\text{MGK-Zuschlagssatz}}{100}Materialgemeinkosten=Materialkosten×100MGK-Zuschlagssatz​3. Fertigungskosten (FK):Затраты на производственные операции.Fertigungskosten=∑j=1m(Zeitj×Stundensatzj)\text{Fertigungskosten} = \sum_{j=1}^{m} \left( \text{Zeit}_j \times \text{Stundensatz}_j \right)Fertigungskosten=j=1∑m​(Zeitj​×Stundensatzj​)Zeit – время операции (в часах или минутах, с переводом).Stundensatz – ставка за машино-/рабочее время (из Stammdaten).4. Fertigungsgemeinkosten (FGK):Накладные расходы на производство (процент от Fertigungskosten).Fertigungsgemeinkosten=Fertigungskosten×FGK-Zuschlagssatz100\text{Fertigungsgemeinkosten} = \text{Fertigungskosten} \times \frac{\text{FGK-Zuschlagssatz}}{100}Fertigungsgemeinkosten=Fertigungskosten×100FGK-Zuschlagssatz​" wrappingWidth="347.3333333333335" />
-                        <ImageView fitHeight="502.0" fitWidth="601.0" layoutX="441.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../../OneDrive/Изображения/Снимки%20экрана/Screenshot%202024-06-09%20213810.png" />
-                           </image>
-                        </ImageView>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
         </tabs>
       </TabPane>
    </children>

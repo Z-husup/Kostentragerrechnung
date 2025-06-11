@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 public class InputPageController {
 
@@ -57,19 +58,19 @@ public class InputPageController {
     private void refreshTables() {
 
         // === Material Table ===
-        materialsTable.getItems().setAll(Material.materials);
+        materialsTable.getItems().setAll((Collection<? extends Material>) Material.materials);
 
         // === Maschine Table ===
-        machinesTable.getItems().setAll(Maschine.maschines);
+        machinesTable.getItems().setAll((Collection<? extends Maschine>) Maschine.maschines);
 
         // === Arbeitsplan Table ===
-        workPlanTable.getItems().setAll(Arbeitsplan.arbeitsplans);
+        workPlanTable.getItems().setAll((Collection<? extends Arbeitsplan>) Arbeitsplan.arbeitsplans);
 
         // === Auftrag Table ===
-        auftragTable.getItems().setAll(Auftrag.auftrags);
+        auftragTable.getItems().setAll((Collection<? extends Auftrag>) Auftrag.auftrags);
 
         // === Teil Table ===
-        partsTable.getItems().setAll(Teil.teils);
+        partsTable.getItems().setAll((Collection<? extends Teil>) Teil.teils);
     }
 
     @FXML
@@ -81,13 +82,6 @@ public class InputPageController {
     @FXML
     private void handleCalculate(ActionEvent event) {
 
-        calculationService.calculateCosts(
-                Arbeitsplan.arbeitsplans,
-                Auftrag.auftrags,
-                Maschine.maschines,
-                Material.materials,
-                Teil.teils
-        );
     }
 
     @FXML

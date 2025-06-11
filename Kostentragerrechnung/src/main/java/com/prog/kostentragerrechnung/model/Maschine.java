@@ -2,12 +2,11 @@ package com.prog.kostentragerrechnung.model;
 
 import lombok.Data;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
 public class Maschine {
-
-    private static int nextId = 1;
 
     private int maschineId; //id
 
@@ -17,10 +16,6 @@ public class Maschine {
 
     private double kostensatzProStunde; //KS
 
-    private Arbeitsplan arbeitsplan; //arbeitsplan
-
-    public static final List<Maschine> maschines = new ArrayList<>();
+    public static final HashMap<Integer, Maschine> maschines = new HashMap<>();
 
 }
-
-

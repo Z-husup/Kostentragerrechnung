@@ -106,34 +106,34 @@ public class ImportService {
                 }
             }
 
-            // Material
-            Sheet materialSheet = workbook.getSheet("Material");
-            if (materialSheet != null) {
-                for (Row row : materialSheet) {
-                    if (row.getRowNum() == 0) continue; // Пропуск заголовков
-
-                    String nr = row.getCell(0).getStringCellValue();
-                    double kost = (double) row.getCell(1).getNumericCellValue();
-                    Material.materials.add(new Material(nr, kost));
-                    materialRepo.create(nr, kost);
-                    
-                }
-            }
-
-            // Maschine
-            Sheet maschineSheet = workbook.getSheet("Maschine");
-            if (maschineSheet != null) {
-                for (Row row : maschineSheet) {
-                    if (row.getRowNum() == 0) continue;
-
-                    String nr = row.getCell(0).getStringCellValue();
-                    String bezeichnung = row.getCell(1).getStringCellValue();
-                    double ks_eh = (double) row.getCell(2).getNumericCellValue();
-                    Maschine.maschines.add(new Maschine(nr, bezeichnung, ks_eh));
-                    maschineRepo.create(nr, bezeichnung, ks_eh);
-                }
-            }
-        
+//            // Material
+//            Sheet materialSheet = workbook.getSheet("Material");
+//            if (materialSheet != null) {
+//                for (Row row : materialSheet) {
+//                    if (row.getRowNum() == 0) continue; // Пропуск заголовков
+//
+//                    String nr = row.getCell(0).getStringCellValue();
+//                    double kost = (double) row.getCell(1).getNumericCellValue();
+//                    Material.materials.add(new Material(nr, kost));
+//                    materialRepo.create(nr, kost);
+//
+//                }
+//            }
+//
+//            // Maschine
+//            Sheet maschineSheet = workbook.getSheet("Maschine");
+//            if (maschineSheet != null) {
+//                for (Row row : maschineSheet) {
+//                    if (row.getRowNum() == 0) continue;
+//
+//                    String nr = row.getCell(0).getStringCellValue();
+//                    String bezeichnung = row.getCell(1).getStringCellValue();
+//                    double ks_eh = (double) row.getCell(2).getNumericCellValue();
+//                    Maschine.maschines.add(new Maschine(nr, bezeichnung, ks_eh));
+//                    maschineRepo.create(nr, bezeichnung, ks_eh);
+//                }
+//            }
+//
 
             // Teil
     //         Sheet teilSheet = workbook.getSheet("Teil");

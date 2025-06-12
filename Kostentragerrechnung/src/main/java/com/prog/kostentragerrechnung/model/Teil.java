@@ -10,11 +10,14 @@ import java.util.List;
 @Data
 public class Teil {
 
-    private int teilId; //teil_id
+    private static int nextId = 1;
+
+    private int teilId; //id
 
     private String teilNummer; //teil_nr
 
     private Auftrag auftrag; //knoten_auftrag
+
     private Teil parent; //knoten_parent
     private List<Teil> children; //knoten_childer
 
@@ -23,8 +26,9 @@ public class Teil {
 
     private int anzahl; //anzahl
 
-    private Material material; //mat(nr)
+    private Maschine maschine; //maschine
+    private Material material; //mat
 
-    public static final HashMap<Integer, Teil> teils = new HashMap<>();
+    public static final List<Teil> teils = new ArrayList<>();
 
 }

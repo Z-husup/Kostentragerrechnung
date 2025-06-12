@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 public class Auftrag {
 
+    private static int nextId = 1;
+
     private int auftragId; //id
 
     private String auftragNummer; //auftrag_nr
@@ -20,6 +22,5 @@ public class Auftrag {
 
     private LocalDate datumKostenrechnung; //dat_kost
 
-    public static final HashMap<Integer, Auftrag> auftrags = new HashMap();
-
+    public static final List<Auftrag> auftrags = new ArrayList<>();
 }

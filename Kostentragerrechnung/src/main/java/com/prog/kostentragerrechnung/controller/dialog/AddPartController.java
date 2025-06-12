@@ -1,5 +1,6 @@
 package com.prog.kostentragerrechnung.controller.dialog;
 
+import com.prog.kostentragerrechnung.model.Arbeitsplan;
 import com.prog.kostentragerrechnung.model.Material;
 import com.prog.kostentragerrechnung.model.Teil;
 import javafx.event.ActionEvent;
@@ -40,11 +41,7 @@ public class AddPartController {
 
     @FXML
     public void initialize() {
-        List<String> materialNumbers = Material.materials.stream()
-                .map(Material::getMaterialNummer)
-                .toList();
 
-        materialNummer.getItems().addAll(materialNumbers);
     }
 
     @FXML

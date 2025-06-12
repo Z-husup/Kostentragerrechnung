@@ -6,7 +6,7 @@ public class ExportService {
 
     ) {
 
-        //TODO Akyl
+        //TODO
         //Export to Excel file
 
         return;
@@ -16,8 +16,8 @@ public class ExportService {
 
     ) {
 
-        //TODO Akyl
-        //Export to Excel file
+        //TODO
+        //Export to SQL file
 
         return;
     }

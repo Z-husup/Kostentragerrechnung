@@ -15,42 +15,9 @@ public class DBManager {
     public static void initDatabase() {
     String[] sqlStatements = {
         """
-        CREATE TABLE IF NOT EXISTS material (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nr TEXT NOT NULL,
-            kost REAL NOT NULL
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS teil (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            bezeichnung TEXT NOT NULL,
-            ks_e_h REAL NOT NULL
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS maschine (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nr TEXT NOT NULL,
-            bezeichnung TEXT NOT NULL,
-            ks_eh REAL NOT NULL
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS auftrag (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            k_mat TEXT NOT NULL,
-            k_fert INTEGER NOT NULL,
-            dat_kost INTEGER NOT NULL
-            );
-        """, 
-         """
-        CREATE TABLE IF NOT EXISTS arbeitsplan (
-            teil_nr TEXT,
-            ag INTEGER,
-            maschine TEXT,
-            zeit REAL
-        );
+        
+        
+        
         """  
     };
 

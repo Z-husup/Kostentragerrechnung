@@ -8,6 +8,8 @@ import java.util.List;
 @Data
 public class Maschine {
 
+    private static int nextId = 1;
+
     private int maschineId; //id
 
     private String maschinenNummer; //Nr
@@ -16,6 +18,6 @@ public class Maschine {
 
     private double kostensatzProStunde; //KS
 
-    public static final HashMap<Integer, Maschine> maschines = new HashMap<>();
+    public static final List<Maschine> maschines = new ArrayList<>();
 
 }

@@ -8,12 +8,14 @@ import java.util.List;
 @Data
 public class Material {
 
-    private int materialId; //Id
+    private static int nextId = 1;
+
+    private int materialId; //id
 
     private String materialNummer; //Nr
 
     private double kostenProStueck; //kost
 
-    public static final HashMap<Integer, Material> materials = new HashMap<>();
+    public static final List<Material> materials = new ArrayList<>();
 
 }

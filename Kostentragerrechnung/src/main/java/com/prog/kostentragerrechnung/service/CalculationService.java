@@ -15,9 +15,8 @@ import java.util.List;
 public class CalculationService {
 
     public void calculateCosts() {
-
-
-
+        Teil.teils.forEach(Teil::berechneKosten);
+        Auftrag.auftrags.forEach(Auftrag::berechneKosten);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.prog.kostentragerrechnung.controller;
 
+import com.prog.kostentragerrechnung.Application;
 import com.prog.kostentragerrechnung.controller.dialog.*;
 import com.prog.kostentragerrechnung.database.DBManager;
 import com.prog.kostentragerrechnung.model.*;
@@ -7,6 +8,9 @@ import com.prog.kostentragerrechnung.service.CalculationService;
 import com.prog.kostentragerrechnung.service.DialogService;
 import com.prog.kostentragerrechnung.service.ExportService;
 import com.prog.kostentragerrechnung.service.ImportService;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,9 +24,7 @@ import java.util.Collection;
 public class InputPageController {
 
     final ImportService importService = new ImportService();
-
     final CalculationService calculationService = new CalculationService();
-
     private DialogService dialogService;
 
     public void setMainStage(Stage stage) {
@@ -30,105 +32,133 @@ public class InputPageController {
     }
 
     // === Tables ===
-
     @FXML private TableView<Material> materialsTable;
+    @FXML private TableColumn<Material, String> materialNummer;
+    @FXML private TableColumn<Material, Double> kostenProStueck;
 
     @FXML private TableView<Maschine> machinesTable;
+    @FXML private TableColumn<Maschine, String> maschinenNummer;
+    @FXML private TableColumn<Maschine, String> bezeichnung;
+    @FXML private TableColumn<Maschine, Double> kostensatzProStunde;
 
     @FXML private TableView<Arbeitsplan> workPlanTable;
+    @FXML private TableColumn<Arbeitsplan, Integer> arbeitsgangNummer;
+    @FXML private TableColumn<Arbeitsplan, String> maschinenNummerArbeitsplan;
+    @FXML private TableColumn<Arbeitsplan, Integer> bearbeitungsdauerMin;
 
     @FXML private TableView<Auftrag> auftragTable;
+    @FXML private TableColumn<Auftrag, String> auftragNummer;
+    @FXML private TableColumn<Auftrag, Double> auftragMaterialkosten;
+    @FXML private TableColumn<Auftrag, Double> auftragFertigungskosten;
+    @FXML private TableColumn<Auftrag, String> datumKonstenrechnung;
 
     @FXML private TableView<Teil> partsTable;
+    @FXML private TableColumn<Teil, String> teilNummer;
+    @FXML private TableColumn<Teil, String> teilAuftrag;
+    @FXML private TableColumn<Teil, String> teilOberTeil;
+    @FXML private TableColumn<Teil, Integer> teilAnzahl;
+    @FXML private TableColumn<Teil, String> teilArbeitsplanNummer;
+    @FXML private TableColumn<Teil, String> teilMaterialNummer;
+    @FXML private TableColumn<Teil, Double> teilMaterialkosten;
+    @FXML private TableColumn<Teil, Double> teilFertigungskosten;
 
     // === Buttons ===
-
     @FXML private Button calculateButton;
-
     @FXML private Button importExcelButton;
-
     @FXML private Button helpButton;
-
     @FXML private Label fileLabel;
 
     @FXML
     public void initialize() {
+        // === MATERIAL ===
+        materialNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getMaterialNummer()));
+        kostenProStueck.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getKostenProStueck()).asObject());
+
+        // === MASCHINE ===
+        maschinenNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getMaschinenNummer()));
+        bezeichnung.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getBezeichnung()));
+        kostensatzProStunde.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getKostensatzProStunde()).asObject());
+
+        // === ARBEITSPLAN ===
+        arbeitsgangNummer.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getArbeitsgangNummer()).asObject());
+        maschinenNummerArbeitsplan.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getMaschine() != null ? data.getValue().getMaschine().getMaschinenNummer() : ""));
+        bearbeitungsdauerMin.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getBearbeitungsdauerMin()).asObject());
+
+        // === AUFTRAG ===
+        auftragNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuftragNummer()));
+        auftragMaterialkosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getMaterialkosten()).asObject());
+        auftragFertigungskosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getFertigungskosten()).asObject());
+        datumKonstenrechnung.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getDatumKostenrechnung() != null ? data.getValue().getDatumKostenrechnung().toString() : ""));
+
+        // === TEIL ===
+        teilNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTeilNummer()));
+        teilAuftrag.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getAuftrag() != null ? data.getValue().getAuftrag().getAuftragNummer() : ""));
+        teilOberTeil.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getParent() != null ? data.getValue().getParent().getTeilNummer() : ""));
+        teilAnzahl.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getAnzahl()).asObject());
+        teilArbeitsplanNummer.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getArbeitsplan() != null ? String.valueOf(data.getValue().getArbeitsplan().getArbeitsgangNummer()) : ""));
+        teilMaterialNummer.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getMaterial() != null ? data.getValue().getMaterial().getMaterialNummer() : ""));
+        teilMaterialkosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getMaterialkosten()).asObject());
+        teilFertigungskosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getFertigungskosten()).asObject());
+
         refreshTables();
     }
 
-
     private void refreshTables() {
-
-        // === Material Table ===
-        materialsTable.getItems().setAll((Collection<? extends Material>) Material.materials);
-
-        // === Maschine Table ===
-        machinesTable.getItems().setAll((Collection<? extends Maschine>) Maschine.maschines);
-
-        // === Arbeitsplan Table ===
-        workPlanTable.getItems().setAll((Collection<? extends Arbeitsplan>) Arbeitsplan.arbeitsplans);
-
-        // === Auftrag Table ===
-        auftragTable.getItems().setAll((Collection<? extends Auftrag>) Auftrag.auftrags);
-
-        // === Teil Table ===
-        partsTable.getItems().setAll((Collection<? extends Teil>) Teil.teils);
+        materialsTable.getItems().setAll(Material.materials);
+        machinesTable.getItems().setAll(Maschine.maschines);
+        workPlanTable.getItems().setAll(Arbeitsplan.arbeitsplans);
+        auftragTable.getItems().setAll(Auftrag.auftrags);
+        partsTable.getItems().setAll(Teil.teils);
     }
 
     @FXML
     public void handleImport() throws SQLException {
-
         importService.importExcel(importExcelButton, fileLabel, DBManager.getConnection());
-
         refreshTables();
     }
 
-    @FXML
-    private void handleCalculate(ActionEvent event) {
-
+    @FXML private void handleCalculate(ActionEvent event) {
+        calculationService.calculateCosts();
+        Application.switchScene("result-page.fxml");
     }
 
-    @FXML
-    private void openMaschineDialogButtonAction() {
+    @FXML private void openMaschineDialogButtonAction() {
         var controller = dialogService.openDialog("new-maschine-dialog.fxml", "Neue Maschine");
         if (controller instanceof AddMaschineController maschineController && maschineController.isSaved()) {
-            System.out.println("✅ Neue Maschine gespeichert.");
             refreshTables();
         }
     }
 
-    @FXML
-    private void openMaterialDialogButtonAction() {
+    @FXML private void openMaterialDialogButtonAction() {
         var controller = dialogService.openDialog("new-material-dialog.fxml", "Neues Material");
         if (controller instanceof AddMaterialController materialController && materialController.isSaved()) {
-            System.out.println("✅ Neues Material gespeichert.");
             refreshTables();
         }
     }
 
-    @FXML
-    private void openOrderDialogButtonAction() {
+    @FXML private void openOrderDialogButtonAction() {
         var controller = dialogService.openDialog("new-auftrag-dialog.fxml", "Neuer Auftrag");
         if (controller instanceof AddOrderController orderController && orderController.isSaved()) {
-            System.out.println("✅ Neuer Auftrag gespeichert.");
             refreshTables();
         }
     }
 
-    @FXML
-    private void openPartDialogButtonAction() {
+    @FXML private void openPartDialogButtonAction() {
         var controller = dialogService.openDialog("new-teil-dialog.fxml", "Neues Teil");
         if (controller instanceof AddPartController partController && partController.isSaved()) {
-            System.out.println("✅ Neues Teil gespeichert.");
             refreshTables();
         }
     }
 
-    @FXML
-    private void openWorkPlanDialogButtonAction() {
+    @FXML private void openWorkPlanDialogButtonAction() {
         var controller = dialogService.openDialog("new-arbeitsplan-dialog.fxml", "Neuer Arbeitsplan");
         if (controller instanceof AddWorkPlanController workPlanController && workPlanController.isSaved()) {
-            System.out.println("✅ Neuer Arbeitsplan gespeichert.");
             refreshTables();
         }
     }
@@ -142,8 +172,7 @@ public class InputPageController {
         alert.showAndWait();
     }
 
-    @FXML
-    private void handleDeleteMaterial() {
+    @FXML private void handleDeleteMaterial() {
         Material selected = materialsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             Material.materials.remove(selected);
@@ -151,8 +180,7 @@ public class InputPageController {
         }
     }
 
-    @FXML
-    private void handleDeleteMaschine() {
+    @FXML private void handleDeleteMaschine() {
         Maschine selected = machinesTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             Maschine.maschines.remove(selected);
@@ -160,8 +188,7 @@ public class InputPageController {
         }
     }
 
-    @FXML
-    private void handleDeleteArbeitsplan() {
+    @FXML private void handleDeleteArbeitsplan() {
         Arbeitsplan selected = workPlanTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             Arbeitsplan.arbeitsplans.remove(selected);
@@ -169,8 +196,7 @@ public class InputPageController {
         }
     }
 
-    @FXML
-    private void handleDeleteAuftrag() {
+    @FXML private void handleDeleteAuftrag() {
         Auftrag selected = auftragTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             Auftrag.auftrags.remove(selected);
@@ -178,17 +204,11 @@ public class InputPageController {
         }
     }
 
-    @FXML
-    private void handleDeleteTeil() {
+    @FXML private void handleDeleteTeil() {
         Teil selected = partsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             Teil.teils.remove(selected);
             partsTable.getItems().remove(selected);
         }
     }
-
-
 }
-
-
-

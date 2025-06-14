@@ -24,8 +24,8 @@
                         <columns>
                             <TableColumn fx:id="auftragId" text="Auftrag-ID" />
                             <TableColumn fx:id="auftragNummer" text="Auftragnummer" />
-                              <TableColumn fx:id="auftragNummer1" text="Materialkosten" />
-                              <TableColumn fx:id="auftragNummer2" text="Fertigungskosten" />
+                              <TableColumn fx:id="auftragMaterialkosten" text="Materialkosten" />
+                              <TableColumn fx:id="auftragFertigungskosten" text="Fertigungskosten" />
                             <TableColumn fx:id="datumKonstenrechnung" text="Datum Kostenrechnung" />
                         </columns>
                         <columnResizePolicy>
@@ -93,11 +93,11 @@
                         <columns>
                             <TableColumn fx:id="teilId" prefWidth="52.0" text="Teil-ID" />
                             <TableColumn fx:id="teilNummer" prefWidth="106.0" text="Teil Nummer" />
-                              <TableColumn fx:id="parentTeilNummer1" prefWidth="110.0" text="Auftrag(knoten)" />
-                            <TableColumn fx:id="parentTeilNummer" prefWidth="171.0" text="Ober Teil Nummer(knoten)" />
-                            <TableColumn fx:id="anzahl" prefWidth="70.0" text="Anzahl" />
-                              <TableColumn fx:id="arbeitsplanNummerTeil" prefWidth="175.0" text="Arbeitsplan Nummer" />
-                            <TableColumn fx:id="materialNummerTeil" prefWidth="140.0" text="Material Nummer" />
+                              <TableColumn fx:id="teilAuftrag" prefWidth="110.0" text="Auftrag(knoten)" />
+                            <TableColumn fx:id="teilOberTeil" prefWidth="171.0" text="Ober Teil Nummer(knoten)" />
+                            <TableColumn fx:id="teilAnzahl" prefWidth="70.0" text="Anzahl" />
+                              <TableColumn fx:id="teilArbeitsplanNummer" prefWidth="175.0" text="Arbeitsplan Nummer" />
+                            <TableColumn fx:id="teilMaterialNummer" prefWidth="140.0" text="Material Nummer" />
                               <TableColumn fx:id="teilMaterialkosten" prefWidth="126.0" text="Materialkosten" />
                               <TableColumn fx:id="teilFertigungskosten" prefWidth="124.0" text="Fertigungskosten" />
                         </columns>
@@ -119,8 +119,8 @@
                     <TableView fx:id="workPlanTable" layoutY="70.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
                         <columns>
                             <TableColumn fx:id="arbeitsplanId" text="Arbeitsplan-ID" />
-                            <TableColumn fx:id="teilNummerArbeitsplan" text="Teil-Nummer" />
                             <TableColumn fx:id="arbeitsgangNummer" text="Arbeitsgang Nummer" />
+                            <TableColumn fx:id="teilNummerArbeitsplan" text="Teil-Nummer" />
                             <TableColumn fx:id="maschinenNummerArbeitsplan" text="Maschinen Nummer" />
                             <TableColumn fx:id="bearbeitungsdauerMin" text="Bearbeitungs Dauer Min" />
                         </columns>

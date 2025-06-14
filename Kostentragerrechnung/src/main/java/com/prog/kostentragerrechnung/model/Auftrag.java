@@ -53,14 +53,40 @@ public class Auftrag {
     }
 
     public void berechneKosten() {
+        double sumMat = 0;
+        double sumFert = 0;
+
         if (this.teil != null) {
-            this.teil.berechneKosten();
-
-            this.materialkosten = this.teil.getMaterialkosten();
-            this.fertigungskosten = this.teil.getFertigungskosten();
-
-            this.datumKostenrechnung = LocalDate.now();
+            sumMat += berechneTeilKostenRekursiv(this.teil, true);
+            sumFert += berechneTeilFertigungskostenRekursiv(this.teil, true);
         }
+
+        this.materialkosten = sumMat;
+        this.fertigungskosten = sumFert;
+        this.datumKostenrechnung = LocalDate.now();
     }
+
+    private double berechneTeilKostenRekursiv(Teil teil, boolean callBerechne) {
+        if (callBerechne) teil.berechneKosten();
+        double sum = teil.getMaterialkosten();
+        if (teil.getChildren() != null) {
+            for (Teil child : teil.getChildren()) {
+                sum += berechneTeilKostenRekursiv(child, true);
+            }
+        }
+        return sum;
+    }
+
+    private double berechneTeilFertigungskostenRekursiv(Teil teil, boolean callBerechne) {
+        if (callBerechne) teil.berechneKosten();
+        double sum = teil.getFertigungskosten();
+        if (teil.getChildren() != null) {
+            for (Teil child : teil.getChildren()) {
+                sum += berechneTeilFertigungskostenRekursiv(child, true);
+            }
+        }
+        return sum;
+    }
+
 
 }

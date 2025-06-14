@@ -66,7 +66,7 @@ public class Teil {
         if (this.material != null) {
             for (Material mat : Material.materials) {
                 if (this.material.getMaterialNummer().equals(mat.getMaterialNummer())) {
-                    this.materialkosten = mat.getKostenProStueck();
+                    this.materialkosten = mat.getKostenProStueck() * this.anzahl;
                     break;
                 }
             }

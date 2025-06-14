@@ -7,37 +7,37 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddWorkPlanController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddWorkPlanController">
    <children>
       <Label layoutX="164.0" layoutY="33.0" text="New Arbeitsplan:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="92.0" text="Teil Nummer">
+      <Label layoutX="39.0" layoutY="92.0" text="Teil:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="arbeitsgangNummer" layoutX="192.0" layoutY="132.0" prefHeight="25.0" prefWidth="201.0" />
-      <Label layoutX="39.0" layoutY="135.0" text="Arbeitsgang Nummer">
+      <TextField fx:id="arbeitsgangNummerField" layoutX="192.0" layoutY="132.0" prefHeight="25.0" prefWidth="201.0" />
+      <Label layoutX="39.0" layoutY="135.0" text="Arbeitsgang Nummer:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Button layoutX="36.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="Add New Row" />
-      <Label layoutX="41.0" layoutY="177.0" text="Maschinen Nummer">
+      <Label layoutX="41.0" layoutY="177.0" text="Maschinen:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="teilNummerCombo" layoutX="192.0" layoutY="90.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField fx:id="bearbeitungsdauerMin" layoutX="219.0" layoutY="215.0" prefHeight="25.0" prefWidth="176.0" />
-      <Label layoutX="41.0" layoutY="218.0" text="Bearbeitungs Dauer Min">
+      <ComboBox fx:id="teilCombo" layoutX="192.0" layoutY="90.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField fx:id="bearbeitungsdauerMinField" layoutX="219.0" layoutY="215.0" prefHeight="25.0" prefWidth="176.0" />
+      <Label layoutX="41.0" layoutY="218.0" text="Bearbeitungs Dauer: (Min)">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="maschinenNummer" layoutX="192.0" layoutY="174.0" prefHeight="25.0" prefWidth="201.0" />
+      <ComboBox fx:id="maschinenCombo" layoutX="192.0" layoutY="174.0" prefHeight="25.0" prefWidth="201.0" />
    </children>
 </AnchorPane>

@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddMaterialController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddMaterialController">
    <children>
-      <TextField fx:id="materialNummer" layoutX="192.0" layoutY="89.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField fx:id="materialNummerField" layoutX="192.0" layoutY="89.0" prefHeight="25.0" prefWidth="201.0" />
       <Label layoutX="164.0" layoutY="33.0" text="New Material:">
          <font>
             <Font size="18.0" />
@@ -19,7 +19,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="kostenProStueck" layoutX="192.0" layoutY="132.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField fx:id="kostenProStueckField" layoutX="192.0" layoutY="132.0" prefHeight="25.0" prefWidth="201.0" />
       <Label layoutX="39.0" layoutY="135.0" text="Kosten Pro Stueck">
          <font>
             <Font size="14.0" />

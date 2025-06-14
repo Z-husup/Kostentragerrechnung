@@ -1,6 +1,7 @@
 package com.prog.kostentragerrechnung.controller;
 
 import com.prog.kostentragerrechnung.controller.dialog.*;
+import com.prog.kostentragerrechnung.database.DBManager;
 import com.prog.kostentragerrechnung.model.*;
 import com.prog.kostentragerrechnung.service.CalculationService;
 import com.prog.kostentragerrechnung.service.DialogService;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -74,9 +76,11 @@ public class InputPageController {
     }
 
     @FXML
-    public void handleImport() {
-//        importService.importFromExcel();
-        // TODO Optional: refresh table content
+    public void handleImport() throws SQLException {
+
+        importService.importExcel(importExcelButton, fileLabel, DBManager.getConnection());
+
+        refreshTables();
     }
 
     @FXML
@@ -142,8 +146,8 @@ public class InputPageController {
     private void handleDeleteMaterial() {
         Material selected = materialsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            Material.materials.remove(selected); // remove from static list
-            materialsTable.getItems().remove(selected); // remove from table
+            Material.materials.remove(selected);
+            materialsTable.getItems().remove(selected);
         }
     }
 

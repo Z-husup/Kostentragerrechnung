@@ -25,10 +25,7 @@ public class AddOrderController {
     }
 
     @FXML
-    private TextField datumKonstenrechnung;
-
-    @FXML
-    private TextField auftragNummer;
+    private TextField auftragNummerField;
 
     @FXML
     public void initialize() {
@@ -38,6 +35,11 @@ public class AddOrderController {
     @FXML
     public void handleSave(ActionEvent actionEvent) {
 
+        Auftrag auftrag = new Auftrag();
+        auftrag.setAuftragNummer(auftragNummerField.getText());
+
+        dialogStage.close();
+        saved = true;
     }
 
     private void showAlert(String title, String content) {

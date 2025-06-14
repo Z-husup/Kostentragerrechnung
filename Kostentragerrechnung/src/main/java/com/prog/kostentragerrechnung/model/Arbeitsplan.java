@@ -1,11 +1,14 @@
 package com.prog.kostentragerrechnung.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class Arbeitsplan {
 
     private static int nextId = 1;

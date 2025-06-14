@@ -24,7 +24,10 @@ public class AddMaterialController {
     }
 
     @FXML
-    private TextField materialNummer;
+    private TextField materialNummerField;
+
+    @FXML
+    private TextField kostenProStueckField;
 
     @FXML
     public void initialize() {}
@@ -32,6 +35,12 @@ public class AddMaterialController {
     @FXML
     public void handleSave(ActionEvent actionEvent) {
 
+        Material material = new Material();
+        material.setMaterialNummer(materialNummerField.getText());
+        material.setKostenProStueck(Double.parseDouble(kostenProStueckField.getText()));
+
+        dialogStage.close();
+        saved = true;
     }
 
     private void showAlert(String title, String content) {

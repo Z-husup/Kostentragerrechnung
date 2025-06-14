@@ -24,13 +24,13 @@ public class AddMaschineController {
     }
 
     @FXML
-    private TextField maschinenNummer;
+    private TextField maschinenNummerField;
 
     @FXML
-    private TextField bezeichnung;
+    private TextField bezeichnungField;
 
     @FXML
-    private TextField kostensatzProStunde;
+    private TextField kostensatzProStundeField;
 
     @FXML
     public void initialize() {}
@@ -38,6 +38,13 @@ public class AddMaschineController {
     @FXML
     public void handleSave(ActionEvent event) {
 
+        Maschine maschine = new Maschine();
+        maschine.setMaschinenNummer(maschinenNummerField.getText());
+        maschine.setBezeichnung(bezeichnungField.getText());
+        maschine.setKostensatzProStunde(Double.parseDouble(kostensatzProStundeField.getText()));
+
+        dialogStage.close();
+        saved = true;
     }
 
     private void showAlert(String title, String content) {

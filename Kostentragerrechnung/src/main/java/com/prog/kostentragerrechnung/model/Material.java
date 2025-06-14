@@ -18,4 +18,12 @@ public class Material {
 
     public static final List<Material> materials = new ArrayList<>();
 
+    public Material(String materialNummer, double kostenProStueck) {
+        this.nextId++;
+
+        this.materialNummer = materialNummer;
+        this.kostenProStueck = kostenProStueck;
+
+        materials.add(this);
+    }
 }

@@ -75,7 +75,7 @@ public class InputPageController {
 
     @FXML
     public void handleImport() {
-        importService.importExcel(importExcelButton, fileLabel);
+//        importService.importFromExcel();
         // TODO Optional: refresh table content
     }
 

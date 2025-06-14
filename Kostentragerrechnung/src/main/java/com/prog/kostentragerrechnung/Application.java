@@ -1,7 +1,6 @@
 package com.prog.kostentragerrechnung;
 
 import com.prog.kostentragerrechnung.controller.InputPageController;
-import com.prog.kostentragerrechnung.database.DBManager;
 
 import atlantafx.base.theme.NordLight;
 import javafx.fxml.FXMLLoader;
@@ -73,8 +72,6 @@ public class Application extends javafx.application.Application {
         stage.setMaximized(true);
         stage.initStyle(StageStyle.DECORATED);
         stage.show();
-
-        DBManager.initDatabase();
     }
 
 

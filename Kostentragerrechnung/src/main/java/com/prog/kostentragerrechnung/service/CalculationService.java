@@ -14,12 +14,7 @@ import java.util.List;
 
 public class CalculationService {
 
-    public void calculateCosts(
-            List<Arbeitsplan> arbeitsplans,
-            List<Auftrag>     auftrags,
-            List<Maschine>    maschines,
-            List<Material>    materials,
-            List<Teil>        teils) {
+    public void calculateCosts() {
 
 
 

@@ -12,8 +12,6 @@ public class Arbeitsplan {
 
     private int arbeitsplanId; //id
 
-    private Teil teil; //teil_id
-
     private int arbeitsgangNummer; //ag_nr
 
     private Maschine maschine; //maschine
@@ -21,4 +19,14 @@ public class Arbeitsplan {
     private int bearbeitungsdauerMin; //dauer
 
     public static final List<Arbeitsplan> arbeitsplans = new ArrayList<>();
+
+    public Arbeitsplan(int arbeitsgangNummer, Maschine maschine, int bearbeitungsdauerMin) {
+        this.nextId++;
+
+        this.arbeitsgangNummer = arbeitsgangNummer;
+        this.maschine = maschine;
+        this.bearbeitungsdauerMin = bearbeitungsdauerMin;
+
+        arbeitsplans.add(this);
+    }
 }

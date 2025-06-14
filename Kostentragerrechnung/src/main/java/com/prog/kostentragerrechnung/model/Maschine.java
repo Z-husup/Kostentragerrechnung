@@ -12,7 +12,7 @@ public class Maschine {
 
     private int maschineId; //id
 
-    private String maschinenNummer; //Nr
+    private String maschinenNummer; //maschine_nr
 
     private String bezeichnung; //Bezeichnung
 
@@ -20,4 +20,13 @@ public class Maschine {
 
     public static final List<Maschine> maschines = new ArrayList<>();
 
+    public Maschine(String maschinenNummer, String bezeichnung, double kostensatzProStunde) {
+        this.nextId++;
+
+        this.maschinenNummer = maschinenNummer;
+        this.bezeichnung = bezeichnung;
+        this.kostensatzProStunde = kostensatzProStunde;
+
+        maschines.add(this);
+    }
 }

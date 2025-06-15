@@ -55,6 +55,7 @@ public class Auftrag {
         this.nextId++;
 
         this.auftragId = nextId;
+        this.teil = new ArrayList<>();
 
         auftrags.add(this);
     }

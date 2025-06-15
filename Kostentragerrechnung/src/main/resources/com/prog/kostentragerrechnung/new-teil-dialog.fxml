@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddPartController">
    <children>
-      <TextField fx:id="teilNummerField" layoutX="192.0" layoutY="89.0" prefHeight="25.0" prefWidth="204.0" />
+      <TextField fx:id="teilNummerField" layoutX="168.0" layoutY="89.0" prefHeight="25.0" prefWidth="228.0" />
       <Label layoutX="164.0" layoutY="33.0" text="New Teil:">
          <font>
             <Font size="18.0" />
@@ -22,8 +22,8 @@
          </font>
       </Label>
       <Button layoutX="36.0" layoutY="446.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="Add New Row" />
-      <TextField fx:id="anzahlField" layoutX="132.0" layoutY="270.0" prefHeight="25.0" prefWidth="262.0" />
-      <Label layoutX="40.0" layoutY="273.0" text="Anzahl:">
+      <TextField fx:id="anzahlField" layoutX="133.0" layoutY="339.0" prefHeight="25.0" prefWidth="262.0" />
+      <Label layoutX="41.0" layoutY="342.0" text="Anzahl:">
          <font>
             <Font size="14.0" />
          </font>
@@ -34,15 +34,15 @@
          </font>
       </Label>
       <ComboBox fx:id="materialCombo" layoutX="131.0" layoutY="383.0" prefHeight="25.0" prefWidth="262.0" />
-      <ComboBox fx:id="auftragCombo" disable="true" layoutX="135.0" layoutY="136.0" prefHeight="25.0" prefWidth="262.0" />
-      <ComboBox fx:id="oberTeilCombo" disable="true" layoutX="136.0" layoutY="185.0" prefHeight="25.0" prefWidth="262.0" />
-      <Label layoutX="36.0" layoutY="353.0" text="Arbeitsplan:">
+      <ComboBox fx:id="auftragCombo" disable="true" layoutX="136.0" layoutY="205.0" prefHeight="25.0" prefWidth="262.0" />
+      <ComboBox fx:id="oberTeilCombo" disable="true" layoutX="137.0" layoutY="254.0" prefHeight="25.0" prefWidth="262.0" />
+      <CheckBox fx:id="auftragCheckBox" layoutX="38.0" layoutY="210.0" mnemonicParsing="false" onAction="#makeAuftragTeil" text="Auftrag" />
+      <CheckBox fx:id="oberTeilCheckBox" layoutX="38.0" layoutY="258.0" mnemonicParsing="false" onAction="#makeChildrenTeil" text="Ober Teil" />
+      <TextField fx:id="teilBezeichnungField" layoutX="169.0" layoutY="140.0" prefHeight="25.0" prefWidth="228.0" />
+      <Label layoutX="40.0" layoutY="143.0" text="Bezeichnung:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="arbeitsplanCombo" layoutX="131.0" layoutY="350.0" prefHeight="25.0" prefWidth="262.0" />
-      <CheckBox fx:id="auftragCheckBox" layoutX="37.0" layoutY="141.0" mnemonicParsing="false" onAction="#makeAuftragTeil" text="Auftrag" />
-      <CheckBox fx:id="oberTeilCheckBox" layoutX="37.0" layoutY="189.0" mnemonicParsing="false" onAction="#makeChildrenTeil" text="Ober Teil" />
    </children>
 </AnchorPane>

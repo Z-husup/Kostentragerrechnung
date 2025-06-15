@@ -17,6 +17,8 @@ public class Teil {
 
     private String teilNummer; //teil_nr
 
+    private String bezeichnung; //teil_nr
+
     private Auftrag auftrag;    // knoten_auftrag
     private Teil oberteil;      // knoten_oberteil
     private List<Teil> children; //knoten_children
@@ -61,6 +63,7 @@ public class Teil {
         this.nextId++;
 
         this.teilId = nextId;
+        this.children = new ArrayList<>();
 
         teils.add(this);
     }

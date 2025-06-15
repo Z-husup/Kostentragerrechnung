@@ -58,6 +58,7 @@ public class InputPageController {
     @FXML private TableView<Teil> partsTable;
     @FXML private TableColumn<Teil, Integer> teilId;
     @FXML private TableColumn<Teil, String> teilNummer;
+    @FXML private TableColumn<Teil, String> teilBezeichnung;
     @FXML private TableColumn<Teil, Integer> teilAnzahl;
     @FXML private TableColumn<Teil, String> teilArbeitsplanNummer;
     @FXML private TableColumn<Teil, String> teilMaterialNummer;
@@ -101,12 +102,12 @@ public class InputPageController {
         auftragNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuftragNummer()));
         auftragMaterialkosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getMaterialkosten()).asObject());
         auftragFertigungskosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getFertigungskosten()).asObject());
-        datumKonstenrechnung.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getDatumKostenrechnung() != null ? data.getValue().getDatumKostenrechnung().toString() : ""));
+        datumKonstenrechnung.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDatumKostenrechnung() != null ? data.getValue().getDatumKostenrechnung().toString() : ""));
 
         // === TEIL ===
         teilId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getTeilId()).asObject());
         teilNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTeilNummer()));
+        teilBezeichnung.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getBezeichnung()));
         teilAnzahl.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getAnzahl()).asObject());
         teilAuftrag.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getAuftrag() != null ? data.getValue().getAuftrag().getAuftragNummer() : ""));

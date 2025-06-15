@@ -152,17 +152,17 @@ public class ImportService {
         for (Row row : sheet) {
             if (row == null || row.getRowNum() == 0) continue;
 
-            String teilId = getCellString(row.getCell(0));
-            String teilNr = getCellString(row.getCell(1));
-            String auftragNr = getCellString(row.getCell(2));
-            String parentNr = getCellString(row.getCell(3));
-            int anzahl = (int) getNumericValue(row.getCell(6));
-            String materialNr = getCellString(row.getCell(7));
+            String teilId = getCellString(row.getCell(0));       // A: teil_id
+            String teilNr = getCellString(row.getCell(1));       // B: teil_nr
+            String auftragNr = getCellString(row.getCell(2));    // C: knoten_aufgabe
+            String parentId = getCellString(row.getCell(3));     // D: knoten_teil (points to teil_id)
+            int anzahl = (int) getNumericValue(row.getCell(6));  // G: Anzahl
+            String materialNr = getCellString(row.getCell(7));   // H: Mat
 
-            if (teilNr.isEmpty()) continue;
+            if (teilId.isEmpty() || teilNr.isEmpty()) continue;
 
             Material material = Material.materials.stream()
-                    .filter(m -> m.getMaterialNummer().equals(materialNr))
+                    .filter(m -> m.getMaterialNummer().equalsIgnoreCase(materialNr.trim()))
                     .findFirst()
                     .orElse(null);
 
@@ -171,33 +171,36 @@ public class ImportService {
             teil.setTeilNummer(teilNr);
             teil.setAnzahl(anzahl);
             teil.setMaterial(material);
+            teil.setChildren(new ArrayList<>());
 
-            teilMap.put(teilNr, teil);
+            teilMap.put(teilId, teil);
 
-            if (!parentNr.isEmpty()) parentRelation.put(teilNr, parentNr);
-            if (!auftragNr.isEmpty()) auftragRelation.put(teilNr, auftragNr);
+            if (!parentId.isEmpty()) parentRelation.put(teilId, parentId);
+            if (!auftragNr.isEmpty()) auftragRelation.put(teilId, auftragNr);
         }
 
+        // 🔁 Link parent-child relations (Oberteil)
         for (Map.Entry<String, String> entry : parentRelation.entrySet()) {
-            String childNr = entry.getKey();
-            String parentNr = entry.getValue();
+            String childId = entry.getKey();
+            String parentId = entry.getValue();
 
-            Teil child = teilMap.get(childNr);
-            Teil parent = teilMap.get(parentNr);
+            Teil child = teilMap.get(childId);
+            Teil parent = teilMap.get(parentId);
 
-            if (child != null && parent != null && !childNr.equals(parentNr)) {
+            if (child != null && parent != null && !childId.equals(parentId)) {
                 parent.getChildren().add(child);
                 child.setOberteil(parent);
             }
         }
 
+        // 🔁 Link Auftrag relations
         for (Map.Entry<String, String> entry : auftragRelation.entrySet()) {
-            String teilNr = entry.getKey();
+            String teilId = entry.getKey();
             String auftragNr = entry.getValue();
 
-            Teil teil = teilMap.get(teilNr);
+            Teil teil = teilMap.get(teilId);
             Auftrag auftrag = Auftrag.auftrags.stream()
-                    .filter(a -> a.getAuftragNummer().equals(auftragNr))
+                    .filter(a -> a.getAuftragNummer().trim().equalsIgnoreCase(auftragNr.trim()))
                     .findFirst()
                     .orElse(null);
 
@@ -206,9 +209,8 @@ public class ImportService {
                 teil.setAuftrag(auftrag);
             }
         }
-
-        Teil.teils.addAll(teilMap.values());
     }
+
 
 
     private void importArbeitsplan(Sheet sheet) {

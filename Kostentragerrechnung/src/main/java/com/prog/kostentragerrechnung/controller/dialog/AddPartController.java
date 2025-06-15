@@ -33,6 +33,9 @@ public class AddPartController {
     private TextField teilNummerField;
 
     @FXML
+    private TextField teilBezeichnungField;
+
+    @FXML
     private TextField anzahlField;
 
     @FXML
@@ -43,9 +46,6 @@ public class AddPartController {
 
     @FXML
     private ComboBox<String> oberTeilCombo;
-
-    @FXML
-    private ComboBox<String> arbeitsplanCombo;
 
     @FXML
     private CheckBox auftragCheckBox;
@@ -73,14 +73,6 @@ public class AddPartController {
                         .map(t -> t.getTeilNummer())
                         .toList()
         );
-        // Arbeitsplan ComboBox
-        arbeitsplanCombo.getItems().addAll(
-                Arbeitsplan.arbeitsplans.stream()
-                        .map(ap -> "AP" + ap.getArbeitsgangNummer() + " (" +
-                                (ap.getMaschine() != null ? ap.getMaschine().getMaschinenNummer() : "NoMaschine") +
-                                ", " + ap.getBearbeitungsdauerMin() + "min)")
-                        .toList()
-        );
     }
 
     @FXML void makeAuftragTeil(){
@@ -97,6 +89,7 @@ public class AddPartController {
     public void handleSave(ActionEvent actionEvent) {
         try {
             String teilNr = teilNummerField.getText().trim();
+            String teilBz = teilBezeichnungField.getText().trim();
             int anzahl = Integer.parseInt(anzahlField.getText().trim());
 
             // 🧩 Material
@@ -126,33 +119,23 @@ public class AddPartController {
                         .orElse(null);
             }
 
-            // ⚙️ Arbeitsplan (optional)
-            Arbeitsplan arbeitsplan = null;
-            String selectedApDisplay = arbeitsplanCombo.getValue();
-            if (selectedApDisplay != null) {
-                arbeitsplan = Arbeitsplan.arbeitsplans.stream()
-                        .filter(ap -> selectedApDisplay.contains("AP" + ap.getArbeitsgangNummer()))
-                        .findFirst()
-                        .orElse(null);
-            }
-
             // ✅ Construct Teil
             Teil teil = new Teil();
             teil.setTeilNummer(teilNr);
+            teil.setBezeichnung(teilBz);
             teil.setAnzahl(anzahl);
             teil.setMaterial(material);
-            teil.setArbeitsplan(arbeitsplan);
             teil.setChildren(new ArrayList<>());
 
             if (oberTeil != null) {
                 oberTeil.getChildren().add(teil);
+                teil.setOberteil(oberTeil);
             }
 
             if (auftrag != null) {
                 auftrag.addTeil(teil);
+                teil.setAuftrag(auftrag);
             }
-
-            Teil.teils.add(teil);
             saved = true;
             dialogStage.close();
 

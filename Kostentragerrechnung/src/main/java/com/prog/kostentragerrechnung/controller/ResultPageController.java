@@ -52,7 +52,7 @@ public class ResultPageController {
     @FXML private TableColumn<Teil, String> teilAuftrag;
     @FXML private TableColumn<Teil, String> teilOberTeil;
 
-    @FXML private BarChart<String, Number> kostenChart;
+    @FXML private TreeView<String> reportTreeView;
     @FXML private TreeView<String> entityTreeView;
 
     // === Buttons ===
@@ -64,7 +64,7 @@ public class ResultPageController {
     @FXML
     public void initialize() {
         refreshTables();
-        updateKostenChart();
+        fillReportTreeView();
         buildEntityTree();
     }
 
@@ -129,24 +129,39 @@ public class ResultPageController {
         }
     }
 
-    public void updateKostenChart() {
-        kostenChart.getData().clear();
+    public void fillReportTreeView() {
+        TreeItem<String> rootItem = new TreeItem<>("📦 Aufträge");
+        rootItem.setExpanded(true);
 
-        XYChart.Series<String, Number> materialSeries = new XYChart.Series<>();
-        materialSeries.setName("Materialkosten");
+        for (Auftrag auftrag : Auftrag.auftrags) {
+            TreeItem<String> auftragItem = new TreeItem<>("📁 Auftrag: " + auftrag.getAuftragNummer());
 
-        XYChart.Series<String, Number> fertigungSeries = new XYChart.Series<>();
-        fertigungSeries.setName("Fertigungskosten");
+            for (Teil teil : auftrag.getTeil()) {
+                Report report = new Report().createReport(teil, true);
 
-        for (Teil teil : Teil.teils) {
-            teil.berechneKosten(true); // ensure costs are up-to-date
+                TreeItem<String> teilItem = new TreeItem<>("🔧 Teil: " + report.getTeilNummer());
 
-            materialSeries.getData().add(new XYChart.Data<>(teil.getTeilNummer(), round(teil.getMaterialkosten())));
-            fertigungSeries.getData().add(new XYChart.Data<>(teil.getTeilNummer(), round(teil.getFertigungskosten())));
+                TreeItem<String> anzahlItem = new TreeItem<>("📦 Anzahl: " + report.getAnzahl());
+                TreeItem<String> matTypItem = new TreeItem<>("🔩 Materialtyp: " + report.getMaterialTyp());
+                TreeItem<String> maschineItem = new TreeItem<>("⚙️ Maschine: " + report.getMaschineNummer());
+
+                TreeItem<String> kostenItem = new TreeItem<>("💶 Kosten");
+                kostenItem.getChildren().add(new TreeItem<>("Materialkosten: " + report.getMaterialkosten() + " €"));
+                kostenItem.getChildren().add(new TreeItem<>("Materialgemeinkosten: " + report.getMaterialgemeinkosten() + " €"));
+                kostenItem.getChildren().add(new TreeItem<>("Fertigungskosten: " + report.getFertigungskosten() + " €"));
+                kostenItem.getChildren().add(new TreeItem<>("Fertigungsgemeinkosten: " + report.getFertigungsgemeinkosten() + " €"));
+                kostenItem.getChildren().add(new TreeItem<>("Herstellkosten: " + report.getHerstellkosten() + " €"));
+
+                teilItem.getChildren().addAll(anzahlItem, matTypItem, maschineItem, kostenItem);
+                auftragItem.getChildren().add(teilItem);
+            }
+
+            rootItem.getChildren().add(auftragItem);
         }
 
-        kostenChart.getData().addAll(materialSeries, fertigungSeries);
+        reportTreeView.setRoot(rootItem);
     }
+
 
     public void buildEntityTree() {
         TreeItem<String> root = new TreeItem<>("📦 Aufträge");

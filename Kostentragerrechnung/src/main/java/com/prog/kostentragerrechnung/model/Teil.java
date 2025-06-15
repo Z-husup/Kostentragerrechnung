@@ -25,6 +25,9 @@ public class Teil {
 
     private double materialkosten; //K_mat
     private double fertigungskosten; //K_fert
+    private double materialgemeinkosten;       // 10% Zuschlag
+    private double fertigungsgemeinkosten;     // 10% Zuschlag
+    private double herstellkosten;             // Herstellkosten
 
     private int anzahl; //anzahl
 
@@ -69,36 +72,42 @@ public class Teil {
     }
 
     public void berechneKosten(boolean recursive) {
-        // 🔹 Direct Materialkosten
+        double matKosten = 0;
+        double fertKosten = 0;
+
+        // 🔹 Direktkosten
         if (this.material != null) {
-            this.materialkosten = this.material.getKostenProStueck() * this.anzahl;
-        } else {
-            this.materialkosten = 0;
+            matKosten = this.material.getKostenProStueck() * this.anzahl;
         }
 
-        // 🔹 Direct Fertigungskosten
         if (this.arbeitsplan != null && this.arbeitsplan.getMaschine() != null) {
-            Maschine maschine = this.arbeitsplan.getMaschine();
             double dauer = this.arbeitsplan.getBearbeitungsdauerMin();
-            double kostensatzProMinute = maschine.getKostensatzProStunde() / 60.0;
-            this.fertigungskosten = dauer * kostensatzProMinute;
-        } else {
-            this.fertigungskosten = 0;
+            double kostensatzMin = this.arbeitsplan.getMaschine().getKostensatzProStunde() / 60.0;
+            fertKosten = dauer * kostensatzMin;
         }
 
-        // 🔁 Child costs (if recursive is true)
+        // 🔁 Rekursive Kindkosten
         if (recursive && this.children != null) {
             for (Teil child : this.children) {
-                child.berechneKosten(true); // recursion
-                this.materialkosten += child.getMaterialkosten() * child.getAnzahl();
-                this.fertigungskosten += child.getFertigungskosten() * child.getAnzahl();
+                child.berechneKosten(true);
+                matKosten += child.getMaterialkosten() * child.getAnzahl();
+                fertKosten += child.getFertigungskosten() * child.getAnzahl();
             }
         }
 
-        // 🎯 Round both
-        this.materialkosten = Math.round(this.materialkosten * 100.0) / 100.0;
-        this.fertigungskosten = Math.round(this.fertigungskosten * 100.0) / 100.0;
+        // 📌 Zuschläge
+        this.materialgemeinkosten = Math.round(matKosten * 0.10 * 100.0) / 100.0;
+        this.fertigungsgemeinkosten = Math.round(fertKosten * 0.10 * 100.0) / 100.0;
+
+        // 📌 Direkte + Zuschläge
+        this.materialkosten = Math.round(matKosten * 100.0) / 100.0;
+        this.fertigungskosten = Math.round(fertKosten * 100.0) / 100.0;
+
+        this.herstellkosten = Math.round(
+                (this.materialkosten + this.materialgemeinkosten + this.fertigungskosten + this.fertigungsgemeinkosten) * 100.0
+        ) / 100.0;
     }
+
 
 
 

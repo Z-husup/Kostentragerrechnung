@@ -135,6 +135,7 @@ public class InputPageController {
 
     @FXML private void handleCalculate(ActionEvent event) {
         calculationService.calculateCosts();
+        calculationService.calculateCostsAndPrintReports();
         Application.switchScene("result-page.fxml");
     }
 

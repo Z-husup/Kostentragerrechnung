@@ -70,14 +70,8 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <BarChart fx:id="kostenChart" layoutX="490.0" layoutY="14.0" prefWidth="572.0" prefHeight="534.0">
-                           <xAxis>
-                              <CategoryAxis label="Teil Nummer" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis label="Kosten (EUR)" />
-                           </yAxis>
-                        </BarChart>
+
+                        <TreeView fx:id="reportTreeView" layoutX="490.0" layoutY="14.0" prefHeight="533.0" prefWidth="458.0" />
 
                         <TreeView fx:id="entityTreeView" layoutX="14.0" layoutY="14.0" prefHeight="533.0" prefWidth="458.0" />
 

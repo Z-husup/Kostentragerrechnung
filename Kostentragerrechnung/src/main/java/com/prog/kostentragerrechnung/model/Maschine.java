@@ -8,10 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 public class Maschine {
 
-    private static int nextId = 1;
+    private static int nextId = 0;
 
     private int maschineId; //id
 
@@ -26,9 +25,18 @@ public class Maschine {
     public Maschine(String maschinenNummer, String bezeichnung, double kostensatzProStunde) {
         this.nextId++;
 
+        this.maschineId = nextId;
         this.maschinenNummer = maschinenNummer;
         this.bezeichnung = bezeichnung;
         this.kostensatzProStunde = kostensatzProStunde;
+
+        maschines.add(this);
+    }
+
+    public Maschine(){
+        this.nextId++;
+
+        this.maschineId = nextId;
 
         maschines.add(this);
     }

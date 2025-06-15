@@ -83,6 +83,15 @@ public class AddPartController {
         );
     }
 
+    @FXML void makeAuftragTeil(){
+        auftragCombo.setDisable(false);
+        oberTeilCheckBox.setSelected(false);
+    }
+
+    @FXML void makeChildrenTeil(){
+        oberTeilCombo.setDisable(false);
+        auftragCheckBox.setSelected(false);
+    }
 
     @FXML
     public void handleSave(ActionEvent actionEvent) {
@@ -128,10 +137,10 @@ public class AddPartController {
             }
 
             // ✅ Construct Teil
-            Teil teil = new Teil(auftrag, oberTeil , new ArrayList<>(), 0, 0, anzahl, arbeitsplan, material, teilNr);
+            Teil teil = new Teil(new ArrayList<>(), 0, 0, anzahl, arbeitsplan, material, teilNr);
 
             if (auftrag != null) {
-                teil.setAuftrag(auftrag);
+                auftrag.addTeil(teil);
             }
             if (arbeitsplan != null) {
                 teil.setArbeitsplan(arbeitsplan);

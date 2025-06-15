@@ -110,12 +110,19 @@ public class Application extends javafx.application.Application {
      * @param baseHeight The reference height.
      */
     private static void scaleContent(Stage stage, Group group, double baseWidth, double baseHeight) {
-        double scaleX = stage.getWidth() / baseWidth;
-        double scaleY = stage.getHeight() / baseHeight;
+        if (stage.getScene() == null) return;
+
+        double sceneWidth = stage.getScene().getWidth();
+        double sceneHeight = stage.getScene().getHeight();
+
+        double scaleX = sceneWidth / baseWidth;
+        double scaleY = sceneHeight / baseHeight;
         double scale = Math.min(scaleX, scaleY);
+
         group.setScaleX(scale);
         group.setScaleY(scale);
     }
+
 
     /**
      * Switches the current scene content by loading a new FXML file

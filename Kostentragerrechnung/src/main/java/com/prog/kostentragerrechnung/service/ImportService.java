@@ -12,9 +12,8 @@ import java.nio.file.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -71,11 +70,13 @@ public class ImportService {
 
             clearDatabaseTables(conn, List.of("material", "maschine", "teil", "arbeitsplan", "auftrag"));
 
+            importAuftrag(workbook.getSheet("Auftrag"));
             importMaterial(workbook.getSheet("Material"));
             importMaschine(workbook.getSheet("Maschine"));
             importTeil(workbook.getSheet("Teil"));
             importArbeitsplan(workbook.getSheet("Arbeitsplan"));
-            importAuftrag(workbook.getSheet("Auftrag"));
+
+            Teil.teils.forEach(System.out::println);
         }
     }
 
@@ -83,6 +84,166 @@ public class ImportService {
         for (String table : tables) {
             try (PreparedStatement pstmt = conn.prepareStatement("DELETE FROM " + table)) {
                 pstmt.executeUpdate();
+            }
+        }
+    }
+
+    private void importAuftrag(Sheet sheet) {
+        if (sheet == null) return;
+
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) continue;
+
+            Cell nrCell = row.getCell(0);          // A: auftragNummer
+
+            if (nrCell == null || nrCell.getStringCellValue().isEmpty()) continue;
+
+            String nr = nrCell.getStringCellValue();
+
+            Auftrag auftrag = new Auftrag();
+            auftrag.setAuftragNummer(nr);
+        }
+    }
+
+    private void importMaterial(Sheet sheet) {
+        if (sheet == null) return;
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) continue;
+
+            Cell nrCell = row.getCell(0);   // A: materialNummer
+            Cell kostCell = row.getCell(1); // B: kosten
+
+            if (nrCell == null || kostCell == null) continue;
+
+            String nr = nrCell.getStringCellValue();
+            double kost = getNumericValue(kostCell);
+
+            new Material(nr, kost);
+        }
+    }
+
+
+    private void importMaschine(Sheet sheet) {
+        if (sheet == null) return;
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) continue;
+
+            Cell nrCell = row.getCell(0);      // A: maschinenNummer
+            Cell bezCell = row.getCell(1);     // B: bezeichnung
+            Cell kostenCell = row.getCell(2);  // C: kostensatz
+
+            if (nrCell == null || bezCell == null || kostenCell == null) continue;
+
+            String nr = nrCell.getStringCellValue();
+            String bez = bezCell.getStringCellValue();
+            double kosten = getNumericValue(kostenCell);
+
+            new Maschine(nr, bez, kosten);
+        }
+    }
+
+    private void importTeil(Sheet sheet) {
+        if (sheet == null) return;
+
+        Map<String, Teil> teilMap = new HashMap<>();
+        Map<String, String> parentRelation = new HashMap<>();
+        Map<String, String> auftragRelation = new HashMap<>();
+
+        // 🔁 First pass: create all Teil objects
+        for (Row row : sheet) {
+            if (row == null || row.getRowNum() == 0) continue;
+
+            String teilId = getCellString(row.getCell(0));
+            String teilNr = getCellString(row.getCell(1));
+            String auftragNr = getCellString(row.getCell(2));
+            String parentNr = getCellString(row.getCell(3));
+            int anzahl = (int) getNumericValue(row.getCell(6));
+            String materialNr = getCellString(row.getCell(7));
+
+            if (teilNr.isEmpty()) continue;
+
+            Material material = Material.materials.stream()
+                    .filter(m -> m.getMaterialNummer().equals(materialNr))
+                    .findFirst()
+                    .orElse(null);
+
+            Teil teil = new Teil();
+            teil.setTeilId(Integer.parseInt(teilId));
+            teil.setTeilNummer(teilNr);
+            teil.setAnzahl(anzahl);
+            teil.setMaterial(material);
+
+            teilMap.put(teilNr, teil);
+
+            if (!parentNr.isEmpty()) parentRelation.put(teilNr, parentNr);
+            if (!auftragNr.isEmpty()) auftragRelation.put(teilNr, auftragNr);
+        }
+
+        // 🔁 Second pass: link Teil to parent (children list)
+        for (Map.Entry<String, String> entry : parentRelation.entrySet()) {
+            String childNr = entry.getKey();
+            String parentNr = entry.getValue();
+
+            Teil child = teilMap.get(childNr);
+            Teil parent = teilMap.get(parentNr);
+
+            if (child != null && parent != null && !childNr.equals(parentNr)) {
+                parent.getChildren().add(child);
+            }
+        }
+
+        // 🔁 Second pass: link Teil to Auftrag
+        for (Map.Entry<String, String> entry : auftragRelation.entrySet()) {
+            String teilNr = entry.getKey();
+            String auftragNr = entry.getValue();
+
+            Teil teil = teilMap.get(teilNr);
+            Auftrag auftrag = Auftrag.auftrags.stream()
+                    .filter(a -> a.getAuftragNummer().equals(auftragNr))
+                    .findFirst()
+                    .orElse(null);
+
+            if (teil != null && auftrag != null) {
+                auftrag.addTeil(teil);
+            }
+        }
+
+        // ✅ Add to global list
+        Teil.teils.addAll(teilMap.values());
+    }
+
+    private void importArbeitsplan(Sheet sheet) {
+        if (sheet == null) return;
+
+        for (Row row : sheet) {
+            if (row == null || row.getRowNum() == 0) continue; // skip header
+
+            String teilNr = getCellString(row.getCell(0));        // string
+            String agNrStr = getCellString(row.getCell(1));       // string
+            String maschinenNr = getCellString(row.getCell(2));   // string
+            double dauer = getNumericValue(row.getCell(3));       // numeric
+
+            if (teilNr.isEmpty() || agNrStr.isEmpty() || maschinenNr.isEmpty() || dauer == 0)
+                continue;
+
+            int agNr = parseIntSafe(agNrStr);
+
+            Maschine maschine = Maschine.maschines.stream()
+                    .filter(m -> m.getMaschinenNummer().equals(maschinenNr))
+                    .findFirst()
+                    .orElse(null);
+
+            if (maschine == null) continue;
+
+            Arbeitsplan ap = new Arbeitsplan(agNr, maschine, (int) dauer);
+
+            Teil teil = Teil.teils.stream()
+                    .filter(t -> t.getTeilId() == (Integer.parseInt(teilNr)))
+                    .findFirst()
+                    .orElse(null);
+
+            if (teil != null) {
+                teil.setArbeitsplan(ap);
             }
         }
     }
@@ -96,87 +257,26 @@ public class ImportService {
         };
     }
 
-    private void importMaterial(Sheet sheet) {
-        if (sheet == null) return;
-        for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
-            Cell nrCell = row.getCell(0);
-            Cell kostCell = row.getCell(1);
-            if (nrCell == null || kostCell == null) continue;
-            String nr = nrCell.getStringCellValue();
-            double kost = getNumericValue(kostCell);
-            Material.materials.add(new Material(nr, kost));
+    private String getCellString(Cell cell) {
+        if (cell == null) return "";
+
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue().trim();
+            case NUMERIC -> String.valueOf((int) cell.getNumericCellValue()); // or `cell.getNumericCellValue()` if decimals matter
+            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
+            case FORMULA -> cell.getCellFormula();
+            default -> "";
+        };
+    }
+
+    private int parseIntSafe(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (Exception e) {
+            return 0;
         }
     }
 
-    private void importMaschine(Sheet sheet) {
-        if (sheet == null) return;
-        for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
-            Cell nrCell = row.getCell(0);
-            Cell bezCell = row.getCell(1);
-            Cell kostenCell = row.getCell(2);
-            if (nrCell == null || bezCell == null || kostenCell == null) continue;
-            String nr = nrCell.getStringCellValue();
-            String bez = bezCell.getStringCellValue();
-            double kosten = getNumericValue(kostenCell);
-            Maschine.maschines.add(new Maschine(nr, bez, kosten));
-        }
-    }
 
-    private void importTeil(Sheet sheet) {
-        if (sheet == null) return;
-        for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
-            Cell teilNrCell = row.getCell(1);
-            Cell anzahlCell = row.getCell(5);
-            Cell matNrCell = row.getCell(6);
-            if (teilNrCell == null || anzahlCell == null || matNrCell == null) continue;
-            String teilNr = teilNrCell.getStringCellValue();
-            int anzahl = (int) getNumericValue(anzahlCell);
-            String matNr = matNrCell.getStringCellValue();
-            Material mat = Material.materials.stream().filter(m -> m.getMaterialNummer().equals(matNr)).findFirst().orElse(null);
-            Teil teil = new Teil(null, null, new ArrayList<>(), 0, 0, anzahl, null, mat, teilNr);
-            Teil.teils.add(teil);
-        }
-    }
 
-    private void importArbeitsplan(Sheet sheet) {
-        if (sheet == null) return;
-        for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
-            Cell teilIdCell = row.getCell(0);
-            Cell agNrCell = row.getCell(1);
-            Cell maschinenNrCell = row.getCell(2);
-            Cell dauerCell = row.getCell(3);
-            if (teilIdCell == null || agNrCell == null || maschinenNrCell == null || dauerCell == null) continue;
-            int teilId = (int) getNumericValue(teilIdCell);
-            int agNr = (int) getNumericValue(agNrCell);
-            String maschinenNr = maschinenNrCell.getStringCellValue();
-            int dauer = (int) getNumericValue(dauerCell);
-            Maschine maschine = Maschine.maschines.stream().filter(m -> m.getMaschinenNummer().equals(maschinenNr)).findFirst().orElse(null);
-            Arbeitsplan ap = new Arbeitsplan(agNr, maschine, dauer);
-            if (teilId < Teil.teils.size()) {
-                Teil.teils.get(teilId).setArbeitsplan(ap);
-            }
-            Arbeitsplan.arbeitsplans.add(ap);
-        }
-    }
-
-    private void importAuftrag(Sheet sheet) {
-        if (sheet == null) return;
-        Iterator<Teil> teilIterator = Teil.teils.iterator();
-        for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
-            Cell nrCell = row.getCell(0);
-            if (nrCell == null) continue;
-            String nr = nrCell.getStringCellValue();
-            if (teilIterator.hasNext()) {
-                Teil teil = teilIterator.next();
-                Auftrag auftrag = new Auftrag(nr, 0, 0, null, teil);
-                teil.setAuftrag(auftrag);
-                Auftrag.auftrags.add(auftrag);
-            }
-        }
-    }
 }

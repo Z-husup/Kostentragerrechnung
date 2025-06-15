@@ -24,36 +24,36 @@ public class AddWorkPlanController {
     }
 
     @FXML
-    private TextField arbeitsgangNummer;
+    private TextField arbeitsgangNummerField;
 
     @FXML
-    private ComboBox<String> teilNummerCombo;
+    private ComboBox<String> teilCombo;
 
     @FXML
-    private TextField bearbeitungsdauerMin;
+    private ComboBox<String> maschinenCombo;
 
     @FXML
-    private ComboBox<String> maschinenNummer;
+    private TextField bearbeitungsdauerMinField;
 
     @FXML
     public void initialize() {
         // 🧩 Fill Teil ComboBox
-        teilNummerCombo.getItems().clear();
-        Teil.teils.forEach(t -> teilNummerCombo.getItems().add(t.getTeilNummer()));
+        teilCombo.getItems().clear();
+        Teil.teils.forEach(t -> teilCombo.getItems().add(t.getTeilNummer()));
 
         // ⚙️ Fill Maschine ComboBox
-        maschinenNummer.getItems().clear();
-        Maschine.maschines.forEach(m -> maschinenNummer.getItems().add(m.getMaschinenNummer()));
+        maschinenCombo.getItems().clear();
+        Maschine.maschines.forEach(m -> maschinenCombo.getItems().add(m.getMaschinenNummer()));
     }
 
     @FXML
     public void handleSave(ActionEvent actionEvent) {
         try {
-            int agNr = Integer.parseInt(arbeitsgangNummer.getText().trim());
-            int dauer = Integer.parseInt(bearbeitungsdauerMin.getText().trim());
+            int agNr = Integer.parseInt(arbeitsgangNummerField.getText().trim());
+            int dauer = Integer.parseInt(bearbeitungsdauerMinField.getText().trim());
 
-            String teilNr = teilNummerCombo.getValue();
-            String maschineNr = maschinenNummer.getValue();
+            String teilNr = teilCombo.getValue();
+            String maschineNr = maschinenCombo.getValue();
 
             if (teilNr == null || maschineNr == null) {
                 showAlert("Fehlende Auswahl", "Bitte wählen Sie sowohl Teil als auch Maschine aus.");
@@ -76,7 +76,6 @@ public class AddWorkPlanController {
             }
 
             Arbeitsplan ap = new Arbeitsplan(agNr, maschine, dauer);
-            Arbeitsplan.arbeitsplans.add(ap);
             teil.setArbeitsplan(ap);
 
             saved = true;

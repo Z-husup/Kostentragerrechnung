@@ -52,8 +52,6 @@ public class ResultPageController {
 
     @FXML private TableView<Teil> partsTable;
     @FXML private TableColumn<Teil, String> teilNummer;
-    @FXML private TableColumn<Teil, String> teilAuftrag;
-    @FXML private TableColumn<Teil, String> teilOberTeil;
     @FXML private TableColumn<Teil, Integer> teilAnzahl;
     @FXML private TableColumn<Teil, String> teilArbeitsplanNummer;
     @FXML private TableColumn<Teil, String> teilMaterialNummer;
@@ -92,10 +90,6 @@ public class ResultPageController {
 
         // === TEIL ===
         teilNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTeilNummer()));
-        teilAuftrag.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getAuftrag() != null ? data.getValue().getAuftrag().getAuftragNummer() : ""));
-        teilOberTeil.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getParent() != null ? data.getValue().getParent().getTeilNummer() : ""));
         teilAnzahl.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getAnzahl()).asObject());
         teilArbeitsplanNummer.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getArbeitsplan() != null ? String.valueOf(data.getValue().getArbeitsplan().getArbeitsgangNummer()) : ""));

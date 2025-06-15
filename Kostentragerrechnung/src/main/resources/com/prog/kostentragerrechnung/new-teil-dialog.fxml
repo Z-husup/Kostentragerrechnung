@@ -34,8 +34,8 @@
          </font>
       </Label>
       <ComboBox fx:id="materialCombo" layoutX="131.0" layoutY="383.0" prefHeight="25.0" prefWidth="262.0" />
-      <ComboBox fx:id="auftragCombo" layoutX="135.0" layoutY="136.0" prefHeight="25.0" prefWidth="262.0" />
-      <ComboBox fx:id="oberTeilCombo" layoutX="136.0" layoutY="185.0" prefHeight="25.0" prefWidth="262.0" />
+      <ComboBox fx:id="auftragCombo" disable="true" layoutX="135.0" layoutY="136.0" prefHeight="25.0" prefWidth="262.0" />
+      <ComboBox fx:id="oberTeilCombo" disable="true" layoutX="136.0" layoutY="185.0" prefHeight="25.0" prefWidth="262.0" />
       <Label layoutX="36.0" layoutY="353.0" text="Arbeitsplan:">
          <font>
             <Font size="14.0" />

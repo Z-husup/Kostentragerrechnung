@@ -8,10 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 public class Material {
 
-    private static int nextId = 1;
+    private static int nextId = 0;
 
     private int materialId; //id
 
@@ -24,8 +23,17 @@ public class Material {
     public Material(String materialNummer, double kostenProStueck) {
         this.nextId++;
 
+        this.materialId = nextId;
         this.materialNummer = materialNummer;
         this.kostenProStueck = kostenProStueck;
+
+        materials.add(this);
+    }
+
+    public Material(){
+        this.nextId++;
+
+        this.materialId = nextId;
 
         materials.add(this);
     }

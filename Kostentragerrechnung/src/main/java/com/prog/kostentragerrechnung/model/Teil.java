@@ -9,17 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 public class Teil {
 
-    private static int nextId = 1;
+    private static int nextId = 0;
 
     private int teilId; //id
 
     private String teilNummer; //teil_nr
 
-    private Auftrag auftrag; //knoten_auftrag
-    private Teil parent; //knoten_parent
     private List<Teil> children; //knoten_children
 
     private double materialkosten; //K_mat
@@ -40,16 +37,13 @@ public class Teil {
                 ", anzahl=" + anzahl +
                 ", material=" + (material != null ? material.getMaterialNummer() : "null") +
                 ", arbeitsplan=" + (arbeitsplan != null ? arbeitsplan.toString() : "null") +
-                ", auftragNr=" + (auftrag != null ? auftrag.getAuftragNummer() : "null") +
                 '}';
     }
 
-
-    public Teil(Auftrag auftrag, Teil parent, List<Teil> children, double materialkosten, double fertigungskosten, int anzahl, Arbeitsplan arbeitsplan, Material material, String teilNummer) {
+    public Teil(List<Teil> children, double materialkosten, double fertigungskosten, int anzahl, Arbeitsplan arbeitsplan, Material material, String teilNummer) {
         this.nextId++;
 
-        this.auftrag = auftrag;
-        this.parent = parent;
+        this.teilId = nextId;
         this.children = children;
         this.materialkosten = materialkosten;
         this.fertigungskosten = fertigungskosten;
@@ -61,27 +55,33 @@ public class Teil {
         teils.add(this);
     }
 
-    public void berechneKosten() {
-        // 🔹 K_mat: Materialkosten berechnen
-        if (this.material != null) {
-            for (Material mat : Material.materials) {
-                if (this.material.getMaterialNummer().equals(mat.getMaterialNummer())) {
-                    this.materialkosten = mat.getKostenProStueck() * this.anzahl;
-                    break;
-                }
-            }
-        }
+    public Teil() {
+        this.nextId++;
 
-        // 🔹 K_fert: Fertigungskosten berechnen aus dem einen zugeordneten Arbeitsplan
-        if (this.arbeitsplan != null && this.arbeitsplan.getMaschine() != null) {
-            Maschine maschine = this.arbeitsplan.getMaschine();
-            double ruestMinuten = 0;
-            double stueckMinuten = this.arbeitsplan.getBearbeitungsdauerMin();
-            double kostensatzProMinute = maschine.getKostensatzProStunde() / 60.0;
-            this.fertigungskosten = (ruestMinuten + stueckMinuten) * kostensatzProMinute;
-        }
+        this.teilId = nextId;
+
+        teils.add(this);
     }
 
-
+//    public void berechneKosten() {
+//        // 🔹 K_mat: Materialkosten berechnen
+//        if (this.material != null) {
+//            for (Material mat : Material.materials) {
+//                if (this.material.getMaterialNummer().equals(mat.getMaterialNummer())) {
+//                    this.materialkosten = mat.getKostenProStueck() * this.anzahl;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        // 🔹 K_fert: Fertigungskosten berechnen aus dem einen zugeordneten Arbeitsplan
+//        if (this.arbeitsplan != null && this.arbeitsplan.getMaschine() != null) {
+//            Maschine maschine = this.arbeitsplan.getMaschine();
+//            double ruestMinuten = 0;
+//            double stueckMinuten = this.arbeitsplan.getBearbeitungsdauerMin();
+//            double kostensatzProMinute = maschine.getKostensatzProStunde() / 60.0;
+//            this.fertigungskosten = (ruestMinuten + stueckMinuten) * kostensatzProMinute;
+//        }
+//    }
 
 }

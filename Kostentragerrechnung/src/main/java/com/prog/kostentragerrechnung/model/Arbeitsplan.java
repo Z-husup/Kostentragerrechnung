@@ -8,10 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 public class Arbeitsplan {
 
-    private static int nextId = 1;
+    private static int nextId = 0;
 
     private int arbeitsplanId; //id
 
@@ -26,9 +25,18 @@ public class Arbeitsplan {
     public Arbeitsplan(int arbeitsgangNummer, Maschine maschine, int bearbeitungsdauerMin) {
         this.nextId++;
 
+        this.arbeitsplanId = nextId;
         this.arbeitsgangNummer = arbeitsgangNummer;
         this.maschine = maschine;
         this.bearbeitungsdauerMin = bearbeitungsdauerMin;
+
+        arbeitsplans.add(this);
+    }
+
+    public Arbeitsplan(){
+        this.nextId++;
+
+        this.arbeitsplanId = nextId;
 
         arbeitsplans.add(this);
     }

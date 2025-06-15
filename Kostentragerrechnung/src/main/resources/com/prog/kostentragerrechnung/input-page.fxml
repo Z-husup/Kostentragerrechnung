@@ -69,7 +69,7 @@
                 <children>
                     <TableView fx:id="machinesTable" layoutY="60.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
                         <columns>
-                            <TableColumn fx:id="maschinenId" text="Maschinen-ID" />
+                            <TableColumn fx:id="maschineId" text="Maschinen-ID" />
                             <TableColumn fx:id="maschinenNummer" text="Maschinen Nummer" />
                             <TableColumn fx:id="bezeichnung" text="Bezeichnung" />
                             <TableColumn fx:id="kostensatzProStunde" text="Kostensatz Pro Stunde" />
@@ -120,7 +120,6 @@
                         <columns>
                             <TableColumn fx:id="arbeitsplanId" text="Arbeitsplan-ID" />
                             <TableColumn fx:id="arbeitsgangNummer" text="Arbeitsgang Nummer" />
-                            <TableColumn fx:id="teilNummerArbeitsplan" text="Teil-Nummer" />
                             <TableColumn fx:id="maschinenNummerArbeitsplan" text="Maschinen Nummer" />
                             <TableColumn fx:id="bearbeitungsdauerMin" text="Bearbeitungs Dauer Min" />
                         </columns>

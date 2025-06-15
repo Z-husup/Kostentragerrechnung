@@ -17,6 +17,8 @@ public class Teil {
 
     private String teilNummer; //teil_nr
 
+    private Auftrag auftrag;    // knoten_auftrag
+    private Teil oberteil;      // knoten_oberteil
     private List<Teil> children; //knoten_children
 
     private double materialkosten; //K_mat

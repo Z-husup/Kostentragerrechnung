@@ -149,7 +149,6 @@ public class ImportService {
         Map<String, String> parentRelation = new HashMap<>();
         Map<String, String> auftragRelation = new HashMap<>();
 
-        // 🔁 First pass: create all Teil objects
         for (Row row : sheet) {
             if (row == null || row.getRowNum() == 0) continue;
 
@@ -179,7 +178,6 @@ public class ImportService {
             if (!auftragNr.isEmpty()) auftragRelation.put(teilNr, auftragNr);
         }
 
-        // 🔁 Second pass: link Teil to parent (children list)
         for (Map.Entry<String, String> entry : parentRelation.entrySet()) {
             String childNr = entry.getKey();
             String parentNr = entry.getValue();
@@ -189,10 +187,10 @@ public class ImportService {
 
             if (child != null && parent != null && !childNr.equals(parentNr)) {
                 parent.getChildren().add(child);
+                child.setOberteil(parent);
             }
         }
 
-        // 🔁 Second pass: link Teil to Auftrag
         for (Map.Entry<String, String> entry : auftragRelation.entrySet()) {
             String teilNr = entry.getKey();
             String auftragNr = entry.getValue();
@@ -205,12 +203,13 @@ public class ImportService {
 
             if (teil != null && auftrag != null) {
                 auftrag.addTeil(teil);
+                teil.setAuftrag(auftrag);
             }
         }
 
-        // ✅ Add to global list
         Teil.teils.addAll(teilMap.values());
     }
+
 
     private void importArbeitsplan(Sheet sheet) {
         if (sheet == null) return;

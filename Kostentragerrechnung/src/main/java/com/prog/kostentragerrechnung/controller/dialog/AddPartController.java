@@ -137,13 +137,19 @@ public class AddPartController {
             }
 
             // ✅ Construct Teil
-            Teil teil = new Teil(new ArrayList<>(), 0, 0, anzahl, arbeitsplan, material, teilNr);
+            Teil teil = new Teil();
+            teil.setTeilNummer(teilNr);
+            teil.setAnzahl(anzahl);
+            teil.setMaterial(material);
+            teil.setArbeitsplan(arbeitsplan);
+            teil.setChildren(new ArrayList<>());
+
+            if (oberTeil != null) {
+                oberTeil.getChildren().add(teil);
+            }
 
             if (auftrag != null) {
                 auftrag.addTeil(teil);
-            }
-            if (arbeitsplan != null) {
-                teil.setArbeitsplan(arbeitsplan);
             }
 
             Teil.teils.add(teil);
@@ -154,6 +160,7 @@ public class AddPartController {
             showAlert("Fehler beim Speichern", "Bitte überprüfen Sie die Eingaben.\n" + e.getMessage());
         }
     }
+
 
 
     private void showAlert(String title, String content) {

@@ -63,6 +63,8 @@ public class InputPageController {
     @FXML private TableColumn<Teil, String> teilMaterialNummer;
     @FXML private TableColumn<Teil, Double> teilMaterialkosten;
     @FXML private TableColumn<Teil, Double> teilFertigungskosten;
+    @FXML private TableColumn<Teil, String> teilAuftrag;
+    @FXML private TableColumn<Teil, String> teilOberTeil;
 
     // === Buttons ===
     @FXML private Button calculateButton;
@@ -106,6 +108,10 @@ public class InputPageController {
         teilId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getTeilId()).asObject());
         teilNummer.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTeilNummer()));
         teilAnzahl.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getAnzahl()).asObject());
+        teilAuftrag.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getAuftrag() != null ? data.getValue().getAuftrag().getAuftragNummer() : ""));
+        teilOberTeil.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getOberteil() != null ? data.getValue().getOberteil().getTeilNummer() : ""));
         teilArbeitsplanNummer.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getArbeitsplan() != null ? String.valueOf(data.getValue().getArbeitsplan().getArbeitsplanId()) : ""));
         teilMaterialNummer.setCellValueFactory(data -> new SimpleStringProperty(

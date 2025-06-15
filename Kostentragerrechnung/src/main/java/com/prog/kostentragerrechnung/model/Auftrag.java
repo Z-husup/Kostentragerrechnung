@@ -67,58 +67,37 @@ public class Auftrag {
         this.teil.add(teil);
     }
 
-    public void removeTeil(Teil teil) {}
+    public void berechneKosten() {
+        this.materialkosten = 0;
+        this.fertigungskosten = 0;
+        this.datumKostenrechnung = LocalDate.now();
 
-    public void removeAllTeil() {
-        this.teil = null;
-    }
-
-    public void addAllTeil(List<Teil> teil) {
-        if (this.teil == null) {
-            this.teil = new ArrayList<>();
+        if (this.teil != null) {
+            for (Teil teil : this.teil) {
+                teil.berechneKosten(true); // 🔁 includes children
+                this.materialkosten += teil.getMaterialkosten() * teil.getAnzahl();
+                this.fertigungskosten += teil.getFertigungskosten() * teil.getAnzahl();
+            }
         }
-        this.teil.addAll(teil);
+
+        // 🎯 Round both
+        this.materialkosten = Math.round(this.materialkosten * 100.0) / 100.0;
+        this.fertigungskosten = Math.round(this.fertigungskosten * 100.0) / 100.0;
     }
 
-//    public void berechneKosten() {
-//        double sumMat = 0;
-//        double sumFert = 0;
-//
-//        if (this.teil != null) {
-//            sumMat += berechneTeilKostenRekursiv(this.teil, true);
-//            sumFert += berechneTeilFertigungskostenRekursiv(this.teil, true);
-//        }
-//
-//        this.materialkosten = sumMat;
-//        this.fertigungskosten = sumFert;
-//        this.datumKostenrechnung = LocalDate.now();
-//    }
-//
-//    private double berechneTeilKostenRekursiv(Teil teil, boolean callBerechne) {
-//        if (callBerechne) teil.berechneKosten();
-//        double sum = teil.getMaterialkosten();
-//        if (teil.getChildren() != null) {
-//            for (Teil child : teil.getChildren()) {
-//                for (int i = 0; i < child.getAnzahl(); i++){
-//                    sum += berechneTeilKostenRekursiv(child, true);
-//                }
-//            }
-//        }
-//        return sum;
-//    }
-//
-//    private double berechneTeilFertigungskostenRekursiv(Teil teil, boolean callBerechne) {
-//        if (callBerechne) teil.berechneKosten();
-//        double sum = teil.getFertigungskosten();
-//        if (teil.getChildren() != null) {
-//            for (Teil child : teil.getChildren()) {
-//                for (int i = 0; i < child.getAnzahl(); i++){
-//                    sum += berechneTeilFertigungskostenRekursiv(child, true);
-//                }
-//            }
-//        }
-//        return sum;
-//    }
+
+    public static void berechneAlleKosten() {
+        for (Auftrag a : auftrags) {
+            a.berechneKosten();
+            a.printKosten();
+        }
+    }
+    public void printKosten() {
+        System.out.printf("Auftrag %s:\n  K_mat=%.2f €\n  K_fert=%.2f €\n  Gesamt=%.2f €\n",
+                auftragNummer, materialkosten, fertigungskosten, materialkosten + fertigungskosten);
+    }
+
+
 
 
 }

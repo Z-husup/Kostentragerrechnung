@@ -169,6 +169,7 @@ public class ImportService {
             Teil teil = new Teil();
             teil.setTeilId(Integer.parseInt(teilId));
             teil.setTeilNummer(teilNr);
+            teil.setBezeichnung("(optional)");
             teil.setAnzahl(anzahl);
             teil.setMaterial(material);
             teil.setChildren(new ArrayList<>());

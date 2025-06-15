@@ -68,25 +68,38 @@ public class Teil {
         teils.add(this);
     }
 
-//    public void berechneKosten() {
-//        // 🔹 K_mat: Materialkosten berechnen
-//        if (this.material != null) {
-//            for (Material mat : Material.materials) {
-//                if (this.material.getMaterialNummer().equals(mat.getMaterialNummer())) {
-//                    this.materialkosten = mat.getKostenProStueck() * this.anzahl;
-//                    break;
-//                }
-//            }
-//        }
-//
-//        // 🔹 K_fert: Fertigungskosten berechnen aus dem einen zugeordneten Arbeitsplan
-//        if (this.arbeitsplan != null && this.arbeitsplan.getMaschine() != null) {
-//            Maschine maschine = this.arbeitsplan.getMaschine();
-//            double ruestMinuten = 0;
-//            double stueckMinuten = this.arbeitsplan.getBearbeitungsdauerMin();
-//            double kostensatzProMinute = maschine.getKostensatzProStunde() / 60.0;
-//            this.fertigungskosten = (ruestMinuten + stueckMinuten) * kostensatzProMinute;
-//        }
-//    }
+    public void berechneKosten(boolean recursive) {
+        // 🔹 Direct Materialkosten
+        if (this.material != null) {
+            this.materialkosten = this.material.getKostenProStueck() * this.anzahl;
+        } else {
+            this.materialkosten = 0;
+        }
+
+        // 🔹 Direct Fertigungskosten
+        if (this.arbeitsplan != null && this.arbeitsplan.getMaschine() != null) {
+            Maschine maschine = this.arbeitsplan.getMaschine();
+            double dauer = this.arbeitsplan.getBearbeitungsdauerMin();
+            double kostensatzProMinute = maschine.getKostensatzProStunde() / 60.0;
+            this.fertigungskosten = dauer * kostensatzProMinute;
+        } else {
+            this.fertigungskosten = 0;
+        }
+
+        // 🔁 Child costs (if recursive is true)
+        if (recursive && this.children != null) {
+            for (Teil child : this.children) {
+                child.berechneKosten(true); // recursion
+                this.materialkosten += child.getMaterialkosten() * child.getAnzahl();
+                this.fertigungskosten += child.getFertigungskosten() * child.getAnzahl();
+            }
+        }
+
+        // 🎯 Round both
+        this.materialkosten = Math.round(this.materialkosten * 100.0) / 100.0;
+        this.fertigungskosten = Math.round(this.fertigungskosten * 100.0) / 100.0;
+    }
+
+
 
 }

@@ -20,9 +20,6 @@ module com.prog.kostentragerrechnung {
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
 
-    // JUnit (for test-time reflective access only)
-    opens com.prog.kostentragerrechnung.service to org.junit.platform.commons;
-
     // JavaFX controller/model binding
     opens com.prog.kostentragerrechnung to javafx.fxml;
     opens com.prog.kostentragerrechnung.controller to javafx.fxml;

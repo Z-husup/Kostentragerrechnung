@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.ResultPageController">
+<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.ResultPageController">
    <children>
       <TabPane layoutY="93.0" prefHeight="627.0" prefWidth="1077.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -100,7 +91,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="exportSQLButton" layoutX="484.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportSQL" prefHeight="29.0" prefWidth="182.0" text="Export SQL" />
+      <Button fx:id="exportSQLButton" layoutX="484.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportSQL" prefHeight="29.0" prefWidth="182.0" text="Export SQL" visible="false" />
       <Button fx:id="exportExcelButton" layoutX="691.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportExcel" prefHeight="29.0" prefWidth="161.0" text="Export Excel" />
       <Button fx:id="returnButton" layoutX="881.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="29.0" prefWidth="182.0" text="Return" />
    </children>

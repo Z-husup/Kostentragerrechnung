@@ -4,14 +4,15 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddPartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddPartController">
    <children>
-      <TextField fx:id="teilNummerField" layoutX="168.0" layoutY="89.0" prefHeight="25.0" prefWidth="228.0" />
-      <Label layoutX="164.0" layoutY="33.0" text="New Teil:">
+      <TextField fx:id="teilNummerField" layoutX="168.0" layoutY="89.0" prefHeight="25.0" prefWidth="228.0" promptText="0001" />
+      <Label layoutX="41.0" layoutY="33.0" text="Teil:">
          <font>
             <Font size="18.0" />
          </font>
@@ -21,8 +22,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="36.0" layoutY="446.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="Add New Row" />
-      <TextField fx:id="anzahlField" layoutX="133.0" layoutY="339.0" prefHeight="25.0" prefWidth="262.0" />
+      <Button layoutX="36.0" layoutY="446.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="neue Zeile hinzufügen" />
+      <TextField fx:id="anzahlField" layoutX="133.0" layoutY="339.0" prefHeight="25.0" prefWidth="262.0" promptText="123" />
       <Label layoutX="41.0" layoutY="342.0" text="Anzahl:">
          <font>
             <Font size="14.0" />
@@ -38,11 +39,12 @@
       <ComboBox fx:id="oberTeilCombo" disable="true" layoutX="137.0" layoutY="254.0" prefHeight="25.0" prefWidth="262.0" />
       <CheckBox fx:id="auftragCheckBox" layoutX="38.0" layoutY="210.0" mnemonicParsing="false" onAction="#makeAuftragTeil" text="Auftrag" />
       <CheckBox fx:id="oberTeilCheckBox" layoutX="38.0" layoutY="258.0" mnemonicParsing="false" onAction="#makeChildrenTeil" text="Ober Teil" />
-      <TextField fx:id="teilBezeichnungField" layoutX="169.0" layoutY="140.0" prefHeight="25.0" prefWidth="228.0" />
+      <TextField fx:id="teilBezeichnungField" layoutX="169.0" layoutY="140.0" prefHeight="25.0" prefWidth="228.0" promptText="optional" />
       <Label layoutX="40.0" layoutY="143.0" text="Bezeichnung:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <TextArea editable="false" layoutX="451.0" layoutY="33.0" prefHeight="444.0" prefWidth="291.0" text="Hilfe – Teil erfassen&#10;Teil Nummer&#10;Eindeutige Kennung des Teils zur Identifikation.&#10;&#10;Bezeichnung&#10;Optionaler Name des Teils zur besseren Lesbarkeit.&#10;&#10;Auftrag&#10;Zuordnung zu einem bestehenden Auftrag (für Kostenrechnung erforderlich).&#10;&#10;Ober Teil&#10;Verknüpfung als Unterbaugruppe eines anderen Teils.&#10;&#10;Anzahl&#10;Verwendete Stückzahl – beeinflusst die Kosten.&#10;&#10;Material&#10;Zugewiesenes Material mit festgelegten Kosten pro Stück.&#10;&#10;Beschreibung&#10;Optionaler Freitext für Hinweise oder Dokumentation. Wird nicht berechnet." wrapText="true" />
    </children>
 </AnchorPane>

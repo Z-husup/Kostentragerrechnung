@@ -3,13 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddWorkPlanController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.dialog.AddWorkPlanController">
    <children>
-      <Label layoutX="164.0" layoutY="33.0" text="New Arbeitsplan:">
+      <Label layoutX="39.0" layoutY="40.0" text="Arbeitsplan:">
          <font>
             <Font size="18.0" />
          </font>
@@ -25,7 +26,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="36.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="Add New Row" />
+      <Button layoutX="36.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="neue Zeile hinzufügen" />
       <Label layoutX="41.0" layoutY="177.0" text="Maschinen:">
          <font>
             <Font size="14.0" />
@@ -39,5 +40,6 @@
          </font>
       </Label>
       <ComboBox fx:id="maschinenCombo" layoutX="192.0" layoutY="174.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextArea editable="false" layoutX="466.0" layoutY="20.0" prefHeight="360.0" prefWidth="233.0" text="Hilfe – Arbeitsplan erfassen&#10;Teil: Auswahl des zu bearbeitenden Teils.&#10;&#10;Arbeitsgang Nummer: Eindeutige &#10;Nummer für den Bearbeitungsschritt.&#10;&#10;Maschinen: Auswahl der Maschine, die für diesen Arbeitsschritt verwendet wird.&#10;&#10;Bearbeitungsdauer (Min): Zeit in Minuten, die der Arbeitsschritt benötigt." wrapText="true" />
    </children>
 </AnchorPane>

@@ -32,8 +32,8 @@
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                     </TableView>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openOrderDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteAuftrag" text="Delete Row" />
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openOrderDialogButtonAction" text="Neue Zeile" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteAuftrag" text="löschen" />
                 </children>
             </AnchorPane>
         </content>
@@ -56,8 +56,8 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                 </columnResizePolicy>
                             </TableView>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMaterialDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteMaterial" text="Delete Row" />
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMaterialDialogButtonAction" text="Neue Zeile" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteMaterial" text="löschen" />
                         </children>
                     </AnchorPane>
                 </content>
@@ -78,8 +78,8 @@
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                     </TableView>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMaschineDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteMaschine" text="Delete Row" />
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMaschineDialogButtonAction" text="Neue Zeile" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteMaschine" text="löschen" />
                 </children>
             </AnchorPane>
         </content>
@@ -106,8 +106,8 @@
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                     </TableView>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openPartDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteTeil" text="Delete Row" />
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openPartDialogButtonAction" text="Neue Zeile" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteTeil" text="löschen" />
                 </children>
             </AnchorPane>
         </content>
@@ -128,8 +128,8 @@
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                     </TableView>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openWorkPlanDialogButtonAction" text="New Row" />
-                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteArbeitsplan" text="Delete Row" />
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openWorkPlanDialogButtonAction" text="Neue Zeile" />
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteArbeitsplan" text="löschen" />
                 </children>
             </AnchorPane>
         </content>

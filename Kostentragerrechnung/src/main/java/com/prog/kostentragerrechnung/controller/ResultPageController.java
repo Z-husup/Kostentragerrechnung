@@ -19,7 +19,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.lang.Math.round;
 
@@ -52,19 +55,19 @@ public class ResultPageController {
     @FXML private TableColumn<Teil, String> teilAuftrag;
     @FXML private TableColumn<Teil, String> teilOberTeil;
 
-    @FXML private TreeView<String> reportTreeView;
     @FXML private TreeView<String> entityTreeView;
+    @FXML private TreeView<String> reportTreeView;
+    @FXML private BarChart<String, Number> reportBarChart;
 
     // === Buttons ===
-    @FXML private Button calculateButton;
-    @FXML private Button importExcelButton;
-    @FXML private Button helpButton;
-    @FXML private Label fileLabel;
+    @FXML private Button exportSQLButton;
+    @FXML private Button exportExcelButton;
+    @FXML private Button returnButton;
 
     @FXML
     public void initialize() {
         refreshTables();
-        fillReportTreeView();
+        fillReportTreeView(reportTreeView, reportBarChart);
         buildEntityTree();
     }
 
@@ -99,13 +102,11 @@ public class ResultPageController {
 
     @FXML
     public void handleExportSQL() throws SQLException {
-        importService.importExcel(importExcelButton, fileLabel, DBManager.getConnection());
-        refreshTables();
+
     }
 
     @FXML private void handleExportExcel(ActionEvent event) {
-        calculationService.calculateCosts();
-        Application.switchScene("result-page.fxml");
+
     }
 
     @FXML
@@ -129,38 +130,45 @@ public class ResultPageController {
         }
     }
 
-    public void fillReportTreeView() {
-        TreeItem<String> rootItem = new TreeItem<>("📦 Aufträge");
-        rootItem.setExpanded(true);
+    public void fillReportTreeView(TreeView<String> reportTreeView, BarChart<String, Number> barChart) {
+        TreeItem<String> root = new TreeItem<>("📦 Maschinenberichte");
+        root.setExpanded(true);
 
-        for (Auftrag auftrag : Auftrag.auftrags) {
-            TreeItem<String> auftragItem = new TreeItem<>("📁 Auftrag: " + auftrag.getAuftragNummer());
+        Map<String, Integer> maschinenZeiten = new HashMap<>();
 
-            for (Teil teil : auftrag.getTeil()) {
-                Report report = new Report().createReport(teil, true);
+        for (Teil teil : Teil.teils) {
+            Report report = new Report().createReport(teil, true);
+            String maschineNr = report.getMaschineNummer();
 
-                TreeItem<String> teilItem = new TreeItem<>("🔧 Teil: " + report.getTeilNummer());
+            TreeItem<String> teilItem = new TreeItem<>("🧩 Teil: " + report.getTeilNummer());
 
-                TreeItem<String> anzahlItem = new TreeItem<>("📦 Anzahl: " + report.getAnzahl());
-                TreeItem<String> matTypItem = new TreeItem<>("🔩 Materialtyp: " + report.getMaterialTyp());
-                TreeItem<String> maschineItem = new TreeItem<>("⚙️ Maschine: " + report.getMaschineNummer());
+            teilItem.getChildren().add(new TreeItem<>("📦 Auftrag: " + report.getAuftragNummer()));
+            teilItem.getChildren().add(new TreeItem<>("⚙️ Maschine: " + maschineNr));
+            teilItem.getChildren().add(new TreeItem<>("⏱ Bearbeitungsdauer: " + report.getBearbeitungsdauerMin() + " min"));
+            teilItem.getChildren().add(new TreeItem<>("🛑 Limit überschritten: " + (report.isZeitLimitUeberschritten() ? "✅ Ja" : "❌ Nein")));
 
-                TreeItem<String> kostenItem = new TreeItem<>("💶 Kosten");
-                kostenItem.getChildren().add(new TreeItem<>("Materialkosten: " + report.getMaterialkosten() + " €"));
-                kostenItem.getChildren().add(new TreeItem<>("Materialgemeinkosten: " + report.getMaterialgemeinkosten() + " €"));
-                kostenItem.getChildren().add(new TreeItem<>("Fertigungskosten: " + report.getFertigungskosten() + " €"));
-                kostenItem.getChildren().add(new TreeItem<>("Fertigungsgemeinkosten: " + report.getFertigungsgemeinkosten() + " €"));
-                kostenItem.getChildren().add(new TreeItem<>("Herstellkosten: " + report.getHerstellkosten() + " €"));
+            root.getChildren().add(teilItem);
 
-                teilItem.getChildren().addAll(anzahlItem, matTypItem, maschineItem, kostenItem);
-                auftragItem.getChildren().add(teilItem);
+            if (maschineNr != null) {
+                maschinenZeiten.merge(maschineNr, report.getBearbeitungsdauerMin(), Integer::sum);
             }
-
-            rootItem.getChildren().add(auftragItem);
         }
 
-        reportTreeView.setRoot(rootItem);
+        reportTreeView.setRoot(root);
+
+        // 📊 BarChart anzeigen
+        barChart.getData().clear();
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Maschinen-Zeiten (min)");
+
+        for (Map.Entry<String, Integer> entry : maschinenZeiten.entrySet()) {
+            XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
+            series.getData().add(data);
+        }
+
+        barChart.getData().add(series);
     }
+
 
 
     public void buildEntityTree() {
@@ -185,7 +193,6 @@ public class ResultPageController {
                     if (teil.getArbeitsplan() != null) {
                         TreeItem<String> apItem = new TreeItem<>("⚙️ Arbeitsplan: AP" + teil.getArbeitsplan().getArbeitsgangNummer());
 
-                        // Maschine
                         if (teil.getArbeitsplan().getMaschine() != null) {
                             Maschine maschine = teil.getArbeitsplan().getMaschine();
                             String maschineInfo = "🛠 Maschine: " + maschine.getMaschinenNummer() +
@@ -196,6 +203,20 @@ public class ResultPageController {
                         teilItem.getChildren().add(apItem);
                     }
 
+                    // Report-Teil
+                    teil.berechneKosten(true); // актуализируем
+                    TreeItem<String> reportNode = new TreeItem<>("📊 Bericht:");
+                    reportNode.getChildren().add(new TreeItem<>("📌 Anzahl: " + teil.getAnzahl()));
+                    reportNode.getChildren().add(new TreeItem<>("💶 Materialkosten: " + String.format("%.2f", teil.getMaterialkosten()) + " €"));
+                    reportNode.getChildren().add(new TreeItem<>("💰 Materialgemeinkosten: " + String.format("%.2f", teil.getMaterialgemeinkosten()) + " €"));
+                    reportNode.getChildren().add(new TreeItem<>("🔧 Fertigungskosten: " + String.format("%.2f", teil.getFertigungskosten()) + " €"));
+                    reportNode.getChildren().add(new TreeItem<>("📈 Fertigungsgemeinkosten: " + String.format("%.2f", teil.getFertigungsgemeinkosten()) + " €"));
+                    reportNode.getChildren().add(new TreeItem<>("🧮 Herstellkosten: " + String.format("%.2f", teil.getHerstellkosten()) + " €"));
+                    reportNode.getChildren().add(new TreeItem<>("⏱ Dauer: " + (teil.getArbeitsplan() != null ? teil.getArbeitsplan().getBearbeitungsdauerMin() : 0) + " min"));
+                    reportNode.getChildren().add(new TreeItem<>("📅 Datum: " + LocalDate.now()));
+
+                    teilItem.getChildren().add(reportNode);
+
                     auftragItem.getChildren().add(teilItem);
                 }
             }
@@ -205,6 +226,7 @@ public class ResultPageController {
 
         entityTreeView.setRoot(root);
     }
+
 
 
 }

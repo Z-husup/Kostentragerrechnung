@@ -174,15 +174,6 @@ public class InputPageController {
         }
     }
 
-    @FXML
-    public void handleHelp() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Hilfe");
-        alert.setHeaderText("Bedienungshinweise");
-        alert.setContentText("Hier können Sie Daten importieren und Berechnungen starten.");
-        alert.showAndWait();
-    }
-
     @FXML private void handleDeleteMaterial() {
         Material selected = materialsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
@@ -222,4 +213,48 @@ public class InputPageController {
             partsTable.getItems().remove(selected);
         }
     }
+
+    @FXML
+    public void handleHelp() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Hilfe");
+        alert.setHeaderText("Herstellkosten: Kostenträgerrechnung – Bedienungshinweise");
+
+        String helpText = """
+        Diese Anwendung unterstützt die Erfassung und Auswertung von Daten zur Kostenrechnung.
+
+        ──────────────
+        ▶ Funktionen:
+        - "Import Excel": Lädt Daten zu Auftrag, Teil, Material, Maschine, Arbeitsplan.
+        - "Calculate": Führt alle Kostenberechnungen durch.
+        - "Export Excel/SQL": Exportiert die berechneten Daten.
+
+        ──────────────
+        ▶ Datenstruktur:
+        - Auftrag: Trägt zugehörige Teile, enthält keine Kosten direkt.
+        - Teil: Enthält Material, Arbeitsplan, und ggf. Unterteile.
+        - Material: Hat Stückkosten.
+        - Maschine: Hat Kostensatz pro Stunde.
+        - Arbeitsplan: Verknüpft Teil mit Maschine und Bearbeitungszeit.
+
+        ──────────────
+        ▶ Kostenarten:
+        - Materialkosten + 10% Materialgemeinkosten
+        - Fertigungskosten + 10% Fertigungsgemeinkosten
+        - Herstellkosten = Summe aller Komponenten
+
+        Alle Kosten gelten pro Stück in Euro (€).
+
+        ──────────────
+        ▶ Zusatzfunktionen:
+        - Diagramme zeigen Maschinenbelastung.
+        - Bericht zeigt Kostenstruktur je Teil.
+        """;
+
+        alert.setContentText(helpText);
+        alert.getDialogPane().setExpandableContent(new TextArea(helpText));
+        alert.getDialogPane().setExpanded(true);
+        alert.showAndWait();
+    }
+
 }

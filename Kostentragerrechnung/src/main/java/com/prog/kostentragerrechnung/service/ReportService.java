@@ -6,7 +6,9 @@ import com.prog.kostentragerrechnung.model.Teil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportService {
 
@@ -31,6 +33,30 @@ public class ReportService {
         r.setIstRecursive(recursive);
 
         return r;
+    }
+
+    public static Map<String, Double[]> generateMaterialKostenReport() {
+        Map<String, Double[]> materialMap = new HashMap<>();
+
+        for (Teil teil : Teil.teils) {
+            if (teil.getMaterial() == null) continue;
+
+            String typ = teil.getMaterial().getMaterialNummer();
+            double mat = teil.getMaterialkosten();
+            double matGK = teil.getMaterialgemeinkosten();
+
+            materialMap.putIfAbsent(typ, new Double[]{0.0, 0.0});
+
+            Double[] values = materialMap.get(typ);
+            values[0] += mat;
+            values[1] += matGK;
+
+            // округление
+            values[0] = Math.round(values[0] * 100.0) / 100.0;
+            values[1] = Math.round(values[1] * 100.0) / 100.0;
+        }
+
+        return materialMap;
     }
 
     public static List<Report> createReportsForAuftrag(Auftrag auftrag) {

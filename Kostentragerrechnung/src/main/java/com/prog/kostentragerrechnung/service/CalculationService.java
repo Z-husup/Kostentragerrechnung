@@ -14,6 +14,8 @@ import java.util.List;
 
 public class CalculationService {
 
+    private final Map<String, Integer> maschinenDauerMap = new HashMap<>();
+
     public void calculateCosts() {
         // 1. Запускаем расчет для всех Aufträge
         Auftrag.berechneAlleKosten();
@@ -65,6 +67,48 @@ public class CalculationService {
             System.out.println("   ➤ Datum: " + r.getBerechnungsdatum());
             System.out.println("   ➤ Recursive: " + r.isIstRecursive());
             System.out.println("-------------------------------------------------------");
+        }
+
+        Map<String, Double[]> report = ReportService.generateMaterialKostenReport();
+        System.out.println("Kostenartenrechnung (Material):");
+        for (Map.Entry<String, Double[]> entry : report.entrySet()) {
+            System.out.println("🔹 Materialtyp: " + entry.getKey());
+            System.out.println("   - Materialkosten: " + entry.getValue()[0] + " €");
+            System.out.println("   - Materialgemeinkosten: " + entry.getValue()[1] + " €");
+        }
+
+    }
+
+    public void calculateCostsAndCheckLimits() {
+        Auftrag.berechneAlleKosten(); // ✅ Расчёт затрат
+
+        // 📊 Сброс Map
+        maschinenDauerMap.clear();
+
+        // 📦 Пробегаем по всем Teil
+        for (Teil teil : Teil.teils) {
+            if (teil.getArbeitsplan() != null && teil.getArbeitsplan().getMaschine() != null) {
+                String maschineNr = teil.getArbeitsplan().getMaschine().getMaschinenNummer();
+                int dauer = (int) teil.getArbeitsplan().getBearbeitungsdauerMin() * teil.getAnzahl();
+
+                maschinenDauerMap.merge(maschineNr, dauer, Integer::sum);
+            }
+        }
+
+        // 🔄 Создаём Report с проверкой лимита
+        for (Teil teil : Teil.teils) {
+            Report report = new Report().createReport(teil, true);
+
+            String maschineNr = report.getMaschineNummer();
+            if (maschineNr != null) {
+                int gesamtMin = maschinenDauerMap.getOrDefault(maschineNr, 0);
+                if (gesamtMin > 2400) {
+                    report.setZeitLimitUeberschritten(true);
+                }
+            }
+
+            // Вывод отчёта (в консоль или можно добавить в список)
+            System.out.println(report);
         }
     }
 }

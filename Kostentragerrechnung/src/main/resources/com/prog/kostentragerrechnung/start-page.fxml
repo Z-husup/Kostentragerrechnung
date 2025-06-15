@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.StartPageController">
+<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.StartPageController">
     <children>
       <Text layoutX="30.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Herstellkosten: Kostenträgerrechnung">
          <font>
@@ -16,7 +20,11 @@
         <tabs>
             <Tab text="die Auskunft">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea layoutX="523.0" layoutY="12.0" prefHeight="515.0" prefWidth="475.0" text="Verwendete Berechnungsformeln&#10;1. Materialkosten (K&lt;sub&gt;mat&lt;/sub&gt;)&#10;Kosten des direkt zugeordneten Materials je Teil multipliziert mit der Anzahl:&#10;&#10;K_mat = KostenProStück × Anzahl&#10;2. Materialgemeinkosten (K&lt;sub&gt;mat_gk&lt;/sub&gt;)&#10;Zuschlag auf Materialkosten, standardmäßig 10 %:&#10;&#10;K_mat_gk = K_mat × 0,10&#10;3. Fertigungskosten (K&lt;sub&gt;fert&lt;/sub&gt;)&#10;Berechnung auf Basis der Bearbeitungsdauer (in Minuten) und des Maschinensatzes (€/Stunde):&#10;&#10;K_fert = BearbeitungsdauerMinuten × (KostensatzProStunde / 60)&#10;4. Fertigungsgemeinkosten (K&lt;sub&gt;fert_gk&lt;/sub&gt;)&#10;Zuschlag auf Fertigungskosten, standardmäßig 10 %:&#10;&#10;K_fert_gk = K_fert × 0,10&#10;5. Herstellkosten (HK) pro Teil&#10;Summe aller Kostenarten für das Teil:&#10;&#10;HK = K_mat + K_mat_gk + K_fert + K_fert_gk&#10;6. Rekursive Kosten für Baugruppen&#10;Falls ein Teil Unterteile (Children) besitzt, werden deren Herstellkosten anteilig berücksichtigt:&#10;&#10;HK_total = HK_eigen + ∑ (HK_child × Anzahl_child)&#10;Dabei wird:&#10;&#10;HK_eigen für das aktuelle Teil berechnet&#10;&#10;HK_child für jedes Kindteil ebenfalls berechnet (rekursiv)&#10;&#10;7. Kapazitätsprüfung (Kostenstellenrechnung)&#10;Für jede Maschine wird die wöchentliche Gesamtbearbeitungszeit berechnet:&#10;&#10;Gesamtdauer = ∑ Bearbeitungsdauer aller Arbeitspläne dieser Maschine&#10;Maximal zulässig:&#10;&#10;Max. Zeit je Woche pro Maschine = 2400 Minuten (40 Stunden)&#10;Wird die Kapazität überschritten, wird dies im Report markiert (Limit überschritten: Ja)." wrapText="true" />
+                        <TextArea layoutX="8.0" layoutY="12.0" prefHeight="513.0" prefWidth="497.0" text="Einführung in das System zur Herstellkostenberechnung&#10;Diese Anwendung dient der modellbasierten Berechnung von Herstellkosten im Rahmen der Kostenträgerrechnung. Sie ist Bestandteil des internen Rechnungswesens und ermöglicht die differenzierte Analyse und Planung von Produktionskosten pro Auftrag und Einzelteil.&#10;&#10;Theoretische Grundlage&#10;Die Anwendung basiert auf den Prinzipien der Kostenrechnung, insbesondere:&#10;&#10;Kostenartenrechnung: Ermittlung von Materialkosten, Fertigungskosten sowie zugehöriger Gemeinkosten (Materialgemeinkosten und Fertigungsgemeinkosten – jeweils mit einem Zuschlagssatz von 10 %).&#10;&#10;Kostenträgerrechnung: Zuordnung der direkten und indirekten Kosten zu einzelnen Aufträgen oder Teilen. Dabei wird zwischen direkten Kosten (z. B. für ein Einzelteil) und kumulierten Kosten (einschließlich untergeordneter Teile) unterschieden.&#10;&#10;Kostenstellenrechnung: Analyse der Maschinenkosten nach Zuordnung der Arbeitspläne. Jede Maschine gilt als Kostenstelle. Die verfügbare Bearbeitungszeit ist auf 40 Stunden pro Woche begrenzt.&#10;&#10;Datenstruktur und Eingabe&#10;Das System arbeitet auf Basis tabellarischer Daten, die manuell oder per Excel-Import eingelesen werden. Die folgenden Entitäten werden verarbeitet:&#10;&#10;Aufträge: Enthalten zu fertigende Produkte (Teile).&#10;&#10;Teile: Einzel- oder Baugruppen mit Hierarchiebeziehungen (Ober-/Unterteile).&#10;&#10;Materialien: Mit Kosten pro Stück.&#10;&#10;Maschinen: Mit Stundensatz als Kostenstelle.&#10;&#10;Arbeitspläne: Definieren Maschinen und Bearbeitungsdauer je Teil.&#10;&#10;Berechnungslogik&#10;Die Kosten werden pro Teil und pro Auftrag berechnet. Für jedes Teil werden Material- und Fertigungskosten inklusive Zuschläge ermittelt. Falls ein Teil untergeordnete Komponenten enthält, werden deren Kosten rekursiv berücksichtigt.&#10;&#10;Die Ergebnisse werden strukturiert dargestellt und durch Berichte und Diagramme ergänzt." wrapText="true" />
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>

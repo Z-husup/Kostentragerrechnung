@@ -40,4 +40,40 @@ public class Maschine {
 
         maschines.add(this);
     }
+
+    public static void setNextId(int nextId) {
+        Maschine.nextId = nextId;
+    }
+
+    public int getMaschineId() {
+        return maschineId;
+    }
+
+    public void setMaschineId(int maschineId) {
+        this.maschineId = maschineId;
+    }
+
+    public String getMaschinenNummer() {
+        return maschinenNummer;
+    }
+
+    public void setMaschinenNummer(String maschinenNummer) {
+        this.maschinenNummer = maschinenNummer;
+    }
+
+    public String getBezeichnung() {
+        return bezeichnung;
+    }
+
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
+
+    public double getKostensatzProStunde() {
+        return kostensatzProStunde;
+    }
+
+    public void setKostensatzProStunde(double kostensatzProStunde) {
+        this.kostensatzProStunde = kostensatzProStunde;
+    }
 }

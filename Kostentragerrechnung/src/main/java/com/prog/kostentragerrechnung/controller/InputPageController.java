@@ -114,17 +114,27 @@ public class InputPageController {
         teilOberTeil.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getOberteil() != null ? data.getValue().getOberteil().getTeilNummer() : ""));
         teilArbeitsplanNummer.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getArbeitsplan() != null ? String.valueOf(data.getValue().getArbeitsplan().getArbeitsplanId()) : ""));
+                data.getValue().getArbeitsplan().isEmpty() ? "-" : String.valueOf(data.getValue().getArbeitsplan().get(0).getArbeitsplanId())
+        ));
         teilMaterialNummer.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getMaterial() != null ? data.getValue().getMaterial().getMaterialNummer() : ""));
         teilMaterialkosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getMaterialkosten()).asObject());
         teilFertigungskosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getFertigungskosten()).asObject());
 
-        materialsTable.getItems().setAll(Material.materials);
-        machinesTable.getItems().setAll(Maschine.maschines);
-        workPlanTable.getItems().setAll(Arbeitsplan.arbeitsplans);
-        auftragTable.getItems().setAll(Auftrag.auftrags);
-        partsTable.getItems().setAll(Teil.teils);
+        if (Material.materials != null)
+            materialsTable.getItems().setAll(Material.materials);
+
+        if (Maschine.maschines != null)
+            machinesTable.getItems().setAll(Maschine.maschines);
+
+        if (Arbeitsplan.arbeitsplans != null)
+            workPlanTable.getItems().setAll(Arbeitsplan.arbeitsplans);
+
+        if (Auftrag.auftrags != null)
+            auftragTable.getItems().setAll(Auftrag.auftrags);
+
+        if (Teil.teils != null)
+            partsTable.getItems().setAll(Teil.teils);
     }
 
     @FXML

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ReportService {
 
@@ -20,15 +21,26 @@ public class ReportService {
         r.setTeilNummer(teil.getTeilNummer());
         r.setAnzahl(teil.getAnzahl());
         r.setMaterialTyp(teil.getMaterial() != null ? teil.getMaterial().getMaterialNummer() : null);
-        r.setMaschineNummer(teil.getArbeitsplan() != null && teil.getArbeitsplan().getMaschine() != null
-                ? teil.getArbeitsplan().getMaschine().getMaschinenNummer() : null);
+        String maschinen = teil.getArbeitsplan().stream()
+                .filter(ap -> ap.getMaschine() != null)
+                .map(ap -> ap.getMaschine().getMaschinenNummer())
+                .distinct()
+                .collect(Collectors.joining(", "));
+
+        r.setMaschineNummer(maschinen.isEmpty() ? null : maschinen);
+
 
         r.setMaterialkosten(teil.getMaterialkosten());
         r.setMaterialgemeinkosten(teil.getMaterialgemeinkosten());
         r.setFertigungskosten(teil.getFertigungskosten());
         r.setFertigungsgemeinkosten(teil.getFertigungsgemeinkosten());
         r.setHerstellkosten(teil.getHerstellkosten());
-        r.setBearbeitungsdauerMin(teil.getArbeitsplan() != null ? (int) teil.getArbeitsplan().getBearbeitungsdauerMin() : 0);
+        int dauerSum = teil.getArbeitsplan().stream()
+                .mapToInt(ap -> (int) ap.getBearbeitungsdauerMin())
+                .sum();
+
+        r.setBearbeitungsdauerMin(dauerSum);
+
         r.setBerechnungsdatum(LocalDate.now());
         r.setIstRecursive(recursive);
 

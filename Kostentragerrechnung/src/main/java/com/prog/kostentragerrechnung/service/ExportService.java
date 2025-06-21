@@ -46,10 +46,22 @@ public class ExportService {
             row.createCell(4).setCellValue(teil.getMaterial() != null ? teil.getMaterial().getMaterialNummer() : "");
             row.createCell(5).setCellValue(teil.getMaterial() != null ? teil.getMaterial().getMaterialNummer() : "");
             row.createCell(6).setCellValue(teil.getMaterial() != null ? teil.getMaterial().getKostenProStueck() : 0);
-            row.createCell(7).setCellValue(teil.getArbeitsplan() != null && teil.getArbeitsplan().getMaschine() != null ? teil.getArbeitsplan().getMaschine().getMaschinenNummer() : "");
-            row.createCell(8).setCellValue(teil.getArbeitsplan() != null && teil.getArbeitsplan().getMaschine() != null ? teil.getArbeitsplan().getMaschine().getKostensatzProStunde() : 0);
-            row.createCell(9).setCellValue(String.valueOf(teil.getArbeitsplan() != null ? teil.getArbeitsplan().getArbeitsgangNummer() : ""));
-            row.createCell(10).setCellValue(teil.getArbeitsplan() != null ? teil.getArbeitsplan().getBearbeitungsdauerMin() : 0);
+
+            Arbeitsplan firstPlan = teil.getArbeitsplan() != null && !teil.getArbeitsplan().isEmpty()
+                    ? teil.getArbeitsplan().get(0) : null;
+
+            row.createCell(7).setCellValue(firstPlan != null && firstPlan.getMaschine() != null
+                    ? firstPlan.getMaschine().getMaschinenNummer() : "");
+
+            row.createCell(8).setCellValue(firstPlan != null && firstPlan.getMaschine() != null
+                    ? firstPlan.getMaschine().getKostensatzProStunde() : 0);
+
+            row.createCell(9).setCellValue(firstPlan != null
+                    ? String.valueOf(firstPlan.getArbeitsgangNummer()) : "");
+
+            row.createCell(10).setCellValue(firstPlan != null
+                    ? firstPlan.getBearbeitungsdauerMin() : 0);
+
             row.createCell(11).setCellValue(teil.getAuftrag() != null ? teil.getAuftrag().getAuftragNummer() : "");
             row.createCell(12).setCellValue(teil.getMaterialkosten());
             row.createCell(13).setCellValue(teil.getFertigungskosten());

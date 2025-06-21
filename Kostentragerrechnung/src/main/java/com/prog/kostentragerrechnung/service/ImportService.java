@@ -245,7 +245,7 @@ public class ImportService {
                     .orElse(null);
 
             if (teil != null) {
-                teil.setArbeitsplan(ap);
+                teil.getArbeitsplanList().add(ap);
             }
         }
     }

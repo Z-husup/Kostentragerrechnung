@@ -82,16 +82,19 @@ public class CalculationService {
     public void calculateCostsAndCheckLimits() {
         Auftrag.berechneAlleKosten(); // ✅ Расчёт затрат
 
-        // 📊 Сброс Map
-        maschinenDauerMap.clear();
+        maschinenDauerMap.clear(); // 📊 Сброс Map
 
         // 📦 Пробегаем по всем Teil
         for (Teil teil : Teil.teils) {
-            if (teil.getArbeitsplan() != null && teil.getArbeitsplan().getMaschine() != null) {
-                String maschineNr = teil.getArbeitsplan().getMaschine().getMaschinenNummer();
-                int dauer = (int) teil.getArbeitsplan().getBearbeitungsdauerMin() * teil.getAnzahl();
+            if (teil.getArbeitsplan() != null) {
+                for (Arbeitsplan plan : teil.getArbeitsplan()) {
+                    if (plan.getMaschine() != null) {
+                        String maschineNr = plan.getMaschine().getMaschinenNummer();
+                        int dauer = (int) plan.getBearbeitungsdauerMin() * teil.getAnzahl();
 
-                maschinenDauerMap.merge(maschineNr, dauer, Integer::sum);
+                        maschinenDauerMap.merge(maschineNr, dauer, Integer::sum);
+                    }
+                }
             }
         }
 
@@ -107,9 +110,9 @@ public class CalculationService {
                 }
             }
 
-            // Вывод отчёта (в консоль или можно добавить в список)
-            System.out.println(report);
+            System.out.println(report); // 💬 Optional: show in UI instead
         }
     }
+
 }
 

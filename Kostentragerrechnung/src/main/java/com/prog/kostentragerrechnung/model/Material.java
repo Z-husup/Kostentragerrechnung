@@ -37,4 +37,32 @@ public class Material {
 
         materials.add(this);
     }
+
+    public static void setNextId(int nextId) {
+        Material.nextId = nextId;
+    }
+
+    public int getMaterialId() {
+        return materialId;
+    }
+
+    public void setMaterialId(int materialId) {
+        this.materialId = materialId;
+    }
+
+    public String getMaterialNummer() {
+        return materialNummer;
+    }
+
+    public void setMaterialNummer(String materialNummer) {
+        this.materialNummer = materialNummer;
+    }
+
+    public double getKostenProStueck() {
+        return kostenProStueck;
+    }
+
+    public void setKostenProStueck(double kostenProStueck) {
+        this.kostenProStueck = kostenProStueck;
+    }
 }

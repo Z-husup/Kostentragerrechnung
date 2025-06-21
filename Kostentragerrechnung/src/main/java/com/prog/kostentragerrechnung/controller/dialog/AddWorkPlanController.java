@@ -76,7 +76,7 @@ public class AddWorkPlanController {
             }
 
             Arbeitsplan ap = new Arbeitsplan(agNr, maschine, dauer);
-            teil.setArbeitsplan(ap);
+            teil.getArbeitsplan().add(ap); // ✅ Append instead of overwrite
 
             saved = true;
             dialogStage.close();
@@ -85,6 +85,7 @@ public class AddWorkPlanController {
             showAlert("Fehler beim Speichern", "Bitte überprüfen Sie Ihre Eingaben:\n" + e.getMessage());
         }
     }
+
 
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

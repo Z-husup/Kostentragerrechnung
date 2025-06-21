@@ -97,7 +97,55 @@ public class Auftrag {
                 auftragNummer, materialkosten, fertigungskosten, materialkosten + fertigungskosten);
     }
 
+    public static void setNextId(int nextId) {
+        Auftrag.nextId = nextId;
+    }
 
+    public int getAuftragId() {
+        return auftragId;
+    }
 
+    public void setAuftragId(int auftragId) {
+        this.auftragId = auftragId;
+    }
 
+    public String getAuftragNummer() {
+        return auftragNummer;
+    }
+
+    public void setAuftragNummer(String auftragNummer) {
+        this.auftragNummer = auftragNummer;
+    }
+
+    public double getMaterialkosten() {
+        return materialkosten;
+    }
+
+    public void setMaterialkosten(double materialkosten) {
+        this.materialkosten = materialkosten;
+    }
+
+    public double getFertigungskosten() {
+        return fertigungskosten;
+    }
+
+    public void setFertigungskosten(double fertigungskosten) {
+        this.fertigungskosten = fertigungskosten;
+    }
+
+    public LocalDate getDatumKostenrechnung() {
+        return datumKostenrechnung;
+    }
+
+    public void setDatumKostenrechnung(LocalDate datumKostenrechnung) {
+        this.datumKostenrechnung = datumKostenrechnung;
+    }
+
+    public List<Teil> getTeil() {
+        return teil;
+    }
+
+    public void setTeil(List<Teil> teil) {
+        this.teil = teil;
+    }
 }

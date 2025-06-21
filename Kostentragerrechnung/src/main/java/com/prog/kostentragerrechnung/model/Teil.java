@@ -31,7 +31,7 @@ public class Teil {
 
     private int anzahl; //anzahl
 
-    private Arbeitsplan arbeitsplan; //arbeitsplan
+    private List<Arbeitsplan> arbeitsplanList;
     private Material material; //mat
 
     public static final List<Teil> teils = new ArrayList<>();
@@ -43,11 +43,11 @@ public class Teil {
                 "teilNr='" + teilNummer + '\'' +
                 ", anzahl=" + anzahl +
                 ", material=" + (material != null ? material.getMaterialNummer() : "null") +
-                ", arbeitsplan=" + (arbeitsplan != null ? arbeitsplan.toString() : "null") +
+                ", arbeitsplan=" + (arbeitsplanList != null ? arbeitsplanList.toString() : "null") +
                 '}';
     }
 
-    public Teil(List<Teil> children, double materialkosten, double fertigungskosten, int anzahl, Arbeitsplan arbeitsplan, Material material, String teilNummer) {
+    public Teil(List<Teil> children, double materialkosten, double fertigungskosten, int anzahl, List<Arbeitsplan> arbeitsplan, Material material, String teilNummer) {
         this.nextId++;
 
         this.teilId = nextId;
@@ -55,7 +55,8 @@ public class Teil {
         this.materialkosten = materialkosten;
         this.fertigungskosten = fertigungskosten;
         this.anzahl = anzahl;
-        this.arbeitsplan = arbeitsplan;
+        this.arbeitsplanList = new ArrayList<>();
+        this.arbeitsplanList.addAll(arbeitsplan);
         this.material = material;
         this.teilNummer = teilNummer;
 
@@ -67,6 +68,7 @@ public class Teil {
 
         this.teilId = nextId;
         this.children = new ArrayList<>();
+        this.arbeitsplanList = new ArrayList<>();
 
         teils.add(this);
     }
@@ -80,10 +82,14 @@ public class Teil {
             matKosten = this.material.getKostenProStueck() * this.anzahl;
         }
 
-        if (this.arbeitsplan != null && this.arbeitsplan.getMaschine() != null) {
-            double dauer = this.arbeitsplan.getBearbeitungsdauerMin();
-            double kostensatzMin = this.arbeitsplan.getMaschine().getKostensatzProStunde() / 60.0;
-            fertKosten = dauer * kostensatzMin;
+        if (this.arbeitsplanList != null) {
+            for (Arbeitsplan plan : arbeitsplanList) {
+                if (plan.getMaschine() != null) {
+                    double dauer = plan.getBearbeitungsdauerMin();
+                    double kostensatzMin = plan.getMaschine().getKostensatzProStunde() / 60.0;
+                    fertKosten += dauer * kostensatzMin;
+                }
+            }
         }
 
         // 🔁 Rekursive Kindkosten
@@ -110,5 +116,119 @@ public class Teil {
 
 
 
+    public static void setNextId(int nextId) {
+        Teil.nextId = nextId;
+    }
 
+    public int getTeilId() {
+        return teilId;
+    }
+
+    public void setTeilId(int teilId) {
+        this.teilId = teilId;
+    }
+
+    public String getTeilNummer() {
+        return teilNummer;
+    }
+
+    public void setTeilNummer(String teilNummer) {
+        this.teilNummer = teilNummer;
+    }
+
+    public String getBezeichnung() {
+        return bezeichnung;
+    }
+
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
+
+    public Auftrag getAuftrag() {
+        return auftrag;
+    }
+
+    public void setAuftrag(Auftrag auftrag) {
+        this.auftrag = auftrag;
+    }
+
+    public Teil getOberteil() {
+        return oberteil;
+    }
+
+    public void setOberteil(Teil oberteil) {
+        this.oberteil = oberteil;
+    }
+
+    public List<Teil> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Teil> children) {
+        this.children = children;
+    }
+
+    public double getMaterialkosten() {
+        return materialkosten;
+    }
+
+    public void setMaterialkosten(double materialkosten) {
+        this.materialkosten = materialkosten;
+    }
+
+    public double getFertigungskosten() {
+        return fertigungskosten;
+    }
+
+    public void setFertigungskosten(double fertigungskosten) {
+        this.fertigungskosten = fertigungskosten;
+    }
+
+    public double getMaterialgemeinkosten() {
+        return materialgemeinkosten;
+    }
+
+    public void setMaterialgemeinkosten(double materialgemeinkosten) {
+        this.materialgemeinkosten = materialgemeinkosten;
+    }
+
+    public double getFertigungsgemeinkosten() {
+        return fertigungsgemeinkosten;
+    }
+
+    public void setFertigungsgemeinkosten(double fertigungsgemeinkosten) {
+        this.fertigungsgemeinkosten = fertigungsgemeinkosten;
+    }
+
+    public double getHerstellkosten() {
+        return herstellkosten;
+    }
+
+    public void setHerstellkosten(double herstellkosten) {
+        this.herstellkosten = herstellkosten;
+    }
+
+    public int getAnzahl() {
+        return anzahl;
+    }
+
+    public void setAnzahl(int anzahl) {
+        this.anzahl = anzahl;
+    }
+
+    public List<Arbeitsplan> getArbeitsplan() {
+        return arbeitsplanList;
+    }
+
+    public void setArbeitsplan(List<Arbeitsplan> arbeitsplanList) {
+        this.arbeitsplanList = arbeitsplanList;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
 }

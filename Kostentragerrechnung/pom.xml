@@ -15,7 +15,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -116,6 +115,7 @@
 
     <build>
         <plugins>
+            <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -125,17 +125,17 @@
                     <target>21</target>
                 </configuration>
             </plugin>
+
+            <!-- JavaFX plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.prog.kostentragerrechnung/com.prog.kostentragerrechnung.Application
-                            </mainClass>
+                            <mainClass>com.prog.kostentragerrechnung/com.prog.kostentragerrechnung.Application</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -147,6 +147,7 @@
                 </executions>
             </plugin>
 
+            <!-- Surefire plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -155,6 +156,36 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+
+            <!-- JavaPackager plugin -->
+            <plugin>
+                <groupId>io.github.fvarrui</groupId>
+                <artifactId>javapackager</artifactId>
+                <version>1.7.6</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.prog.kostentragerrechnung.Application</mainClass>
+                            <bundleJre>true</bundleJre>
+                            <generateInstaller>true</generateInstaller>
+                            <administratorRequired>false</administratorRequired>
+                            <platform>auto</platform>
+                            <additionalResources>
+                                <additionalResource>src/main/resources</additionalResource>
+                            </additionalResources>
+                            <winConfig>
+                                <icon>src/main/resources/icon.ico</icon>
+                            </winConfig>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
+
 </project>

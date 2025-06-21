@@ -40,4 +40,40 @@ public class Arbeitsplan {
 
         arbeitsplans.add(this);
     }
+
+    public static void setNextId(int nextId) {
+        Arbeitsplan.nextId = nextId;
+    }
+
+    public int getArbeitsplanId() {
+        return arbeitsplanId;
+    }
+
+    public void setArbeitsplanId(int arbeitsplanId) {
+        this.arbeitsplanId = arbeitsplanId;
+    }
+
+    public int getArbeitsgangNummer() {
+        return arbeitsgangNummer;
+    }
+
+    public void setArbeitsgangNummer(int arbeitsgangNummer) {
+        this.arbeitsgangNummer = arbeitsgangNummer;
+    }
+
+    public Maschine getMaschine() {
+        return maschine;
+    }
+
+    public void setMaschine(Maschine maschine) {
+        this.maschine = maschine;
+    }
+
+    public int getBearbeitungsdauerMin() {
+        return bearbeitungsdauerMin;
+    }
+
+    public void setBearbeitungsdauerMin(int bearbeitungsdauerMin) {
+        this.bearbeitungsdauerMin = bearbeitungsdauerMin;
+    }
 }

@@ -38,10 +38,6 @@ public class Material {
         materials.add(this);
     }
 
-    public static void setNextId(int nextId) {
-        Material.nextId = nextId;
-    }
-
     public int getMaterialId() {
         return materialId;
     }

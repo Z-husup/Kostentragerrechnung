@@ -39,12 +39,10 @@ public class Teil {
     // Teil.java
     @Override
     public String toString() {
-        return "Teil{" +
+        return "Teil: " +
                 "teilNr='" + teilNummer + '\'' +
-                ", anzahl=" + anzahl +
-                ", material=" + (material != null ? material.getMaterialNummer() : "null") +
-                ", arbeitsplan=" + (arbeitsplanList != null ? arbeitsplanList.toString() : "null") +
-                '}';
+                "bezeichnung='" + bezeichnung + '\'' +
+                ", anzahl=" + anzahl;
     }
 
     public Teil(List<Teil> children, double materialkosten, double fertigungskosten, int anzahl, List<Arbeitsplan> arbeitsplan, Material material, String teilNummer) {
@@ -112,12 +110,6 @@ public class Teil {
         this.herstellkosten = Math.round(
                 (this.materialkosten + this.materialgemeinkosten + this.fertigungskosten + this.fertigungsgemeinkosten) * 100.0
         ) / 100.0;
-    }
-
-
-
-    public static void setNextId(int nextId) {
-        Teil.nextId = nextId;
     }
 
     public int getTeilId() {

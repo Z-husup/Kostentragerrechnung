@@ -41,10 +41,6 @@ public class Maschine {
         maschines.add(this);
     }
 
-    public static void setNextId(int nextId) {
-        Maschine.nextId = nextId;
-    }
-
     public int getMaschineId() {
         return maschineId;
     }

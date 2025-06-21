@@ -64,13 +64,13 @@ public class AddPartController {
         // Auftrag ComboBox
         auftragCombo.getItems().addAll(
                 Auftrag.auftrags.stream()
-                        .map(a -> a.getAuftragNummer())
+                        .map(a -> a.getAuftragId() + " - " + a.getAuftragNummer())
                         .toList()
         );
         // OberTeil ComboBox
         oberTeilCombo.getItems().addAll(
                 Teil.teils.stream()
-                        .map(t -> t.getTeilNummer())
+                        .map(t -> t.toString())
                         .toList()
         );
     }

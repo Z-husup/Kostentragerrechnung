@@ -97,10 +97,6 @@ public class Auftrag {
                 auftragNummer, materialkosten, fertigungskosten, materialkosten + fertigungskosten);
     }
 
-    public static void setNextId(int nextId) {
-        Auftrag.nextId = nextId;
-    }
-
     public int getAuftragId() {
         return auftragId;
     }

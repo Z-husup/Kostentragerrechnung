@@ -41,10 +41,6 @@ public class Arbeitsplan {
         arbeitsplans.add(this);
     }
 
-    public static void setNextId(int nextId) {
-        Arbeitsplan.nextId = nextId;
-    }
-
     public int getArbeitsplanId() {
         return arbeitsplanId;
     }

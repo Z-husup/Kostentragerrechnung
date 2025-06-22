@@ -92,8 +92,8 @@
                     <TableView fx:id="partsTable" layoutY="68.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
                         <columns>
                             <TableColumn fx:id="teilId" prefWidth="52.0" text="Teil-ID" />
-                            <TableColumn fx:id="teilNummer" prefWidth="106.0" text="Teil Nummer" />
-                              <TableColumn fx:id="teilBezeichnung" prefWidth="52.0" text="Bezeichnung" />
+                            <TableColumn fx:id="teilNummer" prefWidth="87.99999618530273" text="Teil Nummer" />
+                              <TableColumn fx:id="teilBezeichnung" prefWidth="203.33335876464844" text="Bezeichnung" />
                               <TableColumn fx:id="teilAuftrag" prefWidth="110.0" text="Auftrag(knoten)" />
                             <TableColumn fx:id="teilOberTeil" prefWidth="171.0" text="Ober Teil Nummer(knoten)" />
                             <TableColumn fx:id="teilAnzahl" prefWidth="70.0" text="Anzahl" />
@@ -120,6 +120,7 @@
                     <TableView fx:id="workPlanTable" layoutY="70.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
                         <columns>
                             <TableColumn fx:id="arbeitsplanId" text="Arbeitsplan-ID" />
+                              <TableColumn fx:id="arbeitsplanBezeichnung" text="Bezeichnung" />
                             <TableColumn fx:id="arbeitsgangNummer" text="Arbeitsgang Nummer" />
                             <TableColumn fx:id="maschinenNummerArbeitsplan" text="Maschinen Nummer" />
                             <TableColumn fx:id="bearbeitungsdauerMin" text="Bearbeitungs Dauer Min" />

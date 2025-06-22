@@ -231,7 +231,7 @@ public class ResultPageController {
 
 
                     // Report-Teil
-                    teil.berechneKosten(true); // актуализируем
+                    teil.berechneKosten(); // актуализируем
                     TreeItem<String> reportNode = new TreeItem<>("📊 Bericht:");
                     reportNode.getChildren().add(new TreeItem<>("📌 Anzahl: " + teil.getAnzahl()));
                     reportNode.getChildren().add(new TreeItem<>("💶 Materialkosten: " + String.format("%.2f", teil.getMaterialkosten()) + " €"));
@@ -292,7 +292,7 @@ public class ResultPageController {
             }
 
             // Report-Teil
-            child.berechneKosten(true); // Aktualisieren
+            child.berechneKosten(); // Aktualisieren
             TreeItem<String> reportNode = new TreeItem<>("📊 Bericht:");
             reportNode.getChildren().add(new TreeItem<>("📌 Anzahl: " + child.getAnzahl()));
             reportNode.getChildren().add(new TreeItem<>("💶 Materialkosten: " + String.format("%.2f", child.getMaterialkosten()) + " €"));

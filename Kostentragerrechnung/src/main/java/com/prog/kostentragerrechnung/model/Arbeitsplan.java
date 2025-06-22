@@ -16,6 +16,8 @@ public class Arbeitsplan {
 
     private int arbeitsgangNummer; //ag_nr
 
+    private String bezeichnung; //bezeichnung
+
     private Maschine maschine; //maschine
 
     private int bearbeitungsdauerMin; //dauer

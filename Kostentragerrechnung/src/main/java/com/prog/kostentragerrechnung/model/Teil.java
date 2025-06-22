@@ -36,7 +36,6 @@ public class Teil {
 
     public static final List<Teil> teils = new ArrayList<>();
 
-    // Teil.java
     @Override
     public String toString() {
         return "Teil: " +
@@ -71,11 +70,10 @@ public class Teil {
         teils.add(this);
     }
 
-    public void berechneKosten(boolean recursive) {
+    public void berechneKosten() {
         double matKosten = 0;
         double fertKosten = 0;
 
-        // 🔹 Direktkosten
         if (this.material != null) {
             matKosten = this.material.getKostenProStueck() * this.anzahl;
         }
@@ -90,20 +88,17 @@ public class Teil {
             }
         }
 
-        // 🔁 Rekursive Kindkosten
-        if (recursive && this.children != null) {
+        if (this.children != null && !this.children.isEmpty()) {
             for (Teil child : this.children) {
-                child.berechneKosten(true);
-                matKosten += child.getMaterialkosten() * child.getAnzahl();
-                fertKosten += child.getFertigungskosten() * child.getAnzahl();
+                child.berechneKosten(); // 🪄 recursive call
+                matKosten += child.getMaterialkosten();
+                fertKosten += child.getFertigungskosten();
             }
         }
 
-        // 📌 Zuschläge
         this.materialgemeinkosten = Math.round(matKosten * 0.10 * 100.0) / 100.0;
         this.fertigungsgemeinkosten = Math.round(fertKosten * 0.10 * 100.0) / 100.0;
 
-        // 📌 Direkte + Zuschläge
         this.materialkosten = Math.round(matKosten * 100.0) / 100.0;
         this.fertigungskosten = Math.round(fertKosten * 100.0) / 100.0;
 
@@ -111,6 +106,8 @@ public class Teil {
                 (this.materialkosten + this.materialgemeinkosten + this.fertigungskosten + this.fertigungsgemeinkosten) * 100.0
         ) / 100.0;
     }
+
+
 
     public int getTeilId() {
         return teilId;

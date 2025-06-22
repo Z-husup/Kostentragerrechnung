@@ -27,6 +27,9 @@ public class AddWorkPlanController {
     private TextField arbeitsgangNummerField;
 
     @FXML
+    private TextField arbeitsplanBezeichnungField;
+
+    @FXML
     private ComboBox<String> teilCombo;
 
     @FXML
@@ -76,6 +79,7 @@ public class AddWorkPlanController {
             }
 
             Arbeitsplan ap = new Arbeitsplan(agNr, maschine, dauer);
+            ap.setBezeichnung(arbeitsplanBezeichnungField.getText().trim());
             teil.getArbeitsplan().add(ap); // ✅ Append instead of overwrite
 
             saved = true;

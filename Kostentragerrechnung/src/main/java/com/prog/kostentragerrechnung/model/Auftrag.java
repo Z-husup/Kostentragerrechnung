@@ -74,7 +74,7 @@ public class Auftrag {
 
         if (this.teil != null) {
             for (Teil teil : this.teil) {
-                teil.berechneKosten(true); // 🔁 includes children
+                teil.berechneKosten();
                 this.materialkosten += teil.getMaterialkosten() * teil.getAnzahl();
                 this.fertigungskosten += teil.getFertigungskosten() * teil.getAnzahl();
             }

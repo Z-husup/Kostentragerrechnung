@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class ReportService {
 
     public static Report createReport(Teil teil, boolean recursive) {
-        teil.berechneKosten(recursive);
+        teil.berechneKosten();
         Report r = new Report();
 
         r.setAuftragNummer(teil.getAuftrag() != null ? teil.getAuftrag().getAuftragNummer() : null);

@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InputPageController {
 
@@ -45,6 +47,7 @@ public class InputPageController {
     @FXML private TableView<Arbeitsplan> workPlanTable;
     @FXML private TableColumn<Arbeitsplan, Integer> arbeitsplanId;
     @FXML private TableColumn<Arbeitsplan, Integer> arbeitsgangNummer;
+    @FXML private TableColumn<Arbeitsplan, String> arbeitsplanBezeichnung;
     @FXML private TableColumn<Arbeitsplan, String> maschinenNummerArbeitsplan;
     @FXML private TableColumn<Arbeitsplan, Integer> bearbeitungsdauerMin;
 
@@ -93,6 +96,7 @@ public class InputPageController {
         // === ARBEITSPLAN ===
         arbeitsplanId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getArbeitsplanId()).asObject());
         arbeitsgangNummer.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getArbeitsgangNummer()).asObject());
+        arbeitsplanBezeichnung.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getBezeichnung()));
         maschinenNummerArbeitsplan.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getMaschine() != null ? data.getValue().getMaschine().getMaschinenNummer() : ""));
         bearbeitungsdauerMin.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getBearbeitungsdauerMin()).asObject());
@@ -113,9 +117,15 @@ public class InputPageController {
                 data.getValue().getAuftrag() != null ? data.getValue().getAuftrag().getAuftragNummer() : ""));
         teilOberTeil.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getOberteil() != null ? data.getValue().getOberteil().getTeilNummer() : ""));
-        teilArbeitsplanNummer.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getArbeitsplan().isEmpty() ? "-" : String.valueOf(data.getValue().getArbeitsplan().get(0).getArbeitsplanId())
-        ));
+        teilArbeitsplanNummer.setCellValueFactory(data -> {
+            List<Arbeitsplan> pläne = data.getValue().getArbeitsplan();
+            String joined = pläne.isEmpty()
+                    ? "-"
+                    : pläne.stream()
+                    .map(ap -> String.valueOf(ap.getArbeitsplanId()))
+                    .collect(Collectors.joining(", "));
+            return new SimpleStringProperty(joined);
+        });
         teilMaterialNummer.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getMaterial() != null ? data.getValue().getMaterial().getMaterialNummer() : ""));
         teilMaterialkosten.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getMaterialkosten()).asObject());

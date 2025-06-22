@@ -238,6 +238,7 @@ public class ImportService {
             if (maschine == null) continue;
 
             Arbeitsplan ap = new Arbeitsplan(agNr, maschine, (int) dauer);
+            ap.setBezeichnung("(optional)");
 
             Teil teil = Teil.teils.stream()
                     .filter(t -> t.getTeilId() == (Integer.parseInt(teilNr)))

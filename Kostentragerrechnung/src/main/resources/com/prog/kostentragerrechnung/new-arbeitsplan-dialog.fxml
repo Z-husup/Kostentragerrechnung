@@ -20,26 +20,32 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="arbeitsgangNummerField" layoutX="192.0" layoutY="132.0" prefHeight="25.0" prefWidth="201.0" />
-      <Label layoutX="39.0" layoutY="135.0" text="Arbeitsgang Nummer:">
+      <TextField fx:id="arbeitsgangNummerField" layoutX="194.0" layoutY="188.0" prefHeight="25.0" prefWidth="201.0" />
+      <Label layoutX="41.0" layoutY="191.0" text="Arbeitsgang Nummer:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Button layoutX="36.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="366.0" text="neue Zeile hinzufügen" />
-      <Label layoutX="41.0" layoutY="177.0" text="Maschinen:">
+      <Label layoutX="43.0" layoutY="233.0" text="Maschinen:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="teilCombo" layoutX="192.0" layoutY="90.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField fx:id="bearbeitungsdauerMinField" layoutX="219.0" layoutY="215.0" prefHeight="25.0" prefWidth="176.0" />
-      <Label layoutX="41.0" layoutY="218.0" text="Bearbeitungs Dauer: (Min)">
+      <TextField fx:id="bearbeitungsdauerMinField" layoutX="221.0" layoutY="271.0" prefHeight="25.0" prefWidth="176.0" />
+      <Label layoutX="43.0" layoutY="274.0" text="Bearbeitungs Dauer: (Min)">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="maschinenCombo" layoutX="192.0" layoutY="174.0" prefHeight="25.0" prefWidth="201.0" />
+      <ComboBox fx:id="maschinenCombo" layoutX="194.0" layoutY="230.0" prefHeight="25.0" prefWidth="201.0" />
       <TextArea editable="false" layoutX="466.0" layoutY="20.0" prefHeight="360.0" prefWidth="233.0" text="Hilfe – Arbeitsplan erfassen&#10;Teil: Auswahl des zu bearbeitenden Teils.&#10;&#10;Arbeitsgang Nummer: Eindeutige &#10;Nummer für den Bearbeitungsschritt.&#10;&#10;Maschinen: Auswahl der Maschine, die für diesen Arbeitsschritt verwendet wird.&#10;&#10;Bearbeitungsdauer (Min): Zeit in Minuten, die der Arbeitsschritt benötigt." wrapText="true" />
+      <Label layoutX="42.0" layoutY="129.0" text="Bezeichnung:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="arbeitsplanBezeichnungField" layoutX="194.0" layoutY="126.0" prefHeight="25.0" prefWidth="201.0" />
    </children>
 </AnchorPane>

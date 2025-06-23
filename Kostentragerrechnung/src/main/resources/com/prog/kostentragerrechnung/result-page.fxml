@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.prog.kostentragerrechnung.Results"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.ResultPageController">
+   <children>
+      <TabPane layoutY="93.0" prefHeight="627.0" prefWidth="1077.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab fx:id="productStructureTab" text="Auftrag">
+               <content>
+                  <AnchorPane styleClass="content-pane">
+                     <children>
+                        <TableView fx:id="auftragTable" layoutY="69.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
+                           <columns>
+                              <TableColumn fx:id="auftragId" text="Auftrag-ID" />
+                              <TableColumn fx:id="auftragNummer" text="Auftragnummer" />
+                              <TableColumn fx:id="auftragMaterialkosten" text="Materialkosten" />
+                              <TableColumn fx:id="auftragFertigungskosten" text="Fertigungskosten" />
+                              <TableColumn fx:id="datumKonstenrechnung" text="Datum Kostenrechnung" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteAuftrag" text="Delete Row" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="partsTab" text="Teil">
+               <content>
+                  <AnchorPane styleClass="content-pane">
+                     <children>
+                        <TableView fx:id="partsTable" layoutY="68.0" prefHeight="500.0" prefWidth="1077.0" styleClass="data-table">
+                           <columns>
+                              <TableColumn fx:id="teilId" prefWidth="52.0" text="Teil-ID" />
+                              <TableColumn fx:id="teilBezeichnung" prefWidth="52.0" text="Bezeichnung" />
+                              <TableColumn fx:id="teilNummer" prefWidth="106.0" text="Teil Nummer" />
+                              <TableColumn fx:id="teilAuftrag" prefWidth="110.0" text="Auftrag(knoten)" />
+                              <TableColumn fx:id="teilOberTeil" prefWidth="171.0" text="Ober Teil Nummer(knoten)" />
+                              <TableColumn fx:id="teilAnzahl" prefWidth="70.0" text="Anzahl" />
+                              <TableColumn fx:id="teilArbeitsplanNummer" prefWidth="175.0" text="Arbeitsplan Nummer" />
+                              <TableColumn fx:id="teilMaterialNummer" prefWidth="140.0" text="Material Nummer" />
+                              <TableColumn fx:id="teilMaterialkosten" prefWidth="126.0" text="Materialkosten" />
+                              <TableColumn fx:id="teilFertigungskosten" prefWidth="124.0" text="Fertigungskosten" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button layoutX="981.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteTeil" text="Delete Row" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Diagrams">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
 
+                        <TreeView fx:id="reportTreeView" layoutX="490.0" layoutY="372.0" prefHeight="175.0" prefWidth="552.0" />
+
+                        <BarChart fx:id="reportBarChart" layoutX="493.0" layoutY="60.0" prefHeight="216.0" prefWidth="547.0">
+                           <xAxis>
+                              <CategoryAxis label="Maschine" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis label="Minuten" />
+                           </yAxis>
+                        </BarChart>
+
+                        <TreeView fx:id="entityTreeView" layoutX="14.0" layoutY="93.0" prefHeight="454.0" prefWidth="458.0" />
+                        <Label layoutX="14.0" layoutY="14.0" text="Auftragsstruktur &amp; Teilkosten:" />
+                        <Label layoutX="14.0" layoutY="43.0" prefHeight="38.0" prefWidth="451.0" text="Hier werden alle Aufträge, enthaltene Teile sowie die zugehörigen Kostenarten angezeigt:" wrapText="true" />
+                        <Label layoutX="500.0" layoutY="285.0" text="Maschinenlast &amp; Einsatzdauer:" />
+                        <Label layoutX="555.0" layoutY="23.0" text="Maschinenauslastung pro Woche (in Minuten)" />
+                        <Label layoutX="556.0" layoutY="43.0" text="Maschinen-Zeiten (max. 2400 min/Woche)" />
+                        <Label layoutX="500.0" layoutY="311.0" prefHeight="57.0" prefWidth="543.0" text="Darstellung aller Maschinen mit zugewiesenen Teilen, Bearbeitungszeit und Überlastungsprüfung:" wrapText="true" />
+
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Result:" wrappingWidth="72.8203125">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="exportSQLButton" layoutX="484.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportSQL" prefHeight="29.0" prefWidth="182.0" text="Export SQL" visible="false" />
+      <Button fx:id="exportExcelButton" layoutX="691.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportExcel" prefHeight="29.0" prefWidth="161.0" text="Export Excel" />
+      <Button fx:id="returnButton" layoutX="881.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="29.0" prefWidth="182.0" text="Return" />
+   </children>
 </AnchorPane>

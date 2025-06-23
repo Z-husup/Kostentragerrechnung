@@ -1,14 +1,16 @@
 package com.prog.kostentragerrechnung.controller;
 
+import com.prog.kostentragerrechnung.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 public class StartPageController {
-    @FXML
-    private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private void goToInputPage(ActionEvent event) {
+        InputPageController controller = Application.switchScene("input-page.fxml");
+        if (controller != null) {
+            controller.setMainStage(Application.mainStage);
+        }
     }
 }

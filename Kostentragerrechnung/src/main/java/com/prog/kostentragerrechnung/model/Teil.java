@@ -107,7 +107,10 @@ public class Teil {
         ) / 100.0;
     }
 
-
+    public static void resetAll() {
+        teils.clear();
+        nextId = 0;
+    }
 
     public int getTeilId() {
         return teilId;

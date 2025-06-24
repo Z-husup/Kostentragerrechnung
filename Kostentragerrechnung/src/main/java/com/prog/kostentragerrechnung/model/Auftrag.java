@@ -85,16 +85,21 @@ public class Auftrag {
         this.fertigungskosten = Math.round(this.fertigungskosten * 100.0) / 100.0;
     }
 
-
     public static void berechneAlleKosten() {
         for (Auftrag a : auftrags) {
             a.berechneKosten();
             a.printKosten();
         }
     }
+
     public void printKosten() {
         System.out.printf("Auftrag %s:\n  K_mat=%.2f €\n  K_fert=%.2f €\n  Gesamt=%.2f €\n",
                 auftragNummer, materialkosten, fertigungskosten, materialkosten + fertigungskosten);
+    }
+
+    public static void resetAll() {
+        auftrags.clear();
+        nextId = 0;
     }
 
     public int getAuftragId() {

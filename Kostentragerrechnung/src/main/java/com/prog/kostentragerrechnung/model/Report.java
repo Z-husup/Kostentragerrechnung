@@ -66,6 +66,10 @@ public class Report {
         return r;
     }
 
+    public static void resetAll() {
+        report  = new Report();
+    }
+
     public String getAuftragNummer() {
         return auftragNummer;
     }

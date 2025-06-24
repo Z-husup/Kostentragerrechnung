@@ -8,8 +8,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.InputPageController">
     <children>
@@ -137,15 +135,12 @@
     </Tab>
 </tabs>
 </TabPane>
-<Text layoutX="20.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Herstellkosten: Kostenträgerrechnung">
-<font>
-<Font size="24.0" />
-</font>
-</Text>
 <Button fx:id="calculateButton" layoutX="880.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleCalculate" prefHeight="29.0" prefWidth="182.0" text="Calculate" />
-<Button fx:id="importExcelButton" layoutX="691.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleImport" prefHeight="29.0" prefWidth="161.0" text="Import Excel" />
-<Label fx:id="fileLabel" layoutX="691.0" layoutY="62.0" text="Kein Datei ausgewählt" />
+<Button fx:id="importExcelButton" layoutX="731.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleImport" prefHeight="29.0" prefWidth="141.0" text="Import Excel" />
+<Label fx:id="fileLabel" layoutX="731.0" layoutY="66.0" text="Kein Datei ausgewählt" />
 
-<Button fx:id="helpButton" layoutX="501.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="29.0" prefWidth="161.0" text="Help" />
+<Button fx:id="helpButton" layoutX="445.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="29.0" prefWidth="121.0" text="Help" />
+      <Button layoutX="585.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="29.0" prefWidth="132.0" text="Reset tables" />
+      <Button layoutX="20.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="29.0" prefWidth="132.0" text="Return" />
 </children>
 </AnchorPane>

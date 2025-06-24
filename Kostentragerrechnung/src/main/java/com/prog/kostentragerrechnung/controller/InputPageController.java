@@ -234,6 +234,22 @@ public class InputPageController {
         }
     }
 
+    @FXML private void handleReset() {
+        Auftrag.resetAll();
+        Teil.resetAll();
+        Material.resetAll();
+        Maschine.resetAll();
+        Arbeitsplan.resetAll();
+        Report.resetAll();
+
+        refreshTables();
+    }
+
+    @FXML
+    public void handleReturn() {
+        Application.switchScene("start-page.fxml");
+    }
+
     @FXML
     public void handleHelp() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -43,6 +43,11 @@ public class Arbeitsplan {
         arbeitsplans.add(this);
     }
 
+    public static void resetAll() {
+        arbeitsplans.clear();
+        nextId = 0;
+    }
+
     public int getArbeitsplanId() {
         return arbeitsplanId;
     }

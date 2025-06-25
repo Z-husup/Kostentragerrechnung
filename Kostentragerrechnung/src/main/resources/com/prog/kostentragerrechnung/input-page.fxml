@@ -135,12 +135,12 @@
     </Tab>
 </tabs>
 </TabPane>
-<Button fx:id="calculateButton" layoutX="880.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleCalculate" prefHeight="29.0" prefWidth="182.0" text="Calculate" />
-<Button fx:id="importExcelButton" layoutX="731.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleImport" prefHeight="29.0" prefWidth="141.0" text="Import Excel" />
+<Button fx:id="calculateButton" layoutX="880.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleCalculate" prefHeight="29.0" prefWidth="182.0" text="Berechnen" />
+<Button fx:id="importExcelButton" layoutX="731.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleImport" prefHeight="29.0" prefWidth="141.0" text="Excel importieren" />
 <Label fx:id="fileLabel" layoutX="731.0" layoutY="66.0" text="Kein Datei ausgewählt" />
 
-<Button fx:id="helpButton" layoutX="445.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="29.0" prefWidth="121.0" text="Help" />
-      <Button layoutX="585.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="29.0" prefWidth="132.0" text="Reset tables" />
-      <Button layoutX="20.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="29.0" prefWidth="132.0" text="Return" />
+<Button fx:id="helpButton" layoutX="395.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="29.0" prefWidth="121.0" text="Hilfe" />
+      <Button layoutX="535.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="29.0" prefWidth="182.0" text="Tabellen zurücksetzen" />
+      <Button layoutX="20.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="29.0" prefWidth="132.0" text="Zurück" />
 </children>
 </AnchorPane>

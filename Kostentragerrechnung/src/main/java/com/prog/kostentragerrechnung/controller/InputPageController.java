@@ -258,13 +258,11 @@ public class InputPageController {
 
         String helpText = """
         Diese Anwendung unterstützt die Erfassung und Auswertung von Daten zur Kostenrechnung.
-
         ──────────────
         ▶ Funktionen:
         - "Import Excel": Lädt Daten zu Auftrag, Teil, Material, Maschine, Arbeitsplan.
         - "Calculate": Führt alle Kostenberechnungen durch.
         - "Export Excel/SQL": Exportiert die berechneten Daten.
-
         ──────────────
         ▶ Datenstruktur:
         - Auftrag: Trägt zugehörige Teile, enthält keine Kosten direkt.
@@ -272,15 +270,12 @@ public class InputPageController {
         - Material: Hat Stückkosten.
         - Maschine: Hat Kostensatz pro Stunde.
         - Arbeitsplan: Verknüpft Teil mit Maschine und Bearbeitungszeit.
-
         ──────────────
         ▶ Kostenarten:
         - Materialkosten + 10% Materialgemeinkosten
         - Fertigungskosten + 10% Fertigungsgemeinkosten
         - Herstellkosten = Summe aller Komponenten
-
         Alle Kosten gelten pro Stück in Euro (€).
-
         ──────────────
         ▶ Zusatzfunktionen:
         - Diagramme zeigen Maschinenbelastung.

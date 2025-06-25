@@ -65,7 +65,10 @@ public class Auftrag {
             this.teil = new ArrayList<>();
         }
         this.teil.add(teil);
+
+        teil.setAuftrag(this);
     }
+
 
     public void berechneKosten() {
         this.materialkosten = 0;

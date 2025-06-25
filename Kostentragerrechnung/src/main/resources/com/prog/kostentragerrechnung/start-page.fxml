@@ -15,7 +15,7 @@
             <Font size="32.0" />
          </font>
       </Text>
-      <Button fx:id="startButton" layoutX="662.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToInputPage" prefHeight="31.0" prefWidth="347.0" text="Input Page" />
+      <Button fx:id="startButton" layoutX="662.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToInputPage" prefHeight="31.0" prefWidth="347.0" text="Eingebesseite" />
       <TabPane layoutX="18.0" layoutY="97.0" prefHeight="597.0" prefWidth="1013.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="die Auskunft">

@@ -78,7 +78,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Material">
+            <Tab text="Maschine">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -101,13 +101,13 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Result:" wrappingWidth="72.8203125">
+      <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ergebnis:" wrappingWidth="161.33333333333326">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
       <Button fx:id="exportSQLButton" layoutX="484.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportSQL" prefHeight="29.0" prefWidth="182.0" text="Export SQL" visible="false" />
-      <Button fx:id="exportExcelButton" layoutX="691.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportExcel" prefHeight="29.0" prefWidth="161.0" text="Export Excel" />
-      <Button fx:id="returnButton" layoutX="881.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="29.0" prefWidth="182.0" text="Return" />
+      <Button fx:id="exportExcelButton" layoutX="691.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleExportExcel" prefHeight="29.0" prefWidth="161.0" text="Excel-Exportieren" />
+      <Button fx:id="returnButton" layoutX="881.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleReturn" prefHeight="29.0" prefWidth="182.0" text="Zurück" />
    </children>
 </AnchorPane>

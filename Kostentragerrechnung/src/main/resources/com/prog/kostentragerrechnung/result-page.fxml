@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.ResultPageController">
+<AnchorPane maxHeight="720.0" maxWidth="1045.0" prefHeight="720.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prog.kostentragerrechnung.controller.ResultPageController">
    <children>
       <TabPane layoutY="93.0" prefHeight="627.0" prefWidth="1077.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -56,14 +65,25 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Diagrams">
+            <Tab text="Ergebnis">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
 
-                        <TreeView fx:id="reportTreeView" layoutX="490.0" layoutY="372.0" prefHeight="175.0" prefWidth="552.0" />
+                        <TreeView fx:id="entityTreeView" layoutX="14.0" layoutY="93.0" prefHeight="454.0" prefWidth="1033.0" />
+                        <Label layoutX="14.0" layoutY="14.0" text="Auftragsstruktur &amp; Teilkosten:" />
+                        <Label layoutX="14.0" layoutY="43.0" prefHeight="38.0" prefWidth="451.0" text="Hier werden alle Aufträge, enthaltene Teile sowie die zugehörigen Kostenarten angezeigt:" wrapText="true" />
 
-                        <BarChart fx:id="reportBarChart" layoutX="493.0" layoutY="60.0" prefHeight="216.0" prefWidth="547.0">
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Material">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TreeView fx:id="reportTreeView" layoutX="14.0" layoutY="372.0" prefHeight="175.0" prefWidth="1015.0" />
+                        <BarChart fx:id="reportBarChart" layoutX="17.0" layoutY="60.0" prefHeight="216.0" prefWidth="1019.0">
                            <xAxis>
                               <CategoryAxis label="Maschine" />
                            </xAxis>
@@ -71,18 +91,13 @@
                               <NumberAxis label="Minuten" />
                            </yAxis>
                         </BarChart>
-
-                        <TreeView fx:id="entityTreeView" layoutX="14.0" layoutY="93.0" prefHeight="454.0" prefWidth="458.0" />
-                        <Label layoutX="14.0" layoutY="14.0" text="Auftragsstruktur &amp; Teilkosten:" />
-                        <Label layoutX="14.0" layoutY="43.0" prefHeight="38.0" prefWidth="451.0" text="Hier werden alle Aufträge, enthaltene Teile sowie die zugehörigen Kostenarten angezeigt:" wrapText="true" />
-                        <Label layoutX="500.0" layoutY="285.0" text="Maschinenlast &amp; Einsatzdauer:" />
-                        <Label layoutX="555.0" layoutY="23.0" text="Maschinenauslastung pro Woche (in Minuten)" />
-                        <Label layoutX="556.0" layoutY="43.0" text="Maschinen-Zeiten (max. 2400 min/Woche)" />
-                        <Label layoutX="500.0" layoutY="311.0" prefHeight="57.0" prefWidth="543.0" text="Darstellung aller Maschinen mit zugewiesenen Teilen, Bearbeitungszeit und Überlastungsprüfung:" wrapText="true" />
-
+                        <Label layoutX="24.0" layoutY="285.0" text="Maschinenlast &amp; Einsatzdauer:" />
+                        <Label layoutX="79.0" layoutY="23.0" text="Maschinenauslastung pro Woche (in Minuten)" />
+                        <Label layoutX="80.0" layoutY="43.0" text="Maschinen-Zeiten (max. 2400 min/Woche)" />
+                        <Label layoutX="24.0" layoutY="311.0" prefHeight="57.0" prefWidth="543.0" text="Darstellung aller Maschinen mit zugewiesenen Teilen, Bearbeitungszeit und Überlastungsprüfung:" wrapText="true" />
                      </children>
                   </AnchorPane>
-              </content>
+               </content>
             </Tab>
          </tabs>
       </TabPane>

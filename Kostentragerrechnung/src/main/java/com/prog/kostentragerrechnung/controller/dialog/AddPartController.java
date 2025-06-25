@@ -112,11 +112,14 @@ public class AddPartController {
             // 📑 Auftrag (optional)
             Auftrag auftrag = null;
             if (auftragCheckBox.isSelected()) {
-                String selectedAuftragNr = auftragCombo.getValue();
-                auftrag = Auftrag.auftrags.stream()
-                        .filter(a -> a.getAuftragNummer().equals(selectedAuftragNr))
-                        .findFirst()
-                        .orElse(null);
+                String selectedAuftragText = auftragCombo.getValue();
+                if (selectedAuftragText != null && selectedAuftragText.contains(" - ")) {
+                    String selectedAuftragNr = selectedAuftragText.split(" - ")[1].trim();
+                    auftrag = Auftrag.auftrags.stream()
+                            .filter(a -> a.getAuftragNummer().equals(selectedAuftragNr))
+                            .findFirst()
+                            .orElse(null);
+                }
             }
 
             // ✅ Construct Teil
@@ -133,9 +136,10 @@ public class AddPartController {
             }
 
             if (auftrag != null) {
-                auftrag.addTeil(teil);
                 teil.setAuftrag(auftrag);
+                auftrag.addTeil(teil);
             }
+
             saved = true;
             dialogStage.close();
 
@@ -143,8 +147,6 @@ public class AddPartController {
             showAlert("Fehler beim Speichern", "Bitte überprüfen Sie die Eingaben.\n" + e.getMessage());
         }
     }
-
-
 
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

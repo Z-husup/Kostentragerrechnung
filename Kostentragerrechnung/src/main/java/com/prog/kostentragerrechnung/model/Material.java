@@ -38,6 +38,12 @@ public class Material {
         materials.add(this);
     }
 
+    public static void resetAll() {
+        Material.materials.clear();
+        nextId = 0;
+    }
+
+
     public int getMaterialId() {
         return materialId;
     }

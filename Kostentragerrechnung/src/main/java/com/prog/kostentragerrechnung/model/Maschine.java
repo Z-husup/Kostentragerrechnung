@@ -41,6 +41,11 @@ public class Maschine {
         maschines.add(this);
     }
 
+    public static void resetAll() {
+        Maschine.maschines.clear();
+        nextId = 0;
+    }
+
     public int getMaschineId() {
         return maschineId;
     }

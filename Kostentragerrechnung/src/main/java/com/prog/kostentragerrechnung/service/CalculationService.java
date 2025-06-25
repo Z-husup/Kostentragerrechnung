@@ -17,8 +17,6 @@ public class CalculationService {
     private final Map<String, Integer> maschinenDauerMap = new HashMap<>();
 
     public void calculateCosts() {
-        // 1. Запускаем расчет для всех Aufträge
-        Auftrag.berechneAlleKosten();
 
         // 2. Печатаем результаты по каждому Auftrag и Teil
         for (Auftrag auftrag : Auftrag.auftrags) {
@@ -39,6 +37,9 @@ public class CalculationService {
                 System.out.println();
             }
         }
+
+        // 1. Запускаем расчет для всех Aufträge
+        Auftrag.berechneAlleKosten();
     }
 
     public void calculateCostsAndPrintReports() {
